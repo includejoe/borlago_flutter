@@ -1,34 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-const primaryColor = Color(0xFF5A38E3);
+const primaryColor = Color(0xFFD16E11);
+const errorColor = Color(0xFFD20606);
+const darkBgColor = Color(0xFF010100);
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  primaryColor: primaryColor,
+  scaffoldBackgroundColor: Colors.white,
+  colorScheme: ColorScheme.light(
+    primary: primaryColor,
+    onPrimary: Colors.white,
+    error: errorColor,
+    onError: Colors.white,
+    background: Colors.white,
+    onBackground: Colors.black,
+    surface: Colors.grey.shade300,
+    onSurface: Colors.black,
+  ),
   appBarTheme: const AppBarTheme(
     backgroundColor: primaryColor
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: primaryColor
   ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-        const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
-      ),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0)
-        )
-      ),
-      backgroundColor: MaterialStateProperty.all<Color>(primaryColor)
-    )
-  ),
-  textTheme: const TextTheme(
-    headlineMedium: TextStyle(
+  textTheme: TextTheme(
+    bodyMedium: GoogleFonts.poppins(
+      fontSize: 16,
       color: Colors.black,
-      fontWeight: FontWeight.bold
-    )
+      fontWeight: FontWeight.normal
+    ),
+    headlineMedium: GoogleFonts.poppins(
+        fontSize: 24,
+        color: Colors.black,
+        fontWeight: FontWeight.bold
+    ),
+    labelMedium: GoogleFonts.poppins(
+        fontSize: 22,
+        color: Colors.black,
+        fontWeight: FontWeight.bold
+    ),
+    labelSmall: GoogleFonts.poppins(
+        fontSize: 12,
+        color: Colors.black,
+        fontWeight: FontWeight.w500
+    ),
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
@@ -42,6 +58,17 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
+  scaffoldBackgroundColor: darkBgColor,
+  colorScheme: ColorScheme.dark(
+    primary: primaryColor,
+    onPrimary: Colors.white,
+    error: errorColor,
+    onError: Colors.white,
+    background: darkBgColor,
+    onBackground: Colors.black,
+    surface: Colors.grey.shade200,
+    onSurface: Colors.black,
+  ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.white
   ),
@@ -49,19 +76,28 @@ ThemeData darkTheme = ThemeData(
     trackColor: MaterialStateProperty.all<Color>(Colors.grey),
     thumbColor: MaterialStateProperty.all<Color>(Colors.white),
   ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+    textTheme: TextTheme(
+      bodyMedium: GoogleFonts.poppins(
+          fontSize: 16,
+          color: Colors.white,
+          fontWeight: FontWeight.normal
       ),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)
-          )
+      headlineMedium: GoogleFonts.poppins(
+          fontSize: 24,
+          color: Colors.white,
+          fontWeight: FontWeight.bold
       ),
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
-    )
-  ),
+      labelMedium: GoogleFonts.poppins(
+          fontSize: 22,
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+      ),
+      labelSmall: GoogleFonts.poppins(
+          fontSize: 12,
+          color: Colors.white,
+          fontWeight: FontWeight.w500
+      ),
+    ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20.0),

@@ -1,4 +1,11 @@
 {
   "appName": "BorlaGo",
-  "language": "English"
+  "language": "English",
+
+  "login": "LOGIN",
+  "register": "REGISTER",
+  "no_account": "Don't have an account?",
+  "yes_account": "Already have an account?",
+  "ph_email": "Enter your email",
+  "ph_password": "Enter your password"
 }
