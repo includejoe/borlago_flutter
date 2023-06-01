@@ -26,9 +26,14 @@ ThemeData lightTheme = ThemeData(
   ),
   textTheme: TextTheme(
     bodyMedium: GoogleFonts.poppins(
-      fontSize: 16,
+      fontSize: 14,
       color: Colors.black,
       fontWeight: FontWeight.normal
+    ),
+    bodySmall: GoogleFonts.poppins(
+        fontSize: 11,
+        color: Colors.black,
+        fontWeight: FontWeight.w500
     ),
     headlineMedium: GoogleFonts.poppins(
         fontSize: 24,
@@ -39,11 +44,6 @@ ThemeData lightTheme = ThemeData(
         fontSize: 22,
         color: Colors.black,
         fontWeight: FontWeight.bold
-    ),
-    labelSmall: GoogleFonts.poppins(
-        fontSize: 12,
-        color: Colors.black,
-        fontWeight: FontWeight.w500
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
@@ -78,9 +78,14 @@ ThemeData darkTheme = ThemeData(
   ),
     textTheme: TextTheme(
       bodyMedium: GoogleFonts.poppins(
-          fontSize: 16,
+          fontSize: 14,
           color: Colors.white,
           fontWeight: FontWeight.normal
+      ),
+      bodySmall: GoogleFonts.poppins(
+          fontSize: 11,
+          color: Colors.black,
+          fontWeight: FontWeight.w500
       ),
       headlineMedium: GoogleFonts.poppins(
           fontSize: 24,
@@ -91,11 +96,6 @@ ThemeData darkTheme = ThemeData(
           fontSize: 22,
           color: Colors.white,
           fontWeight: FontWeight.bold
-      ),
-      labelSmall: GoogleFonts.poppins(
-          fontSize: 12,
-          color: Colors.white,
-          fontWeight: FontWeight.w500
       ),
     ),
   inputDecorationTheme: InputDecorationTheme(

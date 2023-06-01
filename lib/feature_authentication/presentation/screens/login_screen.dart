@@ -1,3 +1,5 @@
+import 'package:borlago/base/utils/form_validators/email.dart';
+import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
 import 'package:flutter/material.dart';
@@ -14,27 +16,31 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _form = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
+  // email values
   final _emailController = TextEditingController();
+  final _emailFocusNode = FocusNode();
+  String? _emailError;
+
+  // password values
   final _passwordController = TextEditingController();
-  
+  final _passwordFocusNode = FocusNode();
+  String? _passwordError;
+
   @override
   Widget build(BuildContext context) {
+    final emailValidator = EmailValidator(context);
+    final passwordValidator = PasswordValidator(context);
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-
-    // TODO: Do not clear form field values if validation error
-    // TODO: put l10n in form validators
-    // TODO: add login illustration
-
-
 
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Form(
-            key: _form,
+            key: _formKey,
             child: SizedBox(
               height: screenHeight(context),
               child: Column(
@@ -43,19 +49,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   TextInput(
                     controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    inputAction: TextInputAction.next,
+                    error: _emailError,
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(_passwordFocusNode);
+                    },
                     textInputType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 15,),
                   PasswordInput(
                       controller: _passwordController,
+                      focusNode: _passwordFocusNode,
+                      inputAction: TextInputAction.done,
+                      error: _passwordError,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).unfocus();
+                      },
                       placeholder: l10n!.ph_password
                   ),
                   const SizedBox(height: 15,),
                   Button(
                     onTap: () {
-                      if(_form.currentState!.validate()) {
+                      setState(() {
+                        _emailError = emailValidator(_emailController.text);
+                        _passwordError = passwordValidator(_passwordController.text);
+                      });
+
+                      if(_emailError == null && _passwordError == null) {
                         _emailController.clear();
                         _passwordController.clear();
+                        FocusScope.of(context).unfocus();
                       }
                     },
                     text: l10n.login

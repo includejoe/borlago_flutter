@@ -6,6 +6,12 @@
   "register": "REGISTER",
   "no_account": "Don't have an account?",
   "yes_account": "Already have an account?",
-  "ph_email": "Enter your email",
-  "ph_password": "Enter your password"
+
+  "ph_email": "Email",
+  "ph_password": "Password",
+
+  "err_empty_field": "This field cannot be empty",
+  "err_invalid_email": "Enter a valid email address",
+  "err_min_password": "Password must be 6 or more characters"
+
 }
