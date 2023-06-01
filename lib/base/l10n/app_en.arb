@@ -7,11 +7,42 @@
   "no_account": "Don't have an account?",
   "yes_account": "Already have an account?",
 
-  "ph_email": "Email",
-  "ph_password": "Password",
+  "plh_email": "Email",
+  "plh_password": "Password",
+  "plh_first_name": "First Name",
+  "plh_last_name": "Last Name",
+  "plh_gender": "Gender",
+  "plh_country": "Country",
+  "plh_phone": "Phone",
+  "plh_confirm_password": "Confirm Password",
+
+  "lbl_gender": "Choose your gender",
+  "lbl_country": "Choose your country",
+  "male": "Male",
+  "female": "Female",
+  "other": "Other",
+
+  "country_bj": "Benin",
+  "country_bf": "Burkina Faso",
+  "country_ci": "Côte d'Ivoire",
+  "country_cv": "Cape Verde",
+  "country_gh": "Ghana",
+  "country_gm": "Gambia",
+  "country_gn": "Guinea",
+  "country_gw": "Guinea-Bissau",
+  "country_lr": "Liberia",
+  "country_ml": "Mali",
+  "country_mr": "Mauritania",
+  "country_ne": "Niger",
+  "country_ng": "Nigeria",
+  "country_sn": "Senegal",
+  "country_sl": "Sierra Leone",
+  "country_tg": "Togo",
+
 
   "err_empty_field": "This field cannot be empty",
   "err_invalid_email": "Enter a valid email address",
-  "err_min_password": "Password must be 6 or more characters"
+  "err_min_password": "Password must be 6 or more characters",
+  "err_password_mismatch": "Passwords must match"
 
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput({
@@ -9,7 +8,9 @@ class TextInput extends StatelessWidget {
     required this.focusNode,
     this.onFieldSubmitted,
     required this.inputAction,
-    this.error
+    required this.prefixIcon,
+    required this.placeholder,
+    this.error,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -17,13 +18,15 @@ class TextInput extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
   final TextInputType textInputType;
+  final String placeholder;
+  final IconData prefixIcon;
   final String? error;
 
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,7 +43,7 @@ class TextInput extends StatelessWidget {
               color: theme.colorScheme.onSurface,
             ),
             decoration: InputDecoration(
-              hintText: l10n!.ph_email,
+              hintText: placeholder,
               hintStyle: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withOpacity(0.5),
               ),
@@ -54,11 +57,11 @@ class TextInput extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                      color: Colors.grey.shade100
+                      color: Colors.grey.shade700
                   )
               ),
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
-              prefixIcon: Icon(Icons.email, color: theme.colorScheme.primary,),
+              prefixIcon: Icon(prefixIcon, color: theme.colorScheme.primary,),
             ),
           ),
         ),

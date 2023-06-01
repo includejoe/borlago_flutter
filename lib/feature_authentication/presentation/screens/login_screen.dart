@@ -1,3 +1,4 @@
+import 'package:borlago/base/presentation/widgets/AppLogo.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
@@ -18,44 +19,56 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // email values
+  // controllers
   final _emailController = TextEditingController();
-  final _emailFocusNode = FocusNode();
-  String? _emailError;
-
-  // password values
   final _passwordController = TextEditingController();
+
+  // focus nodes
+  final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
+
+  // errors
+  String? _emailError;
   String? _passwordError;
 
   @override
   Widget build(BuildContext context) {
-    final emailValidator = EmailValidator(context);
-    final passwordValidator = PasswordValidator(context);
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
+    // validators
+    final emailValidator = EmailValidator(context);
+    final passwordValidator = PasswordValidator(context, false);
+
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Form(
-            key: _formKey,
-            child: SizedBox(
-              height: screenHeight(context),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.18,
+                    child: const Center(child: AppLogo()),
+                  ),
                   TextInput(
                     controller: _emailController,
+                    textInputType: TextInputType.emailAddress,
                     focusNode: _emailFocusNode,
                     inputAction: TextInputAction.next,
+                    prefixIcon: Icons.email,
+                    placeholder: l10n!.plh_email,
                     error: _emailError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_passwordFocusNode);
                     },
-                    textInputType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 15,),
                   PasswordInput(
@@ -66,14 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).unfocus();
                       },
-                      placeholder: l10n!.ph_password
+                      placeholder: l10n.plh_password
                   ),
                   const SizedBox(height: 15,),
                   Button(
                     onTap: () {
                       setState(() {
                         _emailError = emailValidator(_emailController.text);
-                        _passwordError = passwordValidator(_passwordController.text);
+                        _passwordError = passwordValidator(_passwordController.text, null);
                       });
 
                       if(_emailError == null && _passwordError == null) {
@@ -124,8 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 10,),
                 ],
               ),
-            ),
-          )
+            )
+          ),
         ),
       ),
     );
