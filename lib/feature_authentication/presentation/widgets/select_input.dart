@@ -60,7 +60,7 @@ class _SelectInputState extends State<SelectInput> {
                 disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                        color: Colors.grey.shade600
+                        color: widget.error != null ? theme.colorScheme.error : Colors.grey.shade500
                     )
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),

@@ -54,10 +54,10 @@ class TextInput extends StatelessWidget {
                     color: theme.colorScheme.primary
                   )
               ),
-              border: OutlineInputBorder(
+              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                      color: Colors.grey.shade700
+                      color: error != null ? theme.colorScheme.error : Colors.grey.shade500
                   )
               ),
               contentPadding: const EdgeInsets.symmetric(vertical: 8),

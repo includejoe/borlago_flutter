@@ -1,5 +1,5 @@
 import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/base/presentation/widgets/AppLogo.dart';
+import 'package:borlago/base/presentation/widgets/app_logo.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';

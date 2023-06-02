@@ -1,5 +1,5 @@
 import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/base/presentation/widgets/AppLogo.dart';
+import 'package:borlago/base/presentation/widgets/app_logo.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
@@ -13,7 +13,6 @@ import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

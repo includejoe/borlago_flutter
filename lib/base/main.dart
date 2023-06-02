@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:borlago/base/presentation/theme/theme_constants.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
 import 'package:borlago/base/presentation/theme/theme_provider.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// TODO: set up splash screen
-
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -22,6 +22,13 @@ Future main() async {
   setUpGetIt();
   runApp(const MyApp());
 }
+
+// function to run before splash screen is done
+// void initialization(BuildContext? context) async {
+//   // load resources
+//   await Future.delayed(const Duration(seconds: 3));
+//   FlutterNativeSplash.remove();
+// }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -35,6 +42,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: primaryColor,
+    ));
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => ThemeProvider()),
@@ -51,7 +62,6 @@ class _MyAppState extends State<MyApp> {
                   localizationsDelegates: AppLocalizations.localizationsDelegates,
                   themeMode: themeProvider.themeMode,
                   title: 'BorlaGo',
-                  // theme: darkTheme,
                   theme: lightTheme,
                   darkTheme: darkTheme,
                   home: Scaffold(

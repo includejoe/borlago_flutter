@@ -58,10 +58,10 @@ class _PasswordInputState extends State<PasswordInput> {
                         color: theme.colorScheme.primary
                     )
                 ),
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                        color: Colors.grey.shade100
+                        color: widget.error != null ? theme.colorScheme.error : Colors.grey.shade500
                     )
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
