@@ -1,14 +1,18 @@
+import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/AppLogo.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
+import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/select_input.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
+import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class RegisterScreen extends StatefulWidget {
@@ -20,6 +24,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  AuthenticationViewModel authViewModel = getIt<AuthenticationViewModel>();
 
   // controllers
   final _emailController = TextEditingController();
@@ -68,6 +74,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    void navigateToMainScreen() {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const MainScreen()
+          )
+      );
+    }
+
+    void makeRegisterRequest() async {
+      setState(() {
+        _isLoading = true;
+      });
+
+      bool success = await authViewModel.register(
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        gender: _genderController.text,
+        country: _countryController.text,
+        phone: _phoneController.text,
+        password: _passwordController.text
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if(success) {
+        _emailController.clear();
+        _firstNameController.clear();
+        _lastNameController.clear();
+        _genderController.clear();
+        _countryController.clear();
+        _phoneController.clear();
+        _passwordController.clear();
+        _confirmPasswordController.clear();
+        navigateToMainScreen();
+      } else {
+        Fluttertoast.showToast(
+          msg: l10n!.err_wrong,
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey.shade900,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+    }
 
     // validators
     final emailValidator = EmailValidator(context);
@@ -240,15 +293,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ];
 
                         if(errors.every((error) => error == null)) {
-                          _emailController.clear();
-                          _firstNameController.clear();
-                          _lastNameController.clear();
-                          _genderController.clear();
-                          _phoneController.clear();
-                          _countryController.clear();
-                          _passwordController.clear();
-                          _confirmPasswordController.clear();
                           FocusScope.of(context).unfocus();
+                          makeRegisterRequest();
                         }
                       },
                       text: l10n.register

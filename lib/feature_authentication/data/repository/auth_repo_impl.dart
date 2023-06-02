@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:borlago/feature_authentication/domain/models/Register.dart';
 import 'package:borlago/feature_authentication/domain/models/login.dart';
 import 'package:borlago/feature_authentication/domain/repository/auth_repo.dart';
 import 'package:borlago/base/utils/constants.dart';
@@ -34,9 +33,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<Register?> register(Map<String, dynamic> body) async {
+  Future<Login?> register(Map<String, dynamic> body) async {
     var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/register/");
-    Register? registerResponse;
+    Login? registerResponse;
     String jsonBody = json.encode(body);
 
     await http.post(
@@ -48,16 +47,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     )
     .then((response) {
       Map<String, dynamic> responseJson = jsonDecode(response.body);
-      registerResponse = Register.fromJson(responseJson);
+      registerResponse = Login.fromJson(responseJson);
     })
     .catchError((error) {
       if (kDebugMode) {
         print("Repository error is: ${error.toString()}");
       }
     });
-
     return registerResponse;
-
   }
 
 }

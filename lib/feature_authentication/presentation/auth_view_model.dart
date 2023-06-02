@@ -33,7 +33,49 @@ class AuthenticationViewModel {
       }
     } catch(error) {
       if (kDebugMode) {
-        print("View model error is: $error");
+        print("Login viewModel error: $error");
+      }
+    }
+
+    return success;
+  }
+
+  Future<bool> register({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String gender,
+    required String phone,
+    required String country,
+    required String password,
+  }) async {
+    bool success = false;
+
+    try {
+      Login? registerResponse = await authUseCases.register(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        gender: gender,
+        phone: phone,
+        country: country,
+        password: password
+      );
+
+      if (registerResponse != null) {
+        User? user = await userUseCases.getUser(
+            jwt: registerResponse.jwt,
+            email: registerResponse.email
+        );
+
+        if (user != null) {
+          authProvider.login(jwt: registerResponse.jwt, user: user);
+          success = true;
+        }
+      }
+    } catch(error) {
+      if (kDebugMode) {
+        print("Register viewModel error: $error");
       }
     }
 

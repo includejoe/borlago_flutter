@@ -1,5 +1,4 @@
 import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/feature_authentication/domain/models/Register.dart';
 import 'package:borlago/feature_authentication/domain/models/login.dart';
 import 'package:borlago/feature_authentication/domain/repository/auth_repo.dart';
 import 'package:borlago/base/utils/constants.dart';
@@ -18,7 +17,7 @@ class AuthenticationUseCases {
     return getIt.get<AuthenticationRepository>().login(loginBody);
   }
 
-  Future<Register?> register({
+  Future<Login?> register({
     required String email,
     required String firstName,
     required String lastName,
@@ -30,8 +29,8 @@ class AuthenticationUseCases {
 
     Map<String, dynamic> registerBody = {
       "email": email,
-      "firstName": firstName,
-      "lastName": lastName,
+      "first_name": firstName,
+      "last_name": lastName,
       "gender": gender,
       "country": country,
       "phone": phone,

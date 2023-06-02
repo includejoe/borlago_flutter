@@ -64,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       bool success = await authViewModel.login(
-          email: _emailController.text,
-          password: _passwordController.text
+        email: _emailController.text,
+        password: _passwordController.text
       );
 
       setState(() {
