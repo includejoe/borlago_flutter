@@ -1,13 +1,15 @@
-import 'package:borlago/base/providers/authentication_provider.dart';
+import 'package:borlago/base/di/get_it.dart';
+import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:borlago/base/presentation/theme/theme_constants.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
 import 'package:borlago/base/presentation/theme/theme_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+// TODO: set up splash screen
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +19,7 @@ Future main() async {
     DeviceOrientation.portraitDown
   ]);
 
+  setUpGetIt();
   runApp(const MyApp());
 }
 

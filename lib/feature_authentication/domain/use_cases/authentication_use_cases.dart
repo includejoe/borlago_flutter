@@ -1,43 +1,44 @@
-import 'package:borlago/base/di/locator.dart';
+import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/feature_authentication/domain/models/Register.dart';
 import 'package:borlago/feature_authentication/domain/models/login.dart';
 import 'package:borlago/feature_authentication/domain/repository/auth_repo.dart';
 import 'package:borlago/base/utils/constants.dart';
 
 class AuthenticationUseCases {
-  Future<LoginResponse?> login({
-    required email,
-    required password
+  Future<Login?> login({
+    required String email,
+    required String password
   }) async {
-    Login loginBody = Login(
-      email: email,
-      password: password,
-      userType: Constants.userType
-    );
+    Map<String, dynamic> loginBody = {
+      "email": email,
+      "password": password,
+      "user_type": Constants.userType
+    };
 
-    return locator.get<AuthenticationRepository>().login(loginBody);
+    return getIt.get<AuthenticationRepository>().login(loginBody);
   }
 
   Future<Register?> register({
-    required email,
-    required firstName,
-    required lastName,
-    required gender,
-    required country,
-    required phone,
-    required password
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String gender,
+    required String country,
+    required String phone,
+    required String password
   }) async {
-    Register registerBody = Register(
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      gender: gender,
-      country: country,
-      phone: phone,
-      password: password,
-      userType: Constants.userType
-    );
 
-    return locator.get<AuthenticationRepository>().register(registerBody);
+    Map<String, dynamic> registerBody = {
+      "email": email,
+      "firstName": firstName,
+      "lastName": lastName,
+      "gender": gender,
+      "country": country,
+      "phone": phone,
+      "password": password,
+      "user_type": Constants.userType
+    };
+
+    return getIt.get<AuthenticationRepository>().register(registerBody);
   }
 }

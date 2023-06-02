@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:borlago/feature_user/domain/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -19,7 +20,8 @@ class AuthenticationProvider with ChangeNotifier {
     _jwt = jwt;
     _user = user;
     _prefs.setString("jwt", jwt);
-    _prefs.setString("user", user.toJson() as String);
+    _prefs.setString("user", jsonEncode(user.toJson()));
+    notifyListeners();
   }
 
   logout() {
@@ -27,6 +29,7 @@ class AuthenticationProvider with ChangeNotifier {
     _prefs.remove("user");
     _jwt = null;
     _user = null;
+    notifyListeners();
   }
 
   void _init() async {
@@ -42,7 +45,7 @@ class AuthenticationProvider with ChangeNotifier {
         _user = null;
       } else {
         _jwt = _prefs.getString("jwt");
-        _user = User.fromJson(_prefs.getString("user") as Map<String, dynamic>);
+        _user = User.fromJson(json.decode(_prefs.getString("user")!));
       }
     }
 

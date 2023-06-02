@@ -43,6 +43,8 @@
   "err_empty_field": "This field cannot be empty",
   "err_invalid_email": "Enter a valid email address",
   "err_min_password": "Password must be 6 or more characters",
-  "err_password_mismatch": "Passwords must match"
+  "err_password_mismatch": "Passwords must match",
+  "err_invalid_credentials": "Invalid Credentials",
+  "err_wrong": "Something went wrong"
 
 }

@@ -8,18 +8,25 @@ import 'package:http/http.dart' as http;
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
-  Future<LoginResponse?> login(Login body) async {
-    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/authentication/login/");
-    LoginResponse? loginResponse;
+  Future<Login?> login(Map<String, dynamic> body) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/login/");
+    Login? loginResponse;
+    String jsonBody = json.encode(body);
 
-    await http.post(uri, body: body)
+    await http.post(
+      uri,
+      body: jsonBody,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    )
     .then((response) {
       Map<String, dynamic> responseJson = jsonDecode(response.body);
-      loginResponse = LoginResponse.fromJson(responseJson);
+      loginResponse = Login.fromJson(responseJson);
     })
     .catchError((error) {
       if (kDebugMode) {
-        print("The error is: $error");
+        print("Repository error is: $error");
       }
     });
 
@@ -27,18 +34,25 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<Register?> register(Register body) async {
-    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/authentication/register/");
+  Future<Register?> register(Map<String, dynamic> body) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/register/");
     Register? registerResponse;
+    String jsonBody = json.encode(body);
 
-    await http.post(uri, body: body)
+    await http.post(
+      uri,
+      body: jsonBody,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    )
     .then((response) {
       Map<String, dynamic> responseJson = jsonDecode(response.body);
       registerResponse = Register.fromJson(responseJson);
     })
     .catchError((error) {
       if (kDebugMode) {
-        print("The error is: $error");
+        print("Repository error is: ${error.toString()}");
       }
     });
 
