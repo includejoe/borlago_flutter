@@ -1,0 +1,109 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+const primaryColor = Color(0xFFD16E11);
+const errorColor = Color(0xFFD20606);
+const darkBgColor = Color(0xFF010100);
+
+ThemeData lightTheme = ThemeData(
+  brightness: Brightness.light,
+  scaffoldBackgroundColor: Colors.white,
+  colorScheme: ColorScheme.light(
+    primary: primaryColor,
+    onPrimary: Colors.white,
+    error: errorColor,
+    onError: Colors.white,
+    background: Colors.white,
+    onBackground: Colors.black,
+    surface: Colors.grey.shade300,
+    onSurface: Colors.black,
+  ),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: primaryColor
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: primaryColor
+  ),
+  textTheme: TextTheme(
+    bodyMedium: GoogleFonts.poppins(
+      fontSize: 14,
+      color: Colors.black,
+      fontWeight: FontWeight.normal
+    ),
+    bodySmall: GoogleFonts.poppins(
+        fontSize: 11,
+        color: Colors.black,
+        fontWeight: FontWeight.w500
+    ),
+    headlineMedium: GoogleFonts.poppins(
+        fontSize: 24,
+        color: Colors.black,
+        fontWeight: FontWeight.bold
+    ),
+    labelMedium: GoogleFonts.poppins(
+        fontSize: 22,
+        color: Colors.black,
+        fontWeight: FontWeight.bold
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.0),
+      borderSide: BorderSide.none
+    ),
+    filled: true,
+      fillColor: Colors.grey.withOpacity(0.1),
+  )
+);
+
+ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: darkBgColor,
+  colorScheme: ColorScheme.dark(
+    primary: primaryColor,
+    onPrimary: Colors.white,
+    error: errorColor,
+    onError: Colors.white,
+    background: darkBgColor,
+    onBackground: Colors.black,
+    surface: Colors.grey.shade200,
+    onSurface: Colors.black,
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: Colors.white
+  ),
+  switchTheme: SwitchThemeData(
+    trackColor: MaterialStateProperty.all<Color>(Colors.grey),
+    thumbColor: MaterialStateProperty.all<Color>(Colors.white),
+  ),
+    textTheme: TextTheme(
+      bodyMedium: GoogleFonts.poppins(
+          fontSize: 14,
+          color: Colors.white,
+          fontWeight: FontWeight.normal
+      ),
+      bodySmall: GoogleFonts.poppins(
+          fontSize: 11,
+          color: Colors.black,
+          fontWeight: FontWeight.w500
+      ),
+      headlineMedium: GoogleFonts.poppins(
+          fontSize: 24,
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+      ),
+      labelMedium: GoogleFonts.poppins(
+          fontSize: 22,
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+      ),
+    ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.0),
+      borderSide: BorderSide.none
+    ),
+    filled: true,
+      fillColor: Colors.grey.withOpacity(0.1),
+  )
+);
