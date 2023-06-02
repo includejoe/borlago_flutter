@@ -1,6 +1,6 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
-import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
+import 'package:borlago/base/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

@@ -9,7 +9,7 @@ import 'package:borlago/feature_authentication/presentation/screens/login_screen
 import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/select_input.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
-import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
+import 'package:borlago/base/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -264,7 +264,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       placeholder: l10n.plh_confirm_password
                   ),
                   const SizedBox(height: 15,),
-                  Button(
+                  _isLoading ? SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        color: theme.colorScheme.primary
+                    ),
+                  ) : Button(
                       onTap: () {
                         setState(() {
                           _emailError = emailValidator(_emailController.text);

@@ -5,7 +5,7 @@ import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
-import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
+import 'package:borlago/base/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
