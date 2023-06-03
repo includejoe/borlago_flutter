@@ -1,11 +1,11 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
+import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
-import 'package:borlago/base/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => const MainScreen()
+              builder: (context) => const MainPageView()
           )
       );
     }

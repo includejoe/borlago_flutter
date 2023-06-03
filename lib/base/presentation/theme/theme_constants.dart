@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 const primaryColor = Color(0xFFD16E11);
 const errorColor = Color(0xFFD20606);
-const darkBgColor = Color(0xFF010100);
+const darkBgColor = Color(0xFF0d0d0d);
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
+  splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
   colorScheme: ColorScheme.light(
     primary: primaryColor,
     onPrimary: Colors.white,
@@ -59,6 +61,8 @@ ThemeData lightTheme = ThemeData(
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: darkBgColor,
+  splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
   colorScheme: ColorScheme.dark(
     primary: primaryColor,
     onPrimary: Colors.white,
@@ -66,8 +70,8 @@ ThemeData darkTheme = ThemeData(
     onError: Colors.white,
     background: darkBgColor,
     onBackground: Colors.black,
-    surface: Colors.grey.shade200,
-    onSurface: Colors.black,
+    surface: Colors.grey.shade900,
+    onSurface: Colors.white,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.white

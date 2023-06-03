@@ -57,7 +57,7 @@ class TextInput extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                      color: error != null ? theme.colorScheme.error : Colors.grey.shade500
+                      color: error != null ? theme.colorScheme.error : Colors.transparent
                   )
               ),
               contentPadding: const EdgeInsets.symmetric(vertical: 8),

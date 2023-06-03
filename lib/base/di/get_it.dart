@@ -6,11 +6,16 @@ import 'package:borlago/feature_authentication/providers/authentication_provider
 import 'package:borlago/feature_user/data/repository/user_repo_impl.dart';
 import 'package:borlago/feature_user/domain/repository/user_repo.dart';
 import 'package:borlago/feature_user/domain/use_cases/user_use_cases.dart';
+import 'package:camera/camera.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt getIt = GetIt.instance;
 
-void setUpGetIt() {
+Future setUpGetIt() async {
+  // Camera
+  final cameras = await availableCameras();
+  getIt.registerSingleton<List<CameraDescription>>(cameras);
+
   // Authentication
   getIt.registerSingleton<AuthenticationProvider>(AuthenticationProvider());
   getIt.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepositoryImpl());

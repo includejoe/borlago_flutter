@@ -1,6 +1,7 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
-import 'package:borlago/base/presentation/screens/main_screen.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +11,14 @@ import 'package:borlago/base/presentation/theme/theme_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'presentation/widgets/main_page_view.dart';
+
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
   ]);
 
   setUpGetIt();
@@ -66,7 +68,7 @@ class _MyAppState extends State<MyApp> {
                   darkTheme: darkTheme,
                   home: Scaffold(
                       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      body: authProvider.jwt != null ? const MainScreen(): const LoginScreen()
+                      body: authProvider.jwt != null ? const MainPageView(): const LoginScreen()
                   ),
                 );
               },
