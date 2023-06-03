@@ -6,11 +6,14 @@ class TextInput extends StatelessWidget {
     required this.controller,
     required this.textInputType,
     required this.focusNode,
-    this.onFieldSubmitted,
     required this.inputAction,
-    required this.prefixIcon,
-    required this.placeholder,
+    this.prefixIcon,
+    this.placeholder,
+    this.label,
+    this.maxLines,
     this.error,
+    this.height,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -18,9 +21,12 @@ class TextInput extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
   final TextInputType textInputType;
-  final String placeholder;
-  final IconData prefixIcon;
+  final String? placeholder;
+  final String? label;
+  final IconData? prefixIcon;
   final String? error;
+  final int? maxLines;
+  final double? height;
 
 
   @override
@@ -30,15 +36,20 @@ class TextInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        label != null ? Text(
+          label!,
+          style: theme.textTheme.bodyMedium,
+        ): Container(),
+        const SizedBox(height: 3,),
         SizedBox(
-          height: 50,
+          height: height ?? 50,
           child: TextFormField(
             controller: controller,
             focusNode: focusNode,
             onFieldSubmitted: onFieldSubmitted,
             keyboardType: textInputType,
             textInputAction: inputAction,
-            maxLines: 1,
+            maxLines: maxLines ?? 1,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurface,
             ),
@@ -60,8 +71,11 @@ class TextInput extends StatelessWidget {
                       color: error != null ? theme.colorScheme.error : Colors.transparent
                   )
               ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 8),
-              prefixIcon: Icon(prefixIcon, color: theme.colorScheme.primary,),
+              contentPadding: label != null ?
+              const EdgeInsets.all(8) :
+              const EdgeInsets.symmetric(vertical: 8),
+              prefixIcon: prefixIcon != null ?
+              Icon(prefixIcon, color: theme.colorScheme.primary,) : null,
             ),
           ),
         ),

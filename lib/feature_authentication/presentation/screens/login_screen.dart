@@ -5,10 +5,10 @@ import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
+import 'package:borlago/base/presentation/widgets/password_input.dart';
 import 'package:flutter/material.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
+import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         makeLoginRequest();
                       }
                     },
-                    text: l10n.login
+                    text: l10n.btn_login
                   ),
                   const SizedBox(height: 50,),
                   Divider(
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         child: Text(
-                          l10n.register,
+                          l10n.btn_register,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                             decoration: TextDecoration.underline,

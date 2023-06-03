@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/feature_wcr/presentation/screens/create_wcr_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({
@@ -25,8 +23,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    // TODO: Add flashlight to camera
+
 
     return Stack(
       alignment: Alignment.center,

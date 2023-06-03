@@ -6,12 +6,14 @@ class SelectInput extends StatefulWidget {
     Key? key,
     required this.controller,
     required this.focusNode,
-    this.onFieldSubmitted,
     required this.inputAction,
-    required this.prefixIcon,
     required this.placeholder,
     required this.options,
-    this.error, required this.label,
+    required this.dialogTitle,
+    this.prefixIcon,
+    this.error,
+    this.label,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -19,10 +21,12 @@ class SelectInput extends StatefulWidget {
   final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
   final String placeholder;
-  final String label;
-  final IconData prefixIcon;
+  final String dialogTitle;
   final List<String> options;
+  final IconData? prefixIcon;
   final String? error;
+  final String? label;
+
 
   @override
   State<SelectInput> createState() => _SelectInputState();
@@ -36,6 +40,11 @@ class _SelectInputState extends State<SelectInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        widget.label != null ? Text(
+          widget.label!,
+          style: theme.textTheme.bodyMedium,
+        ): Container(),
+        const SizedBox(height: 3,),
         SizedBox(
           height: 50,
           child: InkWell(
@@ -60,11 +69,16 @@ class _SelectInputState extends State<SelectInput> {
                 disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                        color: widget.error != null ? theme.colorScheme.error : Colors.transparent
+                      color: widget.error != null ?
+                      theme.colorScheme.error :
+                      theme.colorScheme.primary
                     )
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                prefixIcon: Icon(widget.prefixIcon, color: theme.colorScheme.primary,),
+                contentPadding: widget.label != null ?
+                const EdgeInsets.all(8) :
+                const EdgeInsets.symmetric(vertical: 8),
+                prefixIcon: widget.prefixIcon != null ?
+                Icon(widget.prefixIcon, color: theme.colorScheme.primary,) : null,
               ),
             ),
           ),
@@ -90,7 +104,7 @@ class _SelectInputState extends State<SelectInput> {
       context: context,
       builder: (context) =>  SimpleDialog(
         title: Text(
-          widget.label,
+          widget.dialogTitle,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.primary,
             fontWeight: FontWeight.bold,

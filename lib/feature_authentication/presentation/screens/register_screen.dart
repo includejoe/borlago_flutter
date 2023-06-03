@@ -8,9 +8,9 @@ import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/select_input.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
+import 'package:borlago/base/presentation/widgets/password_input.dart';
+import 'package:borlago/base/presentation/widgets/select_input.dart';
+import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -205,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     inputAction: TextInputAction.next,
                     prefixIcon: Icons.person,
                     placeholder: l10n.plh_gender,
-                    label: l10n.lbl_gender,
+                    dialogTitle: l10n.lbl_gender,
                     error: _genderError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_countryFocusNode);
@@ -219,7 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     inputAction: TextInputAction.next,
                     prefixIcon: Icons.public,
                     placeholder: l10n.plh_country,
-                    label: l10n.lbl_country,
+                    dialogTitle: l10n.lbl_country,
                     error: _countryError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -304,7 +304,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           makeRegisterRequest();
                         }
                       },
-                      text: l10n.register
+                      text: l10n.btn_register
                   ),
                   const SizedBox(height: 50,),
                   Divider(
@@ -333,7 +333,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         child: Text(
-                            l10n.login,
+                            l10n.btn_login,
                             style: theme.textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.w700,
                                 decoration: TextDecoration.underline,

@@ -2,10 +2,13 @@
   "appName": "BorlaGo",
   "language": "English",
 
-  "login": "LOGIN",
-  "register": "REGISTER",
+
   "no_account": "Don't have an account?",
   "yes_account": "Already have an account?",
+
+  "btn_login": "LOGIN",
+  "btn_register": "REGISTER",
+  "btn_submit": "SUBMIT",
 
   "plh_email": "Email",
   "plh_password": "Password",
@@ -15,9 +18,15 @@
   "plh_country": "Country",
   "plh_phone": "Phone",
   "plh_confirm_password": "Confirm Password",
+  "plh_description": "Write a description...",
+  "plh_waste_type": "Select waste type",
+  "plh_pick_up_loc": "Select pick up location",
 
-  "lbl_gender": "Choose your gender",
-  "lbl_country": "Choose your country",
+  "lbl_gender": "Select gender",
+  "lbl_country": "Select country",
+  "lbl_waste_type": "Waste Type",
+  "lbl_pick_up_loc": "Pick Up Location",
+  "lbl_description": "Description",
   "male": "Male",
   "female": "Female",
   "other": "Other",
@@ -39,6 +48,7 @@
   "country_sl": "Sierra Leone",
   "country_tg": "Togo",
 
+  "create_wcr": "Create Waste Collection Request",
 
   "err_empty_field": "This field cannot be empty",
   "err_invalid_email": "Enter a valid email address",

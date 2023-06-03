@@ -38,7 +38,7 @@ ThemeData lightTheme = ThemeData(
         fontWeight: FontWeight.w500
     ),
     headlineMedium: GoogleFonts.poppins(
-        fontSize: 24,
+        fontSize: 16,
         color: Colors.black,
         fontWeight: FontWeight.bold
     ),
@@ -92,7 +92,7 @@ ThemeData darkTheme = ThemeData(
           fontWeight: FontWeight.w500
       ),
       headlineMedium: GoogleFonts.poppins(
-          fontSize: 24,
+          fontSize: 16,
           color: Colors.white,
           fontWeight: FontWeight.bold
       ),

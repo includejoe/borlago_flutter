@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
                   localizationsDelegates: AppLocalizations.localizationsDelegates,
                   themeMode: themeProvider.themeMode,
                   title: 'BorlaGo',
-                  theme: darkTheme,
+                  theme: lightTheme,
                   darkTheme: darkTheme,
                   home: Scaffold(
                       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
