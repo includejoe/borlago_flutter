@@ -5,9 +5,9 @@ import 'package:borlago/feature_help/presentation/screens/help_screen.dart';
 import 'package:borlago/feature_notifications/presentation/screens/notifications_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/settings_screen.dart';
 import 'package:borlago/feature_wcr/presentation/screens/wcrs_screen.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 
 class MainPageView extends StatefulWidget {
   const MainPageView({super.key});
@@ -19,12 +19,12 @@ class MainPageView extends StatefulWidget {
 class _MainPageViewState extends State<MainPageView> {
   int _currentScreen = 2;
   final PageController _pageController = PageController(initialPage: 2);
-  late CameraController? _cameraController;
-  final _cameras = getIt.get<List<CameraDescription>>();
+  late CameraController _cameraController;
+  final CameraDescription _backCamera = getIt.get<CameraDescription>();
 
-  Future<void> initCamera({required bool frontCamera}) async {
-    _cameraController = CameraController(_cameras[(frontCamera) ? 1: 0], ResolutionPreset.max);
-    _cameraController!.initialize().then((_) {
+  Future<void> initCamera() async {
+    _cameraController = CameraController(_backCamera, ResolutionPreset.max);
+    _cameraController.initialize().then((_) {
       if (!mounted) {
         return;
       }
@@ -33,10 +33,10 @@ class _MainPageViewState extends State<MainPageView> {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
-          // Handle access errors here.
+            print('User denied camera access.');
             break;
           default:
-          // Handle other errors here.
+            print('Handle other errors.');
             break;
         }
       }
@@ -46,19 +46,12 @@ class _MainPageViewState extends State<MainPageView> {
   @override
   void initState() {
     super.initState();
-
-    if(_cameras.isNotEmpty) {
-      initCamera(frontCamera: false);
-    }
-
+    initCamera();
   }
 
   @override
   void dispose() {
-    if(_cameraController != null) {
-      _cameraController!.dispose();
-    }
-
+    _cameraController.dispose();
     super.dispose();
   }
 
@@ -79,7 +72,7 @@ class _MainPageViewState extends State<MainPageView> {
           const HelpScreen(),
           const WCRsScreen(),
           CameraScreen(
-            cameraController: _cameraController,
+            controller: _cameraController,
             initCamera: initCamera,
           ),
           const NotificationsScreen(),

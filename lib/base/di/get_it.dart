@@ -11,10 +11,10 @@ import 'package:get_it/get_it.dart';
 
 final GetIt getIt = GetIt.instance;
 
-Future setUpGetIt() async {
+void setUpGetIt() async {
   // Camera
   final cameras = await availableCameras();
-  getIt.registerSingleton<List<CameraDescription>>(cameras);
+  getIt.registerSingleton<CameraDescription>(cameras.first);
 
   // Authentication
   getIt.registerSingleton<AuthenticationProvider>(AuthenticationProvider());

@@ -15,22 +15,22 @@ import 'presentation/widgets/main_page_view.dart';
 
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
 
-  setUpGetIt();
+  loadAppResources();
   runApp(const MyApp());
 }
 
 // function to run before splash screen is done
-// void initialization(BuildContext? context) async {
-//   // load resources
-//   await Future.delayed(const Duration(seconds: 3));
-//   FlutterNativeSplash.remove();
-// }
+void loadAppResources({BuildContext? context}) async {
+  setUpGetIt();
+  await Future.delayed(const Duration(seconds: 3));
+  FlutterNativeSplash.remove();
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
                   localizationsDelegates: AppLocalizations.localizationsDelegates,
                   themeMode: themeProvider.themeMode,
                   title: 'BorlaGo',
-                  theme: lightTheme,
+                  theme: darkTheme,
                   darkTheme: darkTheme,
                   home: Scaffold(
                       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
