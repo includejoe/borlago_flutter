@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/screens/camera_screen.dart';
+import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_help/presentation/screens/help_screen.dart';
 import 'package:borlago/feature_notifications/presentation/screens/notifications_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/settings_screen.dart';
@@ -33,10 +34,10 @@ class _MainPageViewState extends State<MainPageView> {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
-            print('User denied camera access.');
+            toast(message: "Camera access denied");
             break;
           default:
-            print('Handle other errors.');
+            toast(message: "Something went wrong");
             break;
         }
       }
@@ -92,25 +93,40 @@ class _MainPageViewState extends State<MainPageView> {
           onTap: (int index) {
             _pageController.jumpToPage(index);
           },
-          items:  const <BottomNavigationBarItem>[
+          items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.question_circle_fill),
+                icon: Icon(_currentScreen == 0 ?
+                  CupertinoIcons.question_circle_fill :
+                  CupertinoIcons.question_circle
+                ),
                 label: 'help'
             ),
             BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.trash_fill),
+                icon: Icon(_currentScreen == 1 ?
+                  CupertinoIcons.trash_fill :
+                  CupertinoIcons.trash
+                ),
                 label: 'wcrs'
             ),
             BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.camera_fill),
+                icon: Icon(_currentScreen == 2 ?
+                  CupertinoIcons.camera_fill :
+                  CupertinoIcons.camera
+                ),
                 label: 'main'
             ),
             BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.bell_fill),
+                icon: Icon(_currentScreen == 3 ?
+                  CupertinoIcons.bell_fill :
+                  CupertinoIcons.bell
+                ),
                 label: 'notifications'
             ),
             BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.gear_solid),
+                icon: Icon(_currentScreen == 4 ?
+                  CupertinoIcons.gear_solid :
+                  CupertinoIcons.gear
+                ),
                 label: 'settings'
             ),
           ],

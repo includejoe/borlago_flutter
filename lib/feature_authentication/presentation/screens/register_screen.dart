@@ -1,19 +1,19 @@
-import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/base/main.dart';
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/main_page_view.dart';
+import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
+import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
 import 'package:borlago/base/presentation/widgets/password_input.dart';
 import 'package:borlago/base/presentation/widgets/select_input.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -22,10 +22,12 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
+// TODO: reform to step screen
+
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  AuthenticationViewModel authViewModel = getIt<AuthenticationViewModel>();
+  AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
   final _emailController = TextEditingController();
@@ -113,12 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _confirmPasswordController.clear();
         navigateToMainScreen();
       } else {
-        Fluttertoast.showToast(
-          msg: l10n!.err_wrong,
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.grey.shade900,
-          gravity: ToastGravity.BOTTOM,
-        );
+        toast(message: l10n!.err_wrong);
       }
     }
 
@@ -152,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputType: TextInputType.emailAddress,
                     focusNode: _emailFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.email,
+                    prefixIcon: CupertinoIcons.envelope_fill,
                     placeholder: l10n!.plh_email,
                     error: _emailError,
                     onFieldSubmitted: (_) {
@@ -165,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputType: TextInputType.text,
                     focusNode: _firstNameFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.person,
+                    prefixIcon: CupertinoIcons.person_fill,
                     placeholder: l10n.plh_first_name,
                     error: _firstNameError,
                     onFieldSubmitted: (_) {
@@ -178,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputType: TextInputType.text,
                     focusNode: _lastNameFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.person,
+                    prefixIcon: CupertinoIcons.person_fill,
                     placeholder: l10n.plh_last_name,
                     error: _lastNameError,
                     onFieldSubmitted: (_) {
@@ -191,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputType: TextInputType.text,
                     focusNode: _phoneFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.phone,
+                    prefixIcon: CupertinoIcons.phone_fill,
                     placeholder: l10n.plh_phone,
                     error: _phoneError,
                     onFieldSubmitted: (_) {
@@ -203,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _genderController,
                     focusNode: _genderFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.person,
+                    prefixIcon: CupertinoIcons.person_fill,
                     placeholder: l10n.plh_gender,
                     dialogTitle: l10n.lbl_gender,
                     error: _genderError,
@@ -217,30 +214,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _countryController,
                     focusNode: _countryFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.public,
+                    prefixIcon: CupertinoIcons.globe,
                     placeholder: l10n.plh_country,
                     dialogTitle: l10n.lbl_country,
                     error: _countryError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_passwordFocusNode);
                     },
-                    options: [
-                      l10n.country_bj,
-                      l10n.country_bf,
-                      l10n.country_ci,
-                      l10n.country_cv,
-                      l10n.country_gh,
-                      l10n.country_gm,
-                      l10n.country_gn,
-                      l10n.country_lr,
-                      l10n.country_ml,
-                      l10n.country_mr,
-                      l10n.country_ne,
-                      l10n.country_ng,
-                      l10n.country_sn,
-                      l10n.country_sl,
-                      l10n.country_tg,
-                    ],
+                    options: Constants.countries,
                   ),
                   const SizedBox(height: 15,),
                   PasswordInput(

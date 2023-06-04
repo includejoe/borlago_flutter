@@ -27,7 +27,9 @@ Future main() async {
 
 // function to run before splash screen is done
 void loadAppResources({BuildContext? context}) async {
-  setUpGetIt();
+  final cameras = await availableCameras();
+  initialize(backCamera: cameras.first);
+
   await Future.delayed(const Duration(seconds: 3));
   FlutterNativeSplash.remove();
 }

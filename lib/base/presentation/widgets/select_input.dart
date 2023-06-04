@@ -40,11 +40,15 @@ class _SelectInputState extends State<SelectInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.label != null ? Text(
-          widget.label!,
-          style: theme.textTheme.bodyMedium,
+        widget.label != null ? Column(
+          children: [
+            Text(
+              widget.label!,
+              style: theme.textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 3,),
+          ],
         ): Container(),
-        const SizedBox(height: 3,),
         SizedBox(
           height: 50,
           child: InkWell(

@@ -11,16 +11,14 @@ import 'package:get_it/get_it.dart';
 
 final GetIt getIt = GetIt.instance;
 
-void setUpGetIt() async {
+void initialize({required CameraDescription backCamera}) {
   // Camera
-  final cameras = await availableCameras();
-  getIt.registerSingleton<CameraDescription>(cameras.first);
+  getIt.registerSingleton<CameraDescription>(backCamera);
 
   // Authentication
   getIt.registerSingleton<AuthenticationProvider>(AuthenticationProvider());
   getIt.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepositoryImpl());
   getIt.registerLazySingleton<AuthenticationUseCases>(() => AuthenticationUseCases());
-  getIt.registerLazySingleton<AuthenticationViewModel>(() => AuthenticationViewModel());
 
   // User
   getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());
