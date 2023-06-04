@@ -20,13 +20,10 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   XFile? _imageFile;
+  FlashMode flashMode = FlashMode.off;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    // TODO: Add flashlight to camera
-
-
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -56,6 +53,38 @@ class _CameraScreenState extends State<CameraScreen> {
         ) : Image.file(File(_imageFile!.path)),
 
         _imageFile == null ? Positioned(
+          top: MediaQuery.of(context).padding.top + 20,
+          right: 10,
+          child: InkWell(
+            onTap: () async {
+              setState(() {
+                if(flashMode == FlashMode.off) {
+                  widget.controller.setFlashMode(FlashMode.always);
+                  flashMode = FlashMode.always;
+                } else {
+                  widget.controller.setFlashMode(FlashMode.off);
+                  flashMode = FlashMode.off;
+                }
+              });
+            },
+            child: Container(
+              height: 45,
+              width: 45,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.black.withOpacity(0.4)
+              ),
+              child: Icon(
+                flashMode == FlashMode.off ? Icons.flash_off : Icons.flash_on,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ) : Container(),
+
+
+        _imageFile == null ? Positioned(
           bottom: 15,
           child: InkWell(
             onTap: () async {
@@ -64,10 +93,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 setState(() {
                   _imageFile = image;
                 });
-
-              } catch(error) {
-                print("Taking picture error: $error");
-              }
+              } catch(_) {}
             },
             child: const Icon(
               CupertinoIcons.camera_circle,
