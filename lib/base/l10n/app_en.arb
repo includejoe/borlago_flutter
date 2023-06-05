@@ -3,7 +3,7 @@
   "language": "English",
 
   "no_account": "Don't have an account? ",
-  "yes_account": "Already have an account?",
+  "yes_account": "Already have an account? ",
   "mistakes": "Made some mistakes?",
   "confirm_logout": "Are you sure you want to logout?",
 
@@ -17,6 +17,7 @@
   "profile": "Edit Profile",
   "locations": "Locations",
   "payments": "Payments",
+  "languages": "Languages",
   "dark_theme": "Dark Theme",
   "logout": "Logout",
 
@@ -56,5 +57,4 @@
   "err_invalid_credentials": "Invalid credentials",
   "err_camera": "Camera access denied",
   "err_wrong": "Something went wrong"
-
 }

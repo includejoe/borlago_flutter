@@ -1,7 +1,7 @@
 import 'package:borlago/base/di/get_it.dart';
+import 'package:borlago/base/providers/localization_provider.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +10,16 @@ import 'package:borlago/feature_authentication/presentation/screens/login_screen
 import 'package:borlago/base/presentation/theme/theme_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'presentation/widgets/main_page_view.dart';
+
+// TODO: + wcr detail screen ui
+// TODO: + create wcr request
+// TODO: + edit profile screen ui
+// TODO: + edit profile request
+// TODO: + locations screen ui
+// TODO: + add location request
+// TODO: + payments screen ui
+
 
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -42,8 +50,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale;
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -52,28 +58,38 @@ class _MyAppState extends State<MyApp> {
 
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => LocalizationProvider()),
           ChangeNotifierProvider(create: (_) => ThemeProvider()),
           ChangeNotifierProvider(create: (_) => AuthenticationProvider())
         ],
-        child: Consumer<ThemeProvider>(
-          builder: (context, themeProvider, child){
-            return Consumer<AuthenticationProvider>(
-              builder: (context, authProvider, child) {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  locale: _locale,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  localizationsDelegates: AppLocalizations.localizationsDelegates,
-                  themeMode: themeProvider.themeMode,
-                  title: 'BorlaGo',
-                  theme: lightTheme,
-                  darkTheme: darkTheme,
-                  home: Scaffold(
-                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      body: authProvider.jwt != null ? const MainPageView(): const LoginScreen()
-                  ),
+        child: Consumer<LocalizationProvider>(
+          builder: (context, localizationProvider, child){
+            return Consumer<ThemeProvider>(
+              builder: (context, themeProvider, child) {
+                return Consumer<AuthenticationProvider>(
+                  builder: (context, authProvider, child) {
+                    return MaterialApp(
+                      debugShowCheckedModeBanner: false,
+                      locale: localizationProvider.locale,
+                      supportedLocales: AppLocalizations.supportedLocales,
+                      localizationsDelegates: AppLocalizations.localizationsDelegates,
+                      themeMode: themeProvider.themeMode,
+                      title: 'BorlaGo',
+                      theme: lightTheme,
+                      darkTheme: darkTheme,
+                      home: Scaffold(
+                          backgroundColor: Theme
+                            .of(context)
+                            .scaffoldBackgroundColor,
+                          body: authProvider.jwt != null
+                            ? const MainPageView()
+                            : const LoginScreen()
+                        // body: const MainPageView()
+                      ),
+                    );
+                  },
                 );
-              },
+              }
             );
           }
         )

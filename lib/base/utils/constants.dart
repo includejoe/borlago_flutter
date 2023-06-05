@@ -6,6 +6,7 @@ class Constants {
   // static const String borlaGoBaseUrl = "http://192.168.43.112:8000/api/v1";
   static const int userType = 2;
   static const wasteTypes = ["General", "Organic", "Hazardous"];
+  static const languages = ["English", "Français"];
   static const countries = [
     "Benin",
     "Burkina Faso",

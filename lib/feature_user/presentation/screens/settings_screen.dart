@@ -1,3 +1,4 @@
+import 'package:borlago/feature_user/presentation/screens/languages_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/location_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/proile_screen.dart';
@@ -49,6 +50,18 @@ class SettingsScreen extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => const PaymentsScreen()
             )
+          );
+        },
+      ),
+      SettingsItem(
+        icon: CupertinoIcons.globe,
+        text: l10n.languages,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const LanguagesScreen()
+              )
           );
         },
       ),
