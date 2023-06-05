@@ -7,10 +7,11 @@
   "mistakes": "Made some mistakes?",
   "confirm_logout": "Are you sure you want to logout?",
 
+  "help": "Help",
   "settings": "Settings",
   "notifications": "Notifications",
   "wcrs": "Waste Collection Requests",
-  "help": "Help",
+  "wcr_detail": "Waste Collection Request Detail",
   "create_wcr": "Create Waste Collection Request",
 
   "profile": "Edit Profile",

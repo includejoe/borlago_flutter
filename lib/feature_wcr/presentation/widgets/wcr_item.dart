@@ -1,3 +1,4 @@
+import 'package:borlago/feature_wcr/presentation/screens/wcr_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -51,12 +52,12 @@ class WCRItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => const WCRDetailScreen(id: id);
-          //   )
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WCRDetailScreen(wcrId: id)
+            )
+          );
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
