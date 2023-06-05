@@ -17,7 +17,7 @@ ThemeData lightTheme = ThemeData(
     onError: Colors.white,
     background: Colors.white,
     onBackground: Colors.black,
-    surface: Colors.grey.shade300,
+    surface: Colors.grey.shade200,
     onSurface: Colors.black,
   ),
   appBarTheme: const AppBarTheme(

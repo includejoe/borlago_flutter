@@ -5,19 +5,27 @@
   "no_account": "Don't have an account? ",
   "yes_account": "Already have an account?",
   "mistakes": "Made some mistakes?",
+  "confirm_logout": "Are you sure you want to logout?",
 
   "settings": "Settings",
   "notifications": "Notifications",
   "wcrs": "Waste Collection Requests",
   "help": "Help",
-  "profile": "Edit Profile",
   "create_wcr": "Create Waste Collection Request",
+
+  "profile": "Edit Profile",
+  "locations": "Locations",
+  "payments": "Payments",
+  "dark_theme": "Dark Theme",
+  "logout": "Logout",
 
   "btn_login": "LOGIN",
   "btn_register": "REGISTER",
   "btn_next": "NEXT",
   "btn_submit": "SUBMIT",
   "btn_back": "BACK",
+  "btn_yes": "YES",
+  "btn_no": "NO",
 
   "plh_email": "Email",
   "plh_password": "Password",

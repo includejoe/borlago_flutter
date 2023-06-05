@@ -1,11 +1,12 @@
-import 'package:borlago/base/presentation/widgets/button.dart';
-import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
+import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<dynamic> confirmLogoutDialog(BuildContext context) {
   final theme = Theme.of(context);
+  final l10n = AppLocalizations.of(context);
 
   return showDialog(
       context: context,
@@ -44,9 +45,11 @@ Future<dynamic> confirmLogoutDialog(BuildContext context) {
                     borderRadius: const BorderRadius.all(Radius.circular(8))
                 ),
                 child: Center(
-                  child: Text("Yes", style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onPrimary,
-                    fontWeight: FontWeight.bold
+                  child: Text(
+                    l10n!.btn_yes,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold
                     ),
                   )
                 ),
@@ -58,7 +61,9 @@ Future<dynamic> confirmLogoutDialog(BuildContext context) {
               Navigator.pop(context);
             },
             child: Center(
-              child: Text("No", style: theme.textTheme.bodyMedium?.copyWith(
+              child: Text(
+                l10n.btn_no,
+                style: theme.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.bold
               ),),
             )

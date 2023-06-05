@@ -1,3 +1,5 @@
+import 'package:borlago/feature_user/presentation/screens/location_screen.dart';
+import 'package:borlago/feature_user/presentation/screens/payment_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/proile_screen.dart';
 import 'package:borlago/feature_user/presentation/widgets/confirm_logout_dialog.dart';
 import 'package:borlago/feature_user/presentation/widgets/settings_item.dart';
@@ -16,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
     final settingsItems = <SettingsItem>[
       SettingsItem(
         icon: CupertinoIcons.person_fill,
-        text: "Edit Profile",
+        text: l10n!.profile,
         onTap: () {
           Navigator.push(
             context,
@@ -26,14 +28,38 @@ class SettingsScreen extends StatelessWidget {
           );
         },
       ),
-      const SettingsItem(
+      SettingsItem(
+        icon: CupertinoIcons.location_solid,
+        text: l10n.locations,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LocationsScreen()
+            )
+          );
+        },
+      ),
+      SettingsItem(
+        icon: CupertinoIcons.money_dollar,
+        text: l10n.payments,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PaymentsScreen()
+            )
+          );
+        },
+      ),
+      SettingsItem(
         icon: CupertinoIcons.sun_max_fill,
-        text: "Dark Theme",
-        suffixWidget: ThemeSwitch(),
+        text: l10n.dark_theme,
+        suffixWidget: const ThemeSwitch(),
       ),
       SettingsItem(
         icon: CupertinoIcons.power,
-        text: "Logout",
+        text: l10n.logout,
         onTap: () {
           confirmLogoutDialog(context);
         },
@@ -46,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.settings,
+          l10n.settings,
           style: theme.textTheme.headlineMedium?.copyWith(
             color: theme.colorScheme.onPrimary
           ),
