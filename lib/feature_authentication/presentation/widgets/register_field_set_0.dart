@@ -2,7 +2,10 @@ import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
+import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterFieldSet0 extends StatefulWidget {
@@ -122,6 +125,18 @@ class _RegisterFieldSet0State extends State<RegisterFieldSet0> {
             }
           },
           text: l10n.btn_next
+        ),
+        BottomAction(
+          btnText: l10n.btn_login,
+          action: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginScreen()
+              )
+            );
+          },
+          info: l10n.yes_account,
         )
       ]
     );

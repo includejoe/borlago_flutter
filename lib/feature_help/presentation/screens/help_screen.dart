@@ -12,9 +12,22 @@ class HelpScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: theme.colorScheme.primary,
+        title: Text(
+          l10n!.help,
+          style: theme.textTheme.headlineMedium?.copyWith(
+              color: theme.colorScheme.onPrimary
+          ),
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            bottomRight: Radius.circular(12)
+          ),
           color: theme.scaffoldBackgroundColor,
         ),
         height: MediaQuery.of(context).size.height,

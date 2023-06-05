@@ -10,7 +10,25 @@ class WCRsScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: SizedBox(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.primary,
+        automaticallyImplyLeading: false,
+        title: Text(
+          l10n!.wcrs,
+          style: theme.textTheme.headlineMedium?.copyWith(
+              color: theme.colorScheme.onPrimary
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12)
+          ),
+          color: theme.scaffoldBackgroundColor,
+        ),
         height: MediaQuery.of(context).size.height,
         child: Center(
           child: Text(

@@ -2,15 +2,22 @@
   "appName": "BorlaGo",
   "language": "English",
 
-  "no_account": "Don't have an account?",
+  "no_account": "Don't have an account? ",
   "yes_account": "Already have an account?",
+  "mistakes": "Made some mistakes?",
 
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "wcrs": "Waste Collection Requests",
+  "help": "Help",
+  "profile": "Edit Profile",
   "create_wcr": "Create Waste Collection Request",
 
   "btn_login": "LOGIN",
   "btn_register": "REGISTER",
   "btn_next": "NEXT",
   "btn_submit": "SUBMIT",
+  "btn_back": "BACK",
 
   "plh_email": "Email",
   "plh_password": "Password",

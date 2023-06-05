@@ -69,7 +69,7 @@ ThemeData darkTheme = ThemeData(
     error: errorColor,
     onError: Colors.white,
     background: darkBgColor,
-    onBackground: Colors.black,
+    onBackground: Colors.white,
     surface: Colors.grey.shade900,
     onSurface: Colors.white,
   ),

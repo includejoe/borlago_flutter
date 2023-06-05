@@ -13,14 +13,12 @@ class AuthenticatedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthenticationProvider>(
-      builder: (context, authProvider, child) {
-        if(authProvider.jwt == null) {
-          return const LoginScreen();
-        } else {
-          return screen;
-        }
-      }
-    );
+    bool isAuthenticated = context.read<AuthenticationProvider>().jwt != null;
+
+    if(isAuthenticated) {
+      return screen;
+    } else {
+      return const LoginScreen();
+    }
   }
 }

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button({Key? key, required this.text, this.onTap}) : super(key: key);
+  const Button({
+    Key? key,
+    required this.text,
+    this.onTap,
+    this.backgroundColor,
+    this.textColor
+  }) : super(key: key);
 
   final String text;
+  final Color? backgroundColor;
+  final Color? textColor;
   final void Function()? onTap;
 
   @override
@@ -15,14 +23,14 @@ class Button extends StatelessWidget {
         height: 50,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            color: theme.colorScheme.primary,
-            borderRadius: const BorderRadius.all(Radius.circular(8))
+          color: backgroundColor ?? theme.colorScheme.primary,
+          borderRadius: const BorderRadius.all(Radius.circular(8))
         ),
         child: Center(
           child: Text(
             text,
             style: theme.textTheme.labelMedium?.copyWith(
-              color: theme.colorScheme.onPrimary
+              color: textColor ?? theme.colorScheme.onPrimary
             ),
           )
         ),

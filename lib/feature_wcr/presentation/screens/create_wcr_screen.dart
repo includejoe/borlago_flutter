@@ -4,6 +4,7 @@ import 'package:borlago/base/presentation/widgets/select_input.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
+import 'package:borlago/base/utils/toast.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -61,12 +62,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
       //   _passwordController.clear();
       //   navigateToMainScreen();
       // } else {
-      //   Fluttertoast.showToast(
-      //     msg: l10n!.err_invalid_credentials,
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     backgroundColor: Colors.grey.shade900,
-      //     gravity: ToastGravity.BOTTOM,
-      //   );
+      //    toast(message: l10n!.err_wrong);
       // }
     }
 

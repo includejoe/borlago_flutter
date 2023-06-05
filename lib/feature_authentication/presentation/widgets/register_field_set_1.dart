@@ -7,6 +7,7 @@ import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/screens/authenticated_screen.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -168,6 +169,11 @@ class _RegisterFieldSet1State extends State<RegisterFieldSet1> {
               }
             },
             text: l10n.btn_register
+        ),
+        BottomAction(
+          info: l10n.mistakes,
+          btnText: l10n.btn_back,
+          action: widget.previousFieldSet,
         )
       ],
     );

@@ -1,8 +1,7 @@
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
-import 'package:borlago/base/presentation/widgets/main_page_view.dart';
-import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_0.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_1.dart';
 import 'package:flutter/material.dart';
@@ -121,44 +120,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: const Center(child: AppLogo()),
                   ),
                   fieldSets[_currentFieldSet],
-                  const SizedBox(height: 50,),
-                  Divider(
-                    height: 0,
-                    thickness: 1,
-                    color: Colors.grey[400],
-                  ),
-                  const SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(l10n!.yes_account),
-                      // const SizedBox(width: 2,),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()
-                              )
-                          );
-                        },
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(0)
-                          ),
-                        ),
-                        child: Text(
-                            l10n.btn_login,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                decoration: TextDecoration.underline,
-                                color: theme.colorScheme.primary
-                            )
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
                 ],
               ),
             ),

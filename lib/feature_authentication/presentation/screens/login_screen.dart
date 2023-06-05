@@ -7,6 +7,7 @@ import 'package:borlago/feature_authentication/presentation/auth_view_model.dart
 import 'package:borlago/feature_authentication/presentation/screens/authenticated_screen.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
 import 'package:borlago/base/presentation/widgets/password_input.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
@@ -145,44 +146,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     text: l10n.btn_login
                   ),
-                  const SizedBox(height: 50,),
-                  Divider(
-                    height: 0,
-                    thickness: 1,
-                    color: Colors.grey[400],
-                  ),
-                  const SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(l10n.no_account),
-                      const SizedBox(width: 5,),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
+                  BottomAction(
+                    info: l10n.no_account,
+                    btnText: l10n.btn_register,
+                    action: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
                               builder: (context) => const RegisterScreen()
-                            )
-                          );
-                        },
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(0)
-                          ),
-                        ),
-                        child: Text(
-                          l10n.btn_register,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            decoration: TextDecoration.underline,
-                            color: theme.colorScheme.primary
                           )
-                        ),
-                      ),
-                    ],
+                      );
+                    }
                   ),
-                  const SizedBox(height: 10,),
                 ],
               ),
             )
