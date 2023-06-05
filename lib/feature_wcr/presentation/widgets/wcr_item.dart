@@ -1,40 +1,63 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NotificationItem extends StatelessWidget {
-  const NotificationItem({
+class WCRItem extends StatelessWidget {
+  const WCRItem({
     super.key,
-    required this.label,
-    required this.body,
+    required this.id,
     required this.time,
-    required this.opened,
-    this.onTap
+    required this.status,
+    required this.wasteType,
+
   });
 
-  final String label;
-  final String body;
+  final String id;
   final String time;
-  final bool opened;
-  final void Function()? onTap;
+  final int status;
+  final String wasteType;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    String statusText = "";
+    Color statusColor = Colors.transparent;
+
+    if(status == 1) {
+      statusText = "Pending";
+      statusColor = Colors.grey.shade600;
+    } else if(status == 2) {
+      statusText = "In Progress";
+      statusColor = Colors.yellow.shade900;
+    } else if(status == 3) {
+      statusText = "Completed";
+      statusColor = Colors.green.shade900;
+    } else if(status == 4) {
+      statusText = "Canceled";
+      statusColor = Colors.red.shade600;
+    }
+
 
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 75,
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: theme.colorScheme.background
+          color: theme.colorScheme.surface,
+          border: Border(
+              bottom: BorderSide(
+                  width: 1,
+                  color: theme.colorScheme.background
+              )
           )
-        )
       ),
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => const WCRDetailScreen(id: id);
+          //   )
+          // );
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -44,13 +67,13 @@ class NotificationItem extends StatelessWidget {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.background,
-                  borderRadius: BorderRadius.circular(100)
+                    color: theme.colorScheme.background,
+                    borderRadius: BorderRadius.circular(100)
                 ),
                 child: Icon(
-                  CupertinoIcons.bell_solid,
+                  CupertinoIcons.trash_fill,
                   size: 30,
-                  color: opened ? Colors.grey[700] : theme.colorScheme.primary,
+                  color: statusColor
                 ),
               ),
               const SizedBox(width: 10,),
@@ -63,7 +86,7 @@ class NotificationItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          label,
+                          id,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -71,20 +94,29 @@ class NotificationItem extends StatelessWidget {
                         Text(
                           time,
                           style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: theme.colorScheme.onBackground.withOpacity(0.7)
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: theme.colorScheme.onBackground.withOpacity(0.7)
                           ),
                         ),
                       ],
                     ),
                     Text(
-                      body,
+                      wasteType,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 12,
                       )
                     ),
+                    Text(
+                      statusText,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: statusColor
+                      )
+                    )
                   ],
                 ),
               ),
@@ -93,5 +125,6 @@ class NotificationItem extends StatelessWidget {
         ),
       ),
     );
+
   }
 }
