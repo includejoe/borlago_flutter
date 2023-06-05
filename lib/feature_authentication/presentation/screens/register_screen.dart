@@ -1,17 +1,10 @@
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
-import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/main_page_view.dart';
-import 'package:borlago/base/utils/constants.dart';
-import 'package:borlago/base/utils/form_validators/email.dart';
-import 'package:borlago/base/utils/form_validators/password.dart';
-import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/base/presentation/widgets/password_input.dart';
-import 'package:borlago/base/presentation/widgets/select_input.dart';
-import 'package:borlago/base/presentation/widgets/text_input.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_0.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,11 +15,9 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-// TODO: reform to step screen
-
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
+  int _currentFieldSet = 0;
   AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
@@ -39,25 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  // focus nodes
-  final _emailFocusNode = FocusNode();
-  final _firstNameFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
-  final _genderFocusNode = FocusNode();
-  final _countryFocusNode = FocusNode();
-  final _phoneFocusNode = FocusNode();
-  final _passwordFocusNode = FocusNode();
-  final _confirmPasswordFocusNode = FocusNode();
 
-  // errors
-  String? _emailError;
-  String? _firstNameError;
-  String? _lastNameError;
-  String? _genderError;
-  String? _countryError;
-  String? _phoneError;
-  String? _passwordError;
-  String? _confirmPasswordError;
 
   @override void dispose() {
     super.dispose();
@@ -71,38 +44,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _confirmPasswordController.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    void navigateToMainScreen() {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const MainPageView()
-          )
+    Future<bool> makeRegisterRequest() async {
+      bool success = false;
+      success = await authViewModel.register(
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          email: _emailController.text,
+          gender: _genderController.text,
+          country: _countryController.text,
+          phone: _phoneController.text,
+          password: _passwordController.text
       );
-    }
-
-    void makeRegisterRequest() async {
-      setState(() {
-        _isLoading = true;
-      });
-
-      bool success = await authViewModel.register(
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
-        email: _emailController.text,
-        gender: _genderController.text,
-        country: _countryController.text,
-        phone: _phoneController.text,
-        password: _passwordController.text
-      );
-
-      setState(() {
-        _isLoading = false;
-      });
 
       if(success) {
         _emailController.clear();
@@ -113,21 +69,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _phoneController.clear();
         _passwordController.clear();
         _confirmPasswordController.clear();
-        navigateToMainScreen();
-      } else {
-        toast(message: l10n!.err_wrong);
       }
+
+      return success;
     }
 
-    // validators
-    final emailValidator = EmailValidator(context);
-    final firstNameValidator = TextValidator(context);
-    final lastNameValidator = TextValidator(context);
-    final genderValidator = TextValidator(context);
-    final countryValidator = TextValidator(context);
-    final phoneValidator = TextValidator(context);
-    final passwordValidator = PasswordValidator(context, false);
-    final confirmPasswordValidator = PasswordValidator(context, true);
+    void nextFieldSet () {
+      setState(() {
+        _currentFieldSet++;
+      });
+    }
+
+    void previousFieldSet() {
+      setState(() {
+        _currentFieldSet--;
+      });
+    }
+
+    final fieldSets = [
+      RegisterFieldSet0(
+        emailController: _emailController,
+        firstNameController: _firstNameController,
+        lastNameController: _lastNameController,
+        phoneController: _phoneController,
+        nextFieldSet: nextFieldSet
+      ),
+      RegisterFieldSet1(
+        genderController: _genderController,
+        countryController: _countryController,
+        passwordController: _passwordController,
+        confirmPasswordController: _confirmPasswordController,
+        previousFieldSet: previousFieldSet,
+        register: makeRegisterRequest
+      )
+    ];
 
     return Scaffold(
       body: SafeArea(
@@ -140,153 +115,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.08,),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.28,
                     child: const Center(child: AppLogo()),
                   ),
-                  TextInput(
-                    controller: _emailController,
-                    textInputType: TextInputType.emailAddress,
-                    focusNode: _emailFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.envelope_fill,
-                    placeholder: l10n!.plh_email,
-                    error: _emailError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_firstNameFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _firstNameController,
-                    textInputType: TextInputType.text,
-                    focusNode: _firstNameFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.person_fill,
-                    placeholder: l10n.plh_first_name,
-                    error: _firstNameError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_lastNameFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _lastNameController,
-                    textInputType: TextInputType.text,
-                    focusNode: _lastNameFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.person_fill,
-                    placeholder: l10n.plh_last_name,
-                    error: _lastNameError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_phoneFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _phoneController,
-                    textInputType: TextInputType.text,
-                    focusNode: _phoneFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.phone_fill,
-                    placeholder: l10n.plh_phone,
-                    error: _phoneError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_genderFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  SelectInput(
-                    controller: _genderController,
-                    focusNode: _genderFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.person_fill,
-                    placeholder: l10n.plh_gender,
-                    dialogTitle: l10n.lbl_gender,
-                    error: _genderError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_countryFocusNode);
-                    },
-                    options: [l10n.male, l10n.female, l10n.other],
-                  ),
-                  const SizedBox(height: 15,),
-                  SelectInput(
-                    controller: _countryController,
-                    focusNode: _countryFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.globe,
-                    placeholder: l10n.plh_country,
-                    dialogTitle: l10n.lbl_country,
-                    error: _countryError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_passwordFocusNode);
-                    },
-                    options: Constants.countries,
-                  ),
-                  const SizedBox(height: 15,),
-                  PasswordInput(
-                      controller: _passwordController,
-                      focusNode: _passwordFocusNode,
-                      inputAction: TextInputAction.next,
-                      error: _passwordError,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
-                      },
-                      placeholder: l10n.plh_password
-                  ),
-                  const SizedBox(height: 15,),
-                  PasswordInput(
-                      controller: _confirmPasswordController,
-                      focusNode: _confirmPasswordFocusNode,
-                      inputAction: TextInputAction.done,
-                      error: _confirmPasswordError,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).unfocus();
-                      },
-                      placeholder: l10n.plh_confirm_password
-                  ),
-                  const SizedBox(height: 15,),
-                  _isLoading ? SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(
-                        strokeWidth: 3,
-                        color: theme.colorScheme.primary
-                    ),
-                  ) : Button(
-                      onTap: () {
-                        setState(() {
-                          _emailError = emailValidator(_emailController.text);
-                          _firstNameError = firstNameValidator(_firstNameController.text);
-                          _lastNameError = lastNameValidator(_lastNameController.text);
-                          _genderError = genderValidator(_genderController.text);
-                          _phoneError = phoneValidator(_phoneController.text);
-                          _countryError = countryValidator(_countryController.text);
-                          _passwordError = passwordValidator(_passwordController.text, null);
-                          _confirmPasswordError = confirmPasswordValidator(
-                              _confirmPasswordController.text,
-                              _passwordController.text
-                          );
-                        });
-
-                        final errors = [
-                          _emailError,
-                          _firstNameError,
-                          _lastNameError,
-                          _genderError,
-                          _phoneError,
-                          _countryError,
-                          _passwordError,
-                          _confirmPasswordError
-                        ];
-
-                        if(errors.every((error) => error == null)) {
-                          FocusScope.of(context).unfocus();
-                          makeRegisterRequest();
-                        }
-                      },
-                      text: l10n.btn_register
-                  ),
+                  fieldSets[_currentFieldSet],
                   const SizedBox(height: 50,),
                   Divider(
                     height: 0,
@@ -297,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(l10n.yes_account),
+                      Text(l10n!.yes_account),
                       // const SizedBox(width: 2,),
                       TextButton(
                         onPressed: () {

@@ -5,14 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CameraScreen extends StatefulWidget {
-  const CameraScreen({
-    super.key,
-    required this.controller,
-    required this.initCamera
-  });
-
+  const CameraScreen({super.key, required this.controller});
   final CameraController controller;
-  final Future<void> Function() initCamera;
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -24,6 +18,8 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Stack(
       alignment: Alignment.center,
       children: [

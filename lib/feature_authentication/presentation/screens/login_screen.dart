@@ -4,6 +4,7 @@ import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
+import 'package:borlago/feature_authentication/presentation/screens/authenticated_screen.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
 import 'package:borlago/base/presentation/widgets/password_input.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,10 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordValidator = PasswordValidator(context, false);
     void navigateToMainScreen() {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const MainPageView()
-          )
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainPageView()
+        )
       );
     }
 

@@ -72,10 +72,7 @@ class _MainPageViewState extends State<MainPageView> {
         children: <Widget> [
           const HelpScreen(),
           const WCRsScreen(),
-          CameraScreen(
-            controller: _cameraController,
-            initCamera: initCamera,
-          ),
+          CameraScreen(controller: _cameraController,),
           const NotificationsScreen(),
           const SettingsScreen()
         ],

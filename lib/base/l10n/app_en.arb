@@ -9,6 +9,7 @@
 
   "btn_login": "LOGIN",
   "btn_register": "REGISTER",
+  "btn_next": "NEXT",
   "btn_submit": "SUBMIT",
 
   "plh_email": "Email",
