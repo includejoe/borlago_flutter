@@ -13,7 +13,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
-// TODO: + wcr detail screen ui
+// TODO: + chat ui for help screen
 // TODO: + create wcr request
 // TODO: + edit profile screen ui
 // TODO: + edit profile request

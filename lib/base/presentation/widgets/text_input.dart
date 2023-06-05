@@ -7,6 +7,7 @@ class TextInput extends StatelessWidget {
     required this.textInputType,
     required this.focusNode,
     required this.inputAction,
+    this.initialValue,
     this.prefixIcon,
     this.placeholder,
     this.label,
@@ -21,6 +22,7 @@ class TextInput extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
   final TextInputType textInputType;
+  final String? initialValue;
   final String? placeholder;
   final String? label;
   final IconData? prefixIcon;
@@ -50,6 +52,7 @@ class TextInput extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             focusNode: focusNode,
+            initialValue: initialValue,
             onFieldSubmitted: onFieldSubmitted,
             keyboardType: textInputType,
             textInputAction: inputAction,
