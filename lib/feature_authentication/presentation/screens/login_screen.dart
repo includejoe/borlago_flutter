@@ -1,15 +1,17 @@
-import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
+import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
+import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
+import 'package:borlago/feature_authentication/presentation/screens/authenticated_screen.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/password_input.dart';
-import 'package:borlago/feature_wcr/presentation/screens/main_screen.dart';
+import 'package:borlago/base/presentation/widgets/password_input.dart';
+import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/text_input.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,7 +24,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  AuthenticationViewModel authViewModel = getIt<AuthenticationViewModel>();
+  AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
   final _emailController = TextEditingController();
@@ -51,10 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordValidator = PasswordValidator(context, false);
     void navigateToMainScreen() {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const MainScreen()
-          )
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainPageView()
+        )
       );
     }
 
@@ -77,12 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _passwordController.clear();
         navigateToMainScreen();
       } else {
-        Fluttertoast.showToast(
-          msg: l10n!.err_invalid_credentials,
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.grey.shade900,
-          gravity: ToastGravity.BOTTOM,
-        );
+        toast(message: l10n!.err_invalid_credentials);
       }
     }
 
@@ -107,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputType: TextInputType.emailAddress,
                     focusNode: _emailFocusNode,
                     inputAction: TextInputAction.next,
-                    prefixIcon: Icons.email,
+                    prefixIcon: CupertinoIcons.envelope_fill,
                     placeholder: l10n!.plh_email,
                     error: _emailError,
                     onFieldSubmitted: (_) {
@@ -147,46 +144,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         makeLoginRequest();
                       }
                     },
-                    text: l10n.login
+                    text: l10n.btn_login
                   ),
-                  const SizedBox(height: 50,),
-                  Divider(
-                    height: 0,
-                    thickness: 1,
-                    color: Colors.grey[400],
-                  ),
-                  const SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(l10n.no_account),
-                      const SizedBox(width: 5,),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
+                  BottomAction(
+                    info: l10n.no_account,
+                    btnText: l10n.btn_register,
+                    action: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
                               builder: (context) => const RegisterScreen()
-                            )
-                          );
-                        },
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(0)
-                          ),
-                        ),
-                        child: Text(
-                          l10n.register,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            decoration: TextDecoration.underline,
-                            color: theme.colorScheme.primary
                           )
-                        ),
-                      ),
-                    ],
+                      );
+                    }
                   ),
-                  const SizedBox(height: 10,),
                 ],
               ),
             )
@@ -194,7 +165,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-
-
   }
 }

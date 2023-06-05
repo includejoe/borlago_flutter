@@ -49,5 +49,7 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSCameraUsageDescription</key>
+        <string>BorlaGo requires camera permissions to work properly.</string>
 	</dict>
 </plist>

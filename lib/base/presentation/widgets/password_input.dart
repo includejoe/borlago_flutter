@@ -1,22 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PasswordInput extends StatefulWidget {
   const PasswordInput({
     Key? key,
     required this.controller,
-    required this.placeholder,
     required this.focusNode,
     this.onFieldSubmitted,
     required this.inputAction,
-    this.error
+    this.placeholder,
+    this.error,
+    this.label
   }) : super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
-  final String placeholder;
+  final String? placeholder;
   final String? error;
+  final String? label;
 
 
   @override
@@ -33,6 +36,15 @@ class _PasswordInputState extends State<PasswordInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        widget.label != null ? Column(
+          children: [
+            Text(
+              widget.label!,
+              style: theme.textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 3,),
+          ],
+        ): Container(),
         SizedBox(
           height: 50,
           child: TextFormField(
@@ -61,15 +73,15 @@ class _PasswordInputState extends State<PasswordInput> {
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                        color: widget.error != null ? theme.colorScheme.error : Colors.grey.shade500
+                        color: widget.error != null ? theme.colorScheme.error : Colors.transparent
                     )
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                prefixIcon: Icon(Icons.lock, color: theme.colorScheme.primary,),
+                prefixIcon: Icon(CupertinoIcons.lock_fill, color: theme.colorScheme.primary,),
                 suffixIcon: IconButton(
                   highlightColor: Colors.transparent,
                   icon: Icon(
-                    isVisible ? Icons.visibility : Icons.visibility_off,
+                    isVisible ? CupertinoIcons.eye_slash_fill : CupertinoIcons.eye_fill,
                     color: theme.colorScheme.onSurface.withOpacity(0.5),
                   ),
                   onPressed: () {
