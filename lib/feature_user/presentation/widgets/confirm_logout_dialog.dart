@@ -64,7 +64,7 @@ Future<dynamic> confirmLogoutDialog(BuildContext context) {
               child: Text(
                 l10n.btn_no,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
               ),),
             )
           )

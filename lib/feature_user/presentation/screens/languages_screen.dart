@@ -19,6 +19,7 @@ class LanguagesScreen extends StatelessWidget {
           context.read<LocalizationProvider>().setLocale(
             locale: const Locale.fromSubtags(languageCode: "en")
           );
+          Navigator.pop(context);
         },
         text: Constants.languages[0],
       ),
@@ -27,6 +28,7 @@ class LanguagesScreen extends StatelessWidget {
           context.read<LocalizationProvider>().setLocale(
             locale: const Locale.fromSubtags(languageCode: "fr")
           );
+          Navigator.pop(context);
         },
         text: Constants.languages[1]
       ),

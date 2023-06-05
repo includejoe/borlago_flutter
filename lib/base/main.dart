@@ -2,6 +2,7 @@ import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/providers/localization_provider.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:camera/camera.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ import 'presentation/widgets/main_page_view.dart';
 // TODO: + create wcr request
 // TODO: + edit profile screen ui
 // TODO: + edit profile request
+// TODO: fix camera flashlight bug
 // TODO: + locations screen ui
 // TODO: + add location request
 // TODO: + payments screen ui
@@ -29,6 +31,8 @@ Future main() async {
     DeviceOrientation.portraitUp,
   ]);
 
+  await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
+
   loadAppResources();
   runApp(const MyApp());
 }
@@ -38,7 +42,7 @@ void loadAppResources({BuildContext? context}) async {
   final cameras = await availableCameras();
   initialize(backCamera: cameras.first);
 
-  await Future.delayed(const Duration(seconds: 3));
+  await Future.delayed(const Duration(seconds: 1));
   FlutterNativeSplash.remove();
 }
 
@@ -81,10 +85,10 @@ class _MyAppState extends State<MyApp> {
                           backgroundColor: Theme
                             .of(context)
                             .scaffoldBackgroundColor,
-                          body: authProvider.jwt != null
-                            ? const MainPageView()
-                            : const LoginScreen()
-                        // body: const MainPageView()
+                          // body: authProvider.jwt != null
+                          //   ? const MainPageView()
+                          //   : const LoginScreen()
+                        body: const MainPageView()
                       ),
                     );
                   },

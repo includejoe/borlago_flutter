@@ -94,7 +94,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
             ),
             const SizedBox(height: 50,),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 key: _formKey,
                 child:  Column(

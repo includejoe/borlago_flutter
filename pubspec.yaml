@@ -15,18 +15,19 @@ dependencies:
   http: ^1.0.0
   jwt_decoder: ^2.0.1
   get_it: ^7.6.0
+  camera: ^0.10.5+2
   google_fonts: ^4.0.5
   shared_preferences: ^2.1.1
   fluttertoast: ^8.2.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  fast_cached_network_image: ^1.2.0
   flutter_svg: ^2.0.6
   flutter_native_splash: ^2.3.0
+  cupertino_icons: ^1.0.2
   flutter_localizations:
     sdk: flutter
   intl: ^0.18.0
-  cupertino_icons: ^1.0.2
-  camera: ^0.10.5+2
 
 dev_dependencies:
   flutter_test:
