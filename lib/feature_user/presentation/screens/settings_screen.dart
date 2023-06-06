@@ -1,3 +1,4 @@
+import 'package:borlago/feature_user/presentation/screens/change_password_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/languages_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/location_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_screen.dart';
@@ -61,6 +62,18 @@ class SettingsScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => const LanguagesScreen()
+              )
+          );
+        },
+      ),
+      SettingsItem(
+        icon: CupertinoIcons.lock_fill,
+        text: l10n.change_password,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ChangePasswordScreen()
               )
           );
         },

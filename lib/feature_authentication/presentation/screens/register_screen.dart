@@ -1,11 +1,8 @@
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
-import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_0.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_1.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -45,8 +42,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     Future<bool> makeRegisterRequest() async {
       bool success = false;
       success = await authViewModel.register(

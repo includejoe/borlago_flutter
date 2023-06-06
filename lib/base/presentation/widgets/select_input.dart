@@ -7,25 +7,27 @@ class SelectInput extends StatefulWidget {
     required this.controller,
     required this.focusNode,
     required this.inputAction,
-    required this.placeholder,
     required this.options,
     required this.dialogTitle,
+    this.placeholder,
     this.prefixIcon,
     this.error,
     this.label,
+    this.initialValue,
     this.onFieldSubmitted,
   }) : super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
-  final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
-  final String placeholder;
   final String dialogTitle;
   final List<String> options;
+  final String? placeholder;
   final IconData? prefixIcon;
   final String? error;
   final String? label;
+  final String? initialValue;
+  final Function(String)? onFieldSubmitted;
 
 
   @override
@@ -56,6 +58,7 @@ class _SelectInputState extends State<SelectInput> {
             child: TextFormField(
               controller: widget.controller,
               focusNode: widget.focusNode,
+              initialValue: widget.initialValue,
               onFieldSubmitted: widget.onFieldSubmitted,
               keyboardType: TextInputType.text,
               textInputAction: widget.inputAction,

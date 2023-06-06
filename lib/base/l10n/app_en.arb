@@ -19,12 +19,14 @@
   "payments": "Payments",
   "languages": "Languages",
   "dark_theme": "Dark Theme",
+  "change_password": "Change Password",
   "logout": "Logout",
 
   "btn_login": "LOGIN",
   "btn_register": "REGISTER",
   "btn_next": "NEXT",
   "btn_submit": "SUBMIT",
+  "btn_save": "SAVE",
   "btn_back": "BACK",
   "btn_yes": "YES",
   "btn_no": "NO",
@@ -53,6 +55,9 @@
   "lbl_payment": "Payment Amount",
   "lbl_created_at": "Created At",
   "lbl_collected_at": "Collected At",
+  "lbl_current_password": "Current Password",
+  "lbl_new_password": "New Password",
+  "lbl_confirm_new_password": "Confirm New Password",
   "na": "N/A",
   "male": "Male",
   "female": "Female",
@@ -64,5 +69,7 @@
   "err_password_mismatch": "Passwords must match",
   "err_invalid_credentials": "Invalid credentials",
   "err_camera": "Camera access denied",
-  "err_wrong": "Something went wrong"
+  "err_wrong": "Something went wrong",
+
+  "suc_password": "Password changed successfully"
 }

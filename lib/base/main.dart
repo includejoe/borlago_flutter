@@ -13,9 +13,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
-// TODO: + chat ui for help screen
 // TODO: + edit profile screen ui
 // TODO: + edit profile request
+// TODO: * labels and placeholders in localization file
 // TODO: + create wcr request
 // TODO: + locations screen ui
 // TODO: + add location request
