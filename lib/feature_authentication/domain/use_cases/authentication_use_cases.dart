@@ -8,13 +8,13 @@ class AuthenticationUseCases {
     required String email,
     required String password
   }) async {
-    Map<String, dynamic> loginBody = {
+    Map<String, dynamic> body = {
       "email": email,
       "password": password,
       "user_type": Constants.userType
     };
 
-    return getIt.get<AuthenticationRepository>().login(loginBody);
+    return getIt.get<AuthenticationRepository>().login(body);
   }
 
   Future<Login?> register({
@@ -27,7 +27,7 @@ class AuthenticationUseCases {
     required String password
   }) async {
 
-    Map<String, dynamic> registerBody = {
+    Map<String, dynamic> body = {
       "email": email,
       "first_name": firstName,
       "last_name": lastName,
@@ -38,6 +38,6 @@ class AuthenticationUseCases {
       "user_type": Constants.userType
     };
 
-    return getIt.get<AuthenticationRepository>().register(registerBody);
+    return getIt.get<AuthenticationRepository>().register(body);
   }
 }

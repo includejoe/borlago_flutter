@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:borlago/feature_user/domain/models/User.dart';
+import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +15,13 @@ class AuthenticationProvider with ChangeNotifier {
 
   String? get jwt => _jwt;
   User? get user => _user;
+  set user(User? user) {
+    _user = user;
+    _prefs.setString("user", jsonEncode(user?.toJson()));
+    notifyListeners();
+  }
 
-  login({required String jwt, required User user}) {
+  login({required jwt, required User user}) {
     _jwt = jwt;
     _user = user;
     _prefs.setString("jwt", jwt);

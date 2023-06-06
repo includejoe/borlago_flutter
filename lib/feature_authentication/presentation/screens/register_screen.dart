@@ -12,9 +12,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final AuthenticationViewModel _authViewModel = AuthenticationViewModel();
   final _formKey = GlobalKey<FormState>();
   int _currentFieldSet = 0;
-  AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
   final _emailController = TextEditingController();
@@ -44,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     Future<bool> makeRegisterRequest() async {
       bool success = false;
-      success = await authViewModel.register(
+      success = await _authViewModel.register(
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
           email: _emailController.text,

@@ -9,7 +9,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<Login?> login(Map<String, dynamic> body) async {
     var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/login/");
-    Login? loginResponse;
+    Login? response;
     String jsonBody = json.encode(body);
 
     await http.post(
@@ -19,23 +19,21 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         "Content-Type": "application/json"
       }
     )
-    .then((response) {
-      Map<String, dynamic> responseJson = jsonDecode(response.body);
-      loginResponse = Login.fromJson(responseJson);
+    .then((data) {
+      Map<String, dynamic> dataJson = jsonDecode(data.body);
+      response = Login.fromJson(dataJson);
     })
     .catchError((error) {
-      if (kDebugMode) {
-        print("Repository error is: $error");
-      }
+      debugPrint("Authentication repository login error: ${error.toString()}");
     });
 
-    return loginResponse;
+    return response;
   }
 
   @override
   Future<Login?> register(Map<String, dynamic> body) async {
     var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/register/");
-    Login? registerResponse;
+    Login? response;
     String jsonBody = json.encode(body);
 
     await http.post(
@@ -45,16 +43,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         "Content-Type": "application/json"
       }
     )
-    .then((response) {
-      Map<String, dynamic> responseJson = jsonDecode(response.body);
-      registerResponse = Login.fromJson(responseJson);
+    .then((data) {
+      Map<String, dynamic> dataJson = jsonDecode(data.body);
+      response = Login.fromJson(dataJson);
     })
     .catchError((error) {
-      if (kDebugMode) {
-        print("Repository error is: ${error.toString()}");
-      }
+      debugPrint("Authentication repository register error: ${error.toString()}");
     });
-    return registerResponse;
+    return response;
   }
-
 }

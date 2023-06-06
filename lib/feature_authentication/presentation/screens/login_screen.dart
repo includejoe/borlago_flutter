@@ -22,9 +22,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthenticationViewModel _authViewModel = AuthenticationViewModel();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
   final _emailController = TextEditingController();
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      bool success = await authViewModel.login(
+      bool success = await _authViewModel.login(
         email: _emailController.text,
         password: _passwordController.text
       );

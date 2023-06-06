@@ -4,8 +4,10 @@ import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
+import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
-import 'package:borlago/feature_user/domain/models/User.dart';
+import 'package:borlago/feature_user/domain/models/user.dart';
+import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,6 +21,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final UserViewModel _userViewModel = UserViewModel();
+  late final AuthenticationProvider _authProvider;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -37,7 +41,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _genderFocusNode = FocusNode();
   final _countryFocusNode = FocusNode();
 
-  String? _emailError;
   String? _firstNameError;
   String? _lastNameError;
   String? _phoneError;
@@ -46,9 +49,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
-    authProvider.init();
-    final user = authProvider.user!;
+    _authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+    _authProvider.init();
+    final user = _authProvider.user!;
     _emailController.text = user.email;
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
@@ -73,8 +76,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-
-    final emailValidator = EmailValidator(context);
     final firstNameValidator = TextValidator(context);
     final lastNameValidator = TextValidator(context);
     final phoneValidator = TextValidator(context);
@@ -82,22 +83,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final countryValidator = TextValidator(context);
 
     void makeRequest() async {
+      User? updatedUser;
       setState(() {
         _isLoading = true;
       });
 
+      updatedUser = await _userViewModel.updateUser(
+        email: _authProvider.user!.email,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        phone: _phoneController.text,
+        gender: _genderController.text,
+        country: _countryController.text,
+      );
+
+      if (updatedUser != null) {
+        _firstNameController.text = updatedUser.firstName;
+        _lastNameController.text = updatedUser.lastName;
+        _phoneController.text = updatedUser.phone;
+        _genderController.text = updatedUser.gender;
+        _countryController.text = updatedUser.country;
+        _authProvider.user = updatedUser;
+        toast(message: l10n!.suc_update);
+      } else {
+        _emailController.text = _authProvider.user!.email;
+        _firstNameController.text = _authProvider.user!.firstName;
+        _lastNameController.text = _authProvider.user!.lastName;
+        _phoneController.text = _authProvider.user!.phone;
+        _genderController.text = _authProvider.user!.gender;
+        _countryController.text = _authProvider.user!.country;
+        toast(message: l10n!.err_wrong);
+      }
+
       setState(() {
         _isLoading = false;
       });
-
-      // if(success) {
-      //   _currentPasswordController.clear();
-      //   _newPasswordController.clear();
-      //   _confirmNewPasswordController.clear();
-      //   toast(message: l10n!.suc_password);
-      // } else {
-      //   toast(message: l10n!.err_wrong);
-      // }
     }
 
     return Scaffold(
@@ -134,7 +154,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   prefixIcon: CupertinoIcons.envelope_fill,
                   enabled: false,
                   label: l10n.lbl_email,
-                  error: _emailError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_firstNameFocusNode);
                   },
@@ -215,31 +234,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: theme.colorScheme.primary
                   ),
                 ) : Button(
-                    onTap: () {
-                      setState(() {
-                        _emailError = emailValidator(_emailController.text);
-                        _firstNameError = firstNameValidator(_firstNameController.text);
-                        _lastNameError = lastNameValidator(_lastNameController.text);
-                        _phoneError = phoneValidator(_phoneController.text);
-                        _genderError = genderValidator(_genderController.text);
-                        _countryError = countryValidator(_countryController.text);
-                      });
+                      onTap: () {
+                        setState(() {
+                          _firstNameError = firstNameValidator(_firstNameController.text);
+                          _lastNameError = lastNameValidator(_lastNameController.text);
+                          _phoneError = phoneValidator(_phoneController.text);
+                          _genderError = genderValidator(_genderController.text);
+                          _countryError = countryValidator(_countryController.text);
+                        });
 
-                      final errors = [
-                        _emailError,
-                        _firstNameError,
-                        _lastNameError,
-                        _phoneError,
-                        _genderError,
-                        _countryError,
-                      ];
+                        final errors = [
+                          _firstNameError,
+                          _lastNameError,
+                          _phoneError,
+                          _genderError,
+                          _countryError,
+                        ];
 
-                      if(errors.every((error) => error == null)) {
-                        FocusScope.of(context).unfocus();
-                        makeRequest();
-                      }
-                    },
-                    text: l10n.btn_save
+                        if(errors.every((error) => error == null)) {
+                          FocusScope.of(context).unfocus();
+                          makeRequest();
+                        }
+                      },
+                      text: l10n.btn_save
                 ),
               ],
             ),

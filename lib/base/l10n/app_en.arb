@@ -72,5 +72,6 @@
   "err_camera": "Camera access denied",
   "err_wrong": "Something went wrong",
 
-  "suc_password": "Password changed successfully"
+  "suc_password": "Password changed successfully",
+  "suc_update": "Updated successfully"
 }
