@@ -13,13 +13,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
-// TODO: + edit profile request
 // TODO: + change password request
-// TODO: + create wcr request
-// TODO: + get user wcrs request
 // TODO: + locations screen ui
 // TODO: + add location request
 // TODO: + payments screen ui
+// TODO: + create wcr request
+// TODO: + get user wcrs request
 // TODO: fix camera flashlight bug
 
 

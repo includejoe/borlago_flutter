@@ -2,6 +2,7 @@ import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/password_input.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/toast.dart';
+import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -13,7 +14,9 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final UserViewModel _userViewModel = UserViewModel();
   bool _isLoading = false;
+
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmNewPasswordController = TextEditingController();
@@ -37,22 +40,29 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
 
     void makeRequest() async {
+      bool success = false;
+
       setState(() {
         _isLoading = true;
       });
 
+      success = await _userViewModel.changePassword(
+        currentPassword: _currentPasswordController.text,
+        newPassword: _newPasswordController.text
+      );
+
+      if(success) {
+        _currentPasswordController.clear();
+        _newPasswordController.clear();
+        _confirmNewPasswordController.clear();
+        toast(message: l10n!.suc_password);
+      } else {
+        toast(message: l10n!.err_wrong);
+      }
+
       setState(() {
         _isLoading = false;
       });
-
-      // if(success) {
-      //   _currentPasswordController.clear();
-      //   _newPasswordController.clear();
-      //   _confirmNewPasswordController.clear();
-      //   toast(message: l10n!.suc_password);
-      // } else {
-      //   toast(message: l10n!.err_wrong);
-      // }
     }
 
     return Scaffold(
@@ -122,16 +132,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     onTap: () {
                       setState(() {
                         _currentPasswordError = currentPasswordValidator(
-                            _currentPasswordController.text,
-                            null
+                          _currentPasswordController.text,
+                          null
                         );
                         _newPasswordError = newPasswordValidator(
-                            _newPasswordController.text,
-                            null
+                          _newPasswordController.text,
+                          null
                         );
                         _confirmNewPasswordError = confirmNewPasswordValidator(
-                            _newPasswordController.text,
-                            _currentPasswordController.text,
+                          _newPasswordController.text,
+                          _confirmNewPasswordController.text,
                         );
 
                       });

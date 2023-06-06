@@ -36,20 +36,21 @@ class UserUseCases {
       body: body
     );
   }
+
+  Future<String?> changePassword({
+    required String jwt,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    Map<String, dynamic> body = {
+      "current_password": currentPassword,
+      "new_password": newPassword,
+    };
+
+    return getIt<UserRepository>().changePassword(
+        jwt: jwt,
+        body: body
+    );
+  }
 }
 
-Future<String?> changePassword({
-  required String jwt,
-  required String currentPassword,
-  required String newPassword,
-}) async {
-  Map<String, dynamic> body = {
-    "current_password": currentPassword,
-    "new_password": newPassword,
-  };
-
-  return getIt<UserRepository>().changePassword(
-    jwt: jwt,
-    body: body
-  );
-}
