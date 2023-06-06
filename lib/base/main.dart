@@ -14,13 +14,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
 // TODO: + chat ui for help screen
-// TODO: + create wcr request
 // TODO: + edit profile screen ui
 // TODO: + edit profile request
-// TODO: fix camera flashlight bug
+// TODO: + create wcr request
 // TODO: + locations screen ui
 // TODO: + add location request
 // TODO: + payments screen ui
+// TODO: fix camera flashlight bug
 
 
 Future main() async {
