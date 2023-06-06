@@ -43,7 +43,7 @@ class WCRsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.wcrs,
+          l10n!.lbl_wcrs,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),

@@ -13,10 +13,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
-// TODO: + edit profile screen ui
 // TODO: + edit profile request
-// TODO: * labels and placeholders in localization file
+// TODO: + change password request
 // TODO: + create wcr request
+// TODO: + get user wcrs request
 // TODO: + locations screen ui
 // TODO: + add location request
 // TODO: + payments screen ui
@@ -85,10 +85,10 @@ class _MyAppState extends State<MyApp> {
                           backgroundColor: Theme
                             .of(context)
                             .scaffoldBackgroundColor,
-                          // body: authProvider.jwt != null
-                          //   ? const MainPageView()
-                          //   : const LoginScreen()
-                        body: const MainPageView()
+                          body: authProvider.jwt != null
+                            ? const MainPageView()
+                            : const LoginScreen()
+                        // body: const MainPageView()
                       ),
                     );
                   },

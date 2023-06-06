@@ -3,7 +3,7 @@ import 'package:borlago/feature_authentication/providers/authentication_provider
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AuthenticatedScreen extends StatelessWidget {
+class AuthenticatedScreen extends StatefulWidget {
   const AuthenticatedScreen({
     super.key,
     required this.screen
@@ -12,11 +12,24 @@ class AuthenticatedScreen extends StatelessWidget {
   final Widget screen;
 
   @override
-  Widget build(BuildContext context) {
-    bool isAuthenticated = context.read<AuthenticationProvider>().jwt != null;
+  State<AuthenticatedScreen> createState() => _AuthenticatedScreenState();
+}
 
-    if(isAuthenticated) {
-      return screen;
+class _AuthenticatedScreenState extends State<AuthenticatedScreen> {
+  late bool _isAuthenticated;
+
+  @override
+  void initState() {
+    final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+    authProvider.init();
+    _isAuthenticated = authProvider.jwt != null;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(_isAuthenticated) {
+      return widget.screen;
     } else {
       return const LoginScreen();
     }

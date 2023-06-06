@@ -19,7 +19,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.locations,
+          l10n!.lbl_locations,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),

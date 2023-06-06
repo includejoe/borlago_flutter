@@ -22,7 +22,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.wcr_detail,
+          l10n!.lbl_wcr_detail,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),
@@ -199,7 +199,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        l10n.na,
+                        l10n.txt_na,
                         style: theme.textTheme.bodyMedium
                     ),
                   ],

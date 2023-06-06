@@ -92,13 +92,13 @@ class _RegisterFieldSet1State extends State<RegisterFieldSet1> {
           focusNode: _genderFocusNode,
           inputAction: TextInputAction.next,
           prefixIcon: CupertinoIcons.person_fill,
-          placeholder: l10n!.plh_gender,
-          dialogTitle: l10n.lbl_gender,
+          placeholder: l10n!.lbl_gender,
+          dialogTitle: l10n.plh_gender,
           error: _genderError,
           onFieldSubmitted: (_) {
             FocusScope.of(context).requestFocus(_countryFocusNode);
           },
-          options: [l10n.male, l10n.female, l10n.other],
+          options: [l10n.txt_male, l10n.txt_female, l10n.txt_other],
         ),
         const SizedBox(height: 15,),
         SelectInput(
@@ -106,8 +106,8 @@ class _RegisterFieldSet1State extends State<RegisterFieldSet1> {
           focusNode: _countryFocusNode,
           inputAction: TextInputAction.next,
           prefixIcon: CupertinoIcons.globe,
-          placeholder: l10n.plh_country,
-          dialogTitle: l10n.lbl_country,
+          placeholder: l10n.lbl_country,
+          dialogTitle: l10n.plh_country,
           error: _countryError,
           onFieldSubmitted: (_) {
             FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -120,10 +120,11 @@ class _RegisterFieldSet1State extends State<RegisterFieldSet1> {
             focusNode: _passwordFocusNode,
             inputAction: TextInputAction.next,
             error: _passwordError,
+            showIcon: true,
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
             },
-            placeholder: l10n.plh_password
+            placeholder: l10n.lbl_password
         ),
         const SizedBox(height: 15,),
         PasswordInput(
@@ -131,10 +132,11 @@ class _RegisterFieldSet1State extends State<RegisterFieldSet1> {
             focusNode: _confirmPasswordFocusNode,
             inputAction: TextInputAction.done,
             error: _confirmPasswordError,
+            showIcon: true,
             onFieldSubmitted: (_) {
               FocusScope.of(context).unfocus();
             },
-            placeholder: l10n.plh_confirm_password
+            placeholder: l10n.lbl_confirm_password
         ),
         const SizedBox(height: 15,),
         _isLoading ? SizedBox(
@@ -171,7 +173,7 @@ class _RegisterFieldSet1State extends State<RegisterFieldSet1> {
             text: l10n.btn_register
         ),
         BottomAction(
-          info: l10n.mistakes,
+          info: l10n.txt_mistakes,
           btnText: l10n.btn_back,
           action: widget.previousFieldSet,
         )

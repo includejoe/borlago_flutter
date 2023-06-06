@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
     final settingsItems = <SettingsItem>[
       SettingsItem(
         icon: CupertinoIcons.person_fill,
-        text: l10n!.profile,
+        text: l10n!.lbl_profile,
         onTap: () {
           Navigator.push(
             context,
@@ -32,7 +32,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       SettingsItem(
         icon: CupertinoIcons.location_solid,
-        text: l10n.locations,
+        text: l10n.lbl_locations,
         onTap: () {
           Navigator.push(
             context,
@@ -44,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       SettingsItem(
         icon: CupertinoIcons.money_dollar,
-        text: l10n.payments,
+        text: l10n.lbl_payments,
         onTap: () {
           Navigator.push(
             context,
@@ -56,7 +56,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       SettingsItem(
         icon: CupertinoIcons.globe,
-        text: l10n.languages,
+        text: l10n.lbl_languages,
         onTap: () {
           Navigator.push(
               context,
@@ -68,7 +68,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       SettingsItem(
         icon: CupertinoIcons.lock_fill,
-        text: l10n.change_password,
+        text: l10n.lbl_change_password,
         onTap: () {
           Navigator.push(
               context,
@@ -80,12 +80,12 @@ class SettingsScreen extends StatelessWidget {
       ),
       SettingsItem(
         icon: CupertinoIcons.sun_max_fill,
-        text: l10n.dark_theme,
+        text: l10n.lbl_dark_theme,
         suffixWidget: const ThemeSwitch(),
       ),
       SettingsItem(
         icon: CupertinoIcons.power,
-        text: l10n.logout,
+        text: l10n.lbl_logout,
         onTap: () {
           confirmLogoutDialog(context);
         },
@@ -98,7 +98,7 @@ class SettingsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n.settings,
+          l10n.lbl_settings,
           style: theme.textTheme.headlineMedium?.copyWith(
             color: theme.colorScheme.onPrimary
           ),

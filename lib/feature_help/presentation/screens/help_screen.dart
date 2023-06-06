@@ -102,7 +102,7 @@ class _HelpScreenState extends State<HelpScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.help,
+          l10n!.lbl_help,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),

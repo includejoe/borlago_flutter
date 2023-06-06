@@ -10,7 +10,7 @@ class AuthenticationProvider with ChangeNotifier {
   String? _jwt;
 
   AuthenticationProvider() {
-    _init();
+    init();
   }
 
   String? get jwt => _jwt;
@@ -32,7 +32,7 @@ class AuthenticationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void _init() async {
+  void init() async {
     _prefs = await SharedPreferences.getInstance();
     String? storedJwt = _prefs.getString("jwt");
 

@@ -18,7 +18,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.payments,
+          l10n!.lbl_payments,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),

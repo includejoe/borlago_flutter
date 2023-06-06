@@ -46,7 +46,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    User user = context.read<AuthenticationProvider>().user!;
+    final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+    authProvider.init();
+    final user = authProvider.user!;
     _emailController.text = user.email;
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
@@ -103,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.profile,
+          l10n!.lbl_profile,
           style: theme.textTheme.headlineMedium?.copyWith(
             color: theme.colorScheme.onPrimary
           ),
@@ -131,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.envelope_fill,
                   enabled: false,
-                  label: l10n.plh_email,
+                  label: l10n.lbl_email,
                   error: _emailError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_firstNameFocusNode);
@@ -144,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   focusNode: _firstNameFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.person_fill,
-                  label: l10n.plh_first_name,
+                  label: l10n.lbl_first_name,
                   error: _firstNameError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_lastNameFocusNode);
@@ -157,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   focusNode: _lastNameFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.person_fill,
-                  label: l10n.plh_last_name,
+                  label: l10n.lbl_last_name,
                   error: _lastNameError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_phoneFocusNode);
@@ -170,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   focusNode: _phoneFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.phone_fill,
-                  label: l10n.plh_phone,
+                  label: l10n.lbl_phone,
                   error: _phoneError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_genderFocusNode);
@@ -182,13 +184,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   focusNode: _genderFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.person_fill,
-                  label: l10n.plh_gender,
-                  dialogTitle: l10n.lbl_gender,
+                  label: l10n.lbl_gender,
+                  dialogTitle: l10n.plh_gender,
                   error: _genderError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_countryFocusNode);
                   },
-                  options: [l10n.male, l10n.female, l10n.other],
+                  options: [l10n.txt_male, l10n.txt_female, l10n.txt_other],
                 ),
                 const SizedBox(height: 15,),
                 SelectInput(
@@ -196,8 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   focusNode: _countryFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.globe,
-                  label: l10n.plh_country,
-                  dialogTitle: l10n.lbl_country,
+                  label: l10n.lbl_country,
+                  dialogTitle: l10n.plh_country,
                   error: _countryError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).dispose();

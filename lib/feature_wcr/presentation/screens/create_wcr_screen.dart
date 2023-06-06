@@ -71,7 +71,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
         backgroundColor: theme.colorScheme.primary,
         centerTitle: false,
         title: Text(
-          l10n!.create_wcr,
+          l10n!.lbl_create_wcr,
           style: theme.textTheme.headlineMedium?.copyWith(
             color: theme.colorScheme.onPrimary
           ),

@@ -57,7 +57,7 @@ class _RegisterFieldSet0State extends State<RegisterFieldSet0> {
           focusNode: _emailFocusNode,
           inputAction: TextInputAction.next,
           prefixIcon: CupertinoIcons.envelope_fill,
-          placeholder: l10n!.plh_email,
+          placeholder: l10n!.lbl_email,
           error: _emailError,
           onFieldSubmitted: (_) {
             FocusScope.of(context).requestFocus(_firstNameFocusNode);
@@ -70,7 +70,7 @@ class _RegisterFieldSet0State extends State<RegisterFieldSet0> {
           focusNode: _firstNameFocusNode,
           inputAction: TextInputAction.next,
           prefixIcon: CupertinoIcons.person_fill,
-          placeholder: l10n.plh_first_name,
+          placeholder: l10n.lbl_first_name,
           error: _firstNameError,
           onFieldSubmitted: (_) {
             FocusScope.of(context).requestFocus(_lastNameFocusNode);
@@ -83,7 +83,7 @@ class _RegisterFieldSet0State extends State<RegisterFieldSet0> {
           focusNode: _lastNameFocusNode,
           inputAction: TextInputAction.next,
           prefixIcon: CupertinoIcons.person_fill,
-          placeholder: l10n.plh_last_name,
+          placeholder: l10n.lbl_last_name,
           error: _lastNameError,
           onFieldSubmitted: (_) {
             FocusScope.of(context).requestFocus(_phoneFocusNode);
@@ -96,7 +96,7 @@ class _RegisterFieldSet0State extends State<RegisterFieldSet0> {
           focusNode: _phoneFocusNode,
           inputAction: TextInputAction.next,
           prefixIcon: CupertinoIcons.phone_fill,
-          placeholder: l10n.plh_phone,
+          placeholder: l10n.lbl_phone,
           error: _phoneError,
           onFieldSubmitted: (_) {
             FocusScope.of(context).unfocus();
@@ -136,7 +136,7 @@ class _RegisterFieldSet0State extends State<RegisterFieldSet0> {
               )
             );
           },
-          info: l10n.yes_account,
+          info: l10n.txt_yes_account,
         )
       ]
     );

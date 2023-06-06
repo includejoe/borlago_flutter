@@ -60,7 +60,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.change_password,
+          l10n!.lbl_change_password,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),
@@ -79,6 +79,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   controller: _currentPasswordController,
                   focusNode: _currentPasswordFocusNode,
                   inputAction: TextInputAction.next,
+                  placeholder: l10n.plh_current_password,
                   error: _currentPasswordError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_newPasswordFocusNode);
@@ -90,6 +91,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     controller: _newPasswordController,
                     focusNode: _newPasswordFocusNode,
                     inputAction: TextInputAction.next,
+                    placeholder: l10n.plh_new_password,
                     error: _newPasswordError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_confirmNewPasswordFocusNode);
@@ -101,6 +103,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     controller: _confirmNewPasswordController,
                     focusNode: _confirmNewPasswordFocusNode,
                     inputAction: TextInputAction.next,
+                    placeholder: l10n.plh_confirm_new_password,
                     error: _confirmNewPasswordError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_confirmNewPasswordFocusNode);

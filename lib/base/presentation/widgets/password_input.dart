@@ -77,10 +77,11 @@ class _PasswordInputState extends State<PasswordInput> {
                         color: widget.error != null ? theme.colorScheme.error : Colors.transparent
                     )
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                contentPadding: widget.showIcon == true ? const EdgeInsets.symmetric(vertical: 8,) :
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 prefixIcon: widget.showIcon == true ?
                 Icon(CupertinoIcons.lock_fill, color: theme.colorScheme.primary,) :
-                Container(),
+                null,
                 suffixIcon: IconButton(
                   highlightColor: Colors.transparent,
                   icon: Icon(
