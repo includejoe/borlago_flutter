@@ -1,14 +1,17 @@
+import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
+import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
+import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_user/presentation/screens/change_password_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/languages_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/location_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/proile_screen.dart';
-import 'package:borlago/feature_user/presentation/widgets/confirm_logout_dialog.dart';
 import 'package:borlago/feature_user/presentation/widgets/settings_item.dart';
 import 'package:borlago/feature_user/presentation/widgets/theme_switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -87,7 +90,19 @@ class SettingsScreen extends StatelessWidget {
         icon: CupertinoIcons.power,
         text: l10n.lbl_logout,
         onTap: () {
-          confirmLogoutDialog(context);
+          confirmationDialog(
+            context: context,
+            title: l10n.txt_confirm_logout,
+            yesAction: () {
+              context.read<AuthenticationProvider>().logout();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LoginScreen()
+                  )
+              );
+            }
+          );
         },
       ),
     ];

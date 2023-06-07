@@ -5,10 +5,11 @@ import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
+import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateWCRScreen extends StatefulWidget {
   const CreateWCRScreen({super.key, required this.imageFile});
@@ -19,6 +20,7 @@ class CreateWCRScreen extends StatefulWidget {
 }
 
 class _CreateWCRScreenState extends State<CreateWCRScreen> {
+  final WCRViewModel _wcrViewModel = WCRViewModel();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -44,26 +46,29 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
     final pickUpLocationValidator = TextValidator(context);
 
     void makeRequest() async {
+      WCR? wcr;
       setState(() {
         _isLoading = true;
       });
 
-      // bool success = await authViewModel.login(
-      //     email: _emailController.text,
-      //     password: _passwordController.text
-      // );
+      wcr = await _wcrViewModel.createWCR(
+        wastePhoto:widget.imageFile,
+        pickUpLocation: _pickUpLocationController.text,
+        wasteDesc: _descriptionController.text,
+        wasteType: _wasteTypeController.text
+      );
+
+      if(wcr != null) {
+        _wasteTypeController.clear();
+        _descriptionController.clear();
+        _pickUpLocationController.clear();
+      } else {
+         toast(message: l10n!.err_wrong);
+      }
 
       setState(() {
         _isLoading = false;
       });
-
-      // if(success) {
-      //   _emailController.clear();
-      //   _passwordController.clear();
-      //   navigateToMainScreen();
-      // } else {
-      //    toast(message: l10n!.err_wrong);
-      // }
     }
 
     return Scaffold(
@@ -131,7 +136,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
                       controller: _descriptionController,
                       textInputType: TextInputType.text,
                       focusNode: _descriptionFocusNode,
-                      inputAction: TextInputAction.next,
+                      inputAction: TextInputAction.done,
                       placeholder: l10n.plh_description,
                       label: l10n.lbl_description,
                       height: 100,

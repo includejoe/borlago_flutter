@@ -6,6 +6,10 @@
   "txt_yes_account": "Already have an account? ",
   "txt_mistakes": "Made some mistakes?",
   "txt_confirm_logout": "Are you sure you want to logout?",
+  "txt_confirm_delete": "Are you sure you want to delete this?",
+  "txt_confirm_cancel": "Are you sure you want to cancel this?",
+  "txt_add_location": "Are you sure you want to add your current location",
+  "txt_enable_location": "Please enable location services",
   "txt_na": "N/A",
   "txt_male": "Male",
   "txt_female": "Female",
@@ -61,6 +65,7 @@
   "btn_submit": "SUBMIT",
   "btn_save": "SAVE",
   "btn_back": "BACK",
+  "btn_ok": "OK",
   "btn_yes": "Yes",
   "btn_no": "No",
 
@@ -73,5 +78,7 @@
   "err_wrong": "Something went wrong",
 
   "suc_password": "Password changed successfully",
-  "suc_update": "Updated successfully"
+  "suc_update": "Updated successfully",
+  "suc_delete": "Deleted successfully",
+  "suc_location": "Location added successfully"
 }

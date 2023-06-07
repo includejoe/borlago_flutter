@@ -17,8 +17,11 @@ import 'presentation/widgets/main_page_view.dart';
 // TODO: + get user wcrs request
 // TODO: + locations screen ui
 // TODO: + add location request
+// TODO: + cache user locations using hive box
 // TODO: + payments screen ui
+// TODO: + add payment method request
 // TODO: fix camera flashlight bug
+// TODO: + forgot password to login screen
 
 
 Future main() async {
