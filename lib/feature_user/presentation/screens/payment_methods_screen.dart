@@ -1,4 +1,6 @@
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
+import 'package:borlago/base/presentation/widgets/page_refresher.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/presentation/screens/settings_screen.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
@@ -18,14 +20,34 @@ class PaymentMethodsScreen extends StatefulWidget {
 class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   final UserViewModel _userViewModel = UserViewModel();
   List<PaymentMethod?> _paymentMethods = [];
+  bool _isLoading = false;
+  bool _isError = false;
+
+  void fetchPaymentMethods() async  {
+    List<PaymentMethod?>? methods;
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+    });
+
+    methods = await _userViewModel.getPaymentMethods();
+
+    if(methods != null) {
+      setState(() {
+        _paymentMethods = methods!;
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isError = true;
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
-    _userViewModel.getPaymentMethods().then((methods) {
-      setState(() {
-        _paymentMethods = methods!;
-      });
-    });
+    fetchPaymentMethods();
     super.initState();
   }
 
@@ -61,12 +83,14 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             ),
           ),
         ),
-        body: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: paymentMethodItems.length,
-            itemBuilder: (context, index) {
-              return paymentMethodItems[index];
-            }
+        body: _isLoading ? const Center(child: Loader(size: 30,),) :
+            _isError ? PageRefresher(onRefresh: fetchPaymentMethods) :
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: paymentMethodItems.length,
+              itemBuilder: (context, index) {
+                return paymentMethodItems[index];
+              }
         ),
         floatingActionButton: FloatActionButton(
             onPressed: () {

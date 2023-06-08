@@ -1,6 +1,8 @@
 import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/presentation/widgets/info_dialog.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
+import 'package:borlago/base/presentation/widgets/page_refresher.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_user/domain/models/user_location.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
@@ -20,21 +22,35 @@ class LocationsScreen extends StatefulWidget {
 
 class _LocationsScreenState extends State<LocationsScreen> {
   final UserViewModel _userViewModel = UserViewModel();
+  bool _isLoading = false;
+  bool _isError = false;
   List<UserLocation?> _userLocations = [];
-
   late double _latitude;
   late double _longitude;
   late String _name;
 
-  @override
-  void initState() {
-    _userViewModel.getUserLocations().then((locations) {
+  void fetchLocations() async {
+    List<UserLocation?>? locations;
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+    });
+
+    locations = await _userViewModel.getUserLocations();
+
+    if(locations != null) {
       setState(() {
         _userLocations = locations!;
+        _isLoading = false;
       });
-    });
-    super.initState();
+    } else {
+      setState(() {
+        _isError = true;
+        _isLoading = false;
+      });
+    }
   }
+
 
   void addLocationRequest() {
     _userViewModel.addLocation(
@@ -66,13 +82,17 @@ class _LocationsScreenState extends State<LocationsScreen> {
     });
   }
 
+  @override
+  void initState() {
+    fetchLocations();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-
-
 
     final locationsItems = _userLocations.map((location) {
       return LocationItem(
@@ -94,13 +114,15 @@ class _LocationsScreenState extends State<LocationsScreen> {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: locationsItems.length,
-        itemBuilder: (context, index) {
-          return locationsItems[index];
-        }
-      ),
+      body: _isLoading ? const Center(child: Loader(size: 30)) :
+        _isError ? PageRefresher(onRefresh: fetchLocations) :
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: locationsItems.length,
+          itemBuilder: (context, index) {
+            return locationsItems[index];
+          }
+        ),
       floatingActionButton: FloatActionButton(
         onPressed: () {
           confirmationDialog(

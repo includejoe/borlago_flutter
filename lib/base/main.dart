@@ -14,11 +14,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
 // TODO: + get user wcrs request
+// TODO: create make payment ui
+// TODO: + error screen on all fetch screens
 // TODO: use dateformatter like moment.js
 // TODO: + cache user locations using hive box
-// TODO: + payments screen ui
-// TODO: + add payment method request
-// TODO: create make payment ui
 // TODO: fix camera flashlight bug
 // TODO: + forgot password to login screen
 
