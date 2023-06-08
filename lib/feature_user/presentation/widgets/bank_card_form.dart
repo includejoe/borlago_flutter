@@ -1,9 +1,9 @@
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
-import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
+import 'package:borlago/feature_user/domain/models/payment_type.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_methods_screen.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/material.dart';

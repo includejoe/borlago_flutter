@@ -1,3 +1,5 @@
+import 'package:borlago/feature_user/domain/models/payment_type.dart';
+
 class Constants {
   // development server
   static const String borlaGoBaseUrl = "http://10.0.2.2:8000/api/v1";
@@ -42,7 +44,7 @@ class Constants {
     "Benin": "XOF",
     "Burkina Faso": "XOF",
     "Cape Verde": "CVE",
-    "Côte d'Ivoire": "XOF",
+    "Ivory Coast": "XOF",
     "Gambia": "GMD",
     "Ghana": "GHS",
     "Guinea": "GNF",
@@ -57,11 +59,11 @@ class Constants {
     "Togo": "XOF"
   };
 
-  static const countries = [
+  static const List<String> countries = [
     "Benin",
     "Burkina Faso",
     "Cape Verde",
-    "Côte d'Ivoire",
+    "Ivory Coast",
     "Gambia",
     "Ghana",
     "Guinea",
@@ -75,12 +77,23 @@ class Constants {
     "Sierra Leone",
     "Togo"
   ];
-}
 
-class PaymentType {
-  PaymentType({required this.name, required this.type, required this.logo,});
-
-  final String name;
-  final String type;
-  final String logo;
+  static const Map<String, String> countryCodes = {
+    "Benin": "+229",
+    "Burkina Faso": "+226",
+    "Cape Verde": "+238",
+    "Ivory Coast": "+225",
+    "Gambia": "+220",
+    "Ghana": "+233",
+    "Guinea": "+224",
+    "Guinea-Bissau": "+245",
+    "Liberia": "+231",
+    "Mali": "+223",
+    "Mauritania": "+222",
+    "Niger": "+227",
+    "Nigeria": "+234",
+    "Senegal": "+221",
+    "Sierra Leone": "+232",
+    "Togo": "+228"
+  };
 }

@@ -2,6 +2,7 @@ import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
+import 'package:borlago/feature_user/domain/models/payment_type.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_method_detail_screen.dart';
 import 'package:borlago/feature_user/presentation/widgets/payment_method_logo.dart';
 import 'package:flutter/cupertino.dart';

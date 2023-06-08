@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.3,),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.25,),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.18,
                     child: const Center(child: AppLogo()),
@@ -105,7 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     focusNode: _emailFocusNode,
                     inputAction: TextInputAction.next,
                     prefixIcon: CupertinoIcons.envelope_fill,
-                    placeholder: l10n!.lbl_email,
+                    label: l10n!.lbl_email,
+                    placeholder: l10n.plh_email,
                     error: _emailError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -117,13 +118,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       focusNode: _passwordFocusNode,
                       inputAction: TextInputAction.done,
                       error: _passwordError,
+                      label: l10n.lbl_password,
+                      placeholder: l10n.plh_password,
                       showIcon: true,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).unfocus();
                       },
-                      placeholder: l10n.lbl_password
                   ),
-                  const SizedBox(height: 15,),
+                  const SizedBox(height: 25,),
                   _isLoading ? SizedBox(
                     height: 24,
                     width: 24,

@@ -31,6 +31,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   String? _confirmNewPasswordError;
 
   @override
+  void dispose() {
+    _currentPasswordController.dispose();
+    _newPasswordController.dispose();
+    _confirmNewPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);

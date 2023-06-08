@@ -78,7 +78,7 @@ class _SelectInputState extends State<SelectInput> {
                     borderSide: BorderSide(
                       color: widget.error != null ?
                       theme.colorScheme.error :
-                      theme.colorScheme.primary
+                      Colors.transparent
                     )
                 ),
                 contentPadding: widget.label != null ?
@@ -126,6 +126,7 @@ class _SelectInputState extends State<SelectInput> {
             SimpleDialogOption(
               onPressed: () {
                 widget.controller.text = option;
+                FocusScope.of(context).unfocus();
                 Navigator.pop(context);
               },
               child: Text(option, style: theme.textTheme.bodyMedium?.copyWith(

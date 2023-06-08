@@ -11,6 +11,7 @@ import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -26,7 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
-  // controllers
   final _emailController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -41,6 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _genderFocusNode = FocusNode();
   final _countryFocusNode = FocusNode();
 
+  final _phoneFormatter = PhoneInputFormatter();
+
   String? _firstNameError;
   String? _lastNameError;
   String? _phoneError;
@@ -52,6 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
     _authProvider.init();
     final user = _authProvider.user!;
+
     _emailController.text = user.email;
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
@@ -81,6 +84,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final phoneValidator = TextValidator(context);
     final genderValidator = TextValidator(context);
     final countryValidator = TextValidator(context);
+
+
 
     void makeRequest() async {
       User? updatedUser;
@@ -189,6 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   controller: _phoneController,
                   textInputType: TextInputType.text,
                   focusNode: _phoneFocusNode,
+                  inputFormatters: [_phoneFormatter],
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.phone_fill,
                   label: l10n.lbl_phone,

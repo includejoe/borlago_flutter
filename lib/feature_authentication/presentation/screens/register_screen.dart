@@ -85,11 +85,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         emailController: _emailController,
         firstNameController: _firstNameController,
         lastNameController: _lastNameController,
-        phoneController: _phoneController,
+        countryController: _countryController,
         nextFieldSet: nextFieldSet
       ),
       RegisterFieldSet1(
         genderController: _genderController,
+        phoneController: _phoneController,
         countryController: _countryController,
         passwordController: _passwordController,
         confirmPasswordController: _confirmPasswordController,
@@ -109,9 +110,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.08,),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.28,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     child: const Center(child: AppLogo()),
                   ),
                   fieldSets[_currentFieldSet],

@@ -1,5 +1,4 @@
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
-import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/presentation/screens/settings_screen.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
@@ -8,7 +7,6 @@ import 'package:borlago/feature_user/presentation/widgets/payment_methods_dialog
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class PaymentMethodsScreen extends StatefulWidget {
   const PaymentMethodsScreen({super.key});
