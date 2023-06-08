@@ -3,7 +3,7 @@ import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:camera/camera.dart';
 
 abstract class WCRRepository {
-  Future<WCR?> createWCR({
+  Future<double?> createWCR({
     required String jwt,
     required Map<String, dynamic> body
   });

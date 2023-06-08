@@ -5,7 +5,7 @@ import 'package:borlago/feature_wcr/domain/repository/wcr_repo.dart';
 import 'package:camera/camera.dart';
 
 class WCRUseCases {
-  Future<WCR?> createWCR({
+  Future<double?> createWCR({
     required String jwt,
     required String wastePhoto,
     required String pickUpLocation,

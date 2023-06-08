@@ -28,9 +28,9 @@ class _LocationsScreenState extends State<LocationsScreen> {
 
   @override
   void initState() {
-    _userViewModel.getUserLocations().then((value) {
+    _userViewModel.getUserLocations().then((locations) {
       setState(() {
-        _userLocations = value!;
+        _userLocations = locations!;
       });
     });
     super.initState();

@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PaymentsScreen extends StatefulWidget {
-  const PaymentsScreen({super.key});
+class PaymentScreen extends StatefulWidget {
+  const PaymentScreen({super.key, required this.amountToPay});
+  final double amountToPay;
 
   @override
-  State<PaymentsScreen> createState() => _PaymentsScreenState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _PaymentsScreenState extends State<PaymentsScreen> {
+class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -20,7 +21,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.lbl_payments,
+          l10n!.lbl_make_payment,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),
@@ -28,7 +29,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       ),
       body: Center(
         child: Text(
-          "PAYMENTS SCREEN",
+          "PAYMENT SCREEN",
           style: theme.textTheme.headlineMedium,
         ),
       ),

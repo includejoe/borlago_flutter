@@ -5,8 +5,11 @@ import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
+import 'package:borlago/feature_user/domain/models/user_location.dart';
+import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
+import 'package:borlago/feature_wcr/presentation/widgets/amount_dialog.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,7 +24,11 @@ class CreateWCRScreen extends StatefulWidget {
 
 class _CreateWCRScreenState extends State<CreateWCRScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
+  final UserViewModel _userViewModel = UserViewModel();
+  late XFile? _imageFile;
+
   final _formKey = GlobalKey<FormState>();
+  List<UserLocation?> _userLocations = [];
   bool _isLoading = false;
 
   final _wasteTypeController = TextEditingController();
@@ -36,7 +43,20 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
   String? _pickUpLocationError;
   String? _descriptionError;
 
+  @override
+  void initState() {
+    _imageFile = widget.imageFile;
+    _userViewModel.getUserLocations().then((locations) {
+      setState(() {
+        _userLocations = locations!;
+      });
+    });
+    super.initState();
+  }
 
+  void showAmountDialog(double amount) {
+    amountDialog(context: context, amount: amount);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +66,37 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
     final pickUpLocationValidator = TextValidator(context);
 
     void makeRequest() async {
-      WCR? wcr;
+      String locationId = "";
+      double? amountToPay;
+
       setState(() {
         _isLoading = true;
       });
 
-      wcr = await _wcrViewModel.createWCR(
-        wastePhoto:widget.imageFile,
-        pickUpLocation: _pickUpLocationController.text,
+      _userLocations.map((location) {
+        if(location!.name == _pickUpLocationController.text) {
+          locationId = location.id;
+        }
+      }).toList();
+
+      amountToPay = await _wcrViewModel.createWCR(
+        wastePhoto: widget.imageFile,
+        pickUpLocation: locationId,
         wasteDesc: _descriptionController.text,
         wasteType: _wasteTypeController.text
       );
 
-      if(wcr != null) {
-        _wasteTypeController.clear();
-        _descriptionController.clear();
-        _pickUpLocationController.clear();
+      if(amountToPay != null) {
+        showAmountDialog(amountToPay);
       } else {
-         toast(message: l10n!.err_wrong);
+        toast(message: l10n!.err_wrong);
       }
 
       setState(() {
         _isLoading = false;
       });
     }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -94,7 +121,9 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
               ),
               child: AspectRatio(
                 aspectRatio: 9 / 6,
-                child: Image.file(File(widget.imageFile.path)),
+                child: _imageFile != null ?
+                Image.file(File(_imageFile!.path)) :
+                Container(),
               ),
             ),
             const SizedBox(height: 50,),
@@ -129,7 +158,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_descriptionFocusNode);
                       },
-                      options: const ["Tesano, Glass Hostel", "GWCL Dzorwulu", "Fiesta Royal Hotel Accra"],
+                      options: _userLocations.map((location) => location!.name).toList(),
                     ),
                     const SizedBox(height: 15,),
                     TextInput(

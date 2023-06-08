@@ -10,29 +10,30 @@ class WCRViewModel {
   final wcrUseCases = getIt<WCRUseCases>();
   final authProvider = getIt<AuthenticationProvider>();
 
-  Future<WCR?> createWCR({
+  Future<double?> createWCR({
     required XFile wastePhoto,
     required String pickUpLocation,
     required String wasteDesc,
     required String wasteType,
   }) async {
-    WCR? wcr;
+    double? amountToPay;
     try {
       final wastePhotoUrl = await wcrUseCases.uploadImageToSupabase(
         userId: authProvider.user!.id,
         wastePhoto: wastePhoto
       );
 
-      wcr = await wcrUseCases.createWCR(
+      amountToPay = await wcrUseCases.createWCR(
         jwt: authProvider.jwt!,
         wastePhoto: wastePhotoUrl!,
         pickUpLocation: pickUpLocation,
         wasteDesc: wasteDesc,
         wasteType: wasteType
       );
+
     } catch(error) {
       debugPrint("WCR view model createWCR error: $error");
     }
-    return wcr;
+    return amountToPay;
   }
 }

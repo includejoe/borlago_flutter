@@ -108,7 +108,7 @@ class UserRepositoryImpl extends UserRepository {
     required String locationId
   }) async {
     bool success = false;
-    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/user/location/detail/$locationId/");
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/user/location/delete/$locationId/");
     await http.delete(
         uri,
         headers: {
