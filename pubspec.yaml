@@ -27,6 +27,7 @@ dependencies:
   flutter_native_splash: ^2.3.0
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+  flutter_multi_formatter: ^2.11.1
   cupertino_icons: ^1.0.2
   flutter_localizations:
     sdk: flutter

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput({
@@ -14,6 +15,7 @@ class TextInput extends StatelessWidget {
     this.error,
     this.height,
     this.enabled,
+    this.inputFormatters,
     this.onFieldSubmitted,
   }) : super(key: key);
 
@@ -28,6 +30,7 @@ class TextInput extends StatelessWidget {
   final int? maxLines;
   final double? height;
   final bool? enabled;
+  final List<TextInputFormatter>? inputFormatters;
   final Function(String)? onFieldSubmitted;
 
 
@@ -55,6 +58,7 @@ class TextInput extends StatelessWidget {
             onFieldSubmitted: onFieldSubmitted,
             keyboardType: textInputType,
             textInputAction: inputAction,
+            inputFormatters: inputFormatters,
             maxLines: maxLines ?? 1,
             enabled: enabled ?? true,
             style: theme.textTheme.bodyMedium?.copyWith(

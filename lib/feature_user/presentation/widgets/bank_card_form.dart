@@ -8,6 +8,7 @@ import 'package:borlago/feature_user/presentation/screens/payment_methods_screen
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
 class BankCardForm extends StatefulWidget {
   const BankCardForm({
@@ -39,6 +40,10 @@ class _BankCardFormState extends State<BankCardForm> {
   final _expiryDateFocusNode = FocusNode();
   final _securityCodeFocusNode = FocusNode();
   final _zipCodeFocusNode = FocusNode();
+
+  final  _cardNumberInputFormatter = CreditCardNumberInputFormatter();
+  final  _expiryDateFormatter = CreditCardExpirationDateFormatter();
+  final _securityCodeInputFormatter = CreditCardCvcInputFormatter();
 
   String? _nameOnCardError;
   String? _cardNumberError;
@@ -154,6 +159,7 @@ class _BankCardFormState extends State<BankCardForm> {
             controller: _cardNumberController,
             textInputType: TextInputType.number,
             focusNode: _cardNumberFocusNode,
+            inputFormatters: [_cardNumberInputFormatter],
             inputAction: TextInputAction.next,
             placeholder: "#### #### #### ####",
             label: l10n.lbl_card_no,
@@ -169,6 +175,7 @@ class _BankCardFormState extends State<BankCardForm> {
                   controller: _expiryDateController,
                   textInputType: TextInputType.datetime,
                   focusNode: _expiryDateFocusNode,
+                  inputFormatters: [_expiryDateFormatter],
                   inputAction: TextInputAction.next,
                   placeholder: "MM/YY",
                   label: l10n.lbl_expiry_date,
@@ -183,6 +190,7 @@ class _BankCardFormState extends State<BankCardForm> {
                   controller: _securityCodeController,
                   textInputType: TextInputType.number,
                   focusNode: _securityCodeFocusNode,
+                  inputFormatters: [_securityCodeInputFormatter],
                   inputAction: TextInputAction.next,
                   placeholder: "###",
                   label: l10n.lbl_security_code,
@@ -199,7 +207,7 @@ class _BankCardFormState extends State<BankCardForm> {
             textInputType: TextInputType.number,
             focusNode: _zipCodeFocusNode,
             inputAction: TextInputAction.done,
-            placeholder: "####",
+            placeholder: "######",
             label: l10n.lbl_zip_code,
             onFieldSubmitted: (_) {
               FocusScope.of(context).dispose();
