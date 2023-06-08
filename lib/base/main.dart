@@ -13,13 +13,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
-// TODO: + create wcr request
 // TODO: + get user wcrs request
-// TODO: + locations screen ui
-// TODO: + add location request
+// TODO: use dateformatter like moment.js
 // TODO: + cache user locations using hive box
 // TODO: + payments screen ui
 // TODO: + add payment method request
+// TODO: create make payment ui
 // TODO: fix camera flashlight bug
 // TODO: + forgot password to login screen
 

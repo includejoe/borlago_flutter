@@ -1,4 +1,6 @@
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
+import 'package:borlago/base/utils/constants.dart';
+import 'package:borlago/feature_user/presentation/widgets/payment_methods_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,7 +36,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
           ),
         ),
         floatingActionButton: FloatActionButton(
-            onPressed: () {},
+            onPressed: () {
+              paymentMethodsDialog(context: context);
+            },
             icon: CupertinoIcons.add
         )
     );
