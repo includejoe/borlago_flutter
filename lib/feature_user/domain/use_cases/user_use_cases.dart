@@ -99,6 +99,34 @@ class UserUseCases {
     );
   }
 
+  Future<PaymentMethod?> updatePaymentMethod({
+    required String jwt,
+    required String paymentMethodId,
+    String? type,
+    String? name,
+    String? accountNumber,
+    String? nameOnCard,
+    String? expiryDate,
+    String? securityCode,
+    String? zipCode,
+  }) async {
+    Map<String, dynamic> body = {
+      "type": type,
+      "name": name,
+      "account_number": accountNumber,
+      "name_on_card": nameOnCard,
+      "expiry_date": expiryDate,
+      "security_code": securityCode,
+      "zip_code": zipCode,
+    };
+
+    return getIt<UserRepository>().updatePaymentMethod(
+        jwt: jwt,
+        paymentMethodId: paymentMethodId,
+        body: body
+    );
+  }
+
   Future<List<PaymentMethod?>?> getPaymentMethods({
     required String jwt,
   }) async {

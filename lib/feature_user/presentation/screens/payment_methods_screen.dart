@@ -1,6 +1,7 @@
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
+import 'package:borlago/feature_user/presentation/screens/settings_screen.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:borlago/feature_user/presentation/widgets/payment_method_item.dart';
 import 'package:borlago/feature_user/presentation/widgets/payment_methods_dialog.dart';
@@ -45,6 +46,16 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
           backgroundColor: theme.colorScheme.primary,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const SettingsScreen())
+              );
+            },
+          ),
           title: Text(
             l10n!.lbl_payment_method,
             style: theme.textTheme.headlineMedium?.copyWith(

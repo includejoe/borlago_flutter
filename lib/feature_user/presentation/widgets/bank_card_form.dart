@@ -4,6 +4,7 @@ import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
+import 'package:borlago/feature_user/presentation/screens/payment_methods_screen.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,8 +46,10 @@ class _BankCardFormState extends State<BankCardForm> {
   String? _securityCodeError;
   String? _zipCodeError;
 
-  void popContext() {
-    Navigator.of(context).pop();
+  void navigateToPaymentMethodsScreen() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const PaymentMethodsScreen())
+    );
   }
 
 
@@ -92,15 +95,28 @@ class _BankCardFormState extends State<BankCardForm> {
         _isLoading = true;
       });
 
-      paymentMethod = await _userViewModel.addPaymentMethod(
-        type: widget.type.type,
-        name: widget.type.name,
-        accountNumber: _cardNumberController.text,
-        nameOnCard: _nameOnCardController.text,
-        expiryDate: _expiryDateController.text,
-        securityCode: _securityCodeController.text,
-        zipCode: _zipCodeControllerController.text,
-      );
+      if (widget.method != null) {
+        paymentMethod = await _userViewModel.updatePaymentMethod(
+          paymentMethodId: widget.method!.id,
+          type: widget.type.type,
+          name: widget.type.name,
+          accountNumber: _cardNumberController.text,
+          nameOnCard: _nameOnCardController.text,
+          expiryDate: _expiryDateController.text,
+          securityCode: _securityCodeController.text,
+          zipCode: _zipCodeControllerController.text,
+        );
+      } else {
+        paymentMethod = await _userViewModel.addPaymentMethod(
+          type: widget.type.type,
+          name: widget.type.name,
+          accountNumber: _cardNumberController.text,
+          nameOnCard: _nameOnCardController.text,
+          expiryDate: _expiryDateController.text,
+          securityCode: _securityCodeController.text,
+          zipCode: _zipCodeControllerController.text,
+        );
+      }
 
       if(paymentMethod != null) {
         _cardNumberController.clear();
@@ -108,7 +124,7 @@ class _BankCardFormState extends State<BankCardForm> {
         _expiryDateController.clear();
         _securityCodeController.clear();
         _zipCodeControllerController.clear();
-        popContext();
+        navigateToPaymentMethodsScreen();
       } else {
         toast(message: l10n!.err_wrong);
       }
@@ -220,8 +236,9 @@ class _BankCardFormState extends State<BankCardForm> {
                   makeRequest();
                 }
               },
-              text: l10n.btn_submit
+              text: widget.method != null ? l10n.btn_update : l10n.btn_submit
           ),
+          widget.method != null ? const SizedBox(height: 80,) : const SizedBox(),
         ],
       ),
     );

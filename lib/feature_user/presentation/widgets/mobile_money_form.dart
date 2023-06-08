@@ -4,6 +4,7 @@ import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
+import 'package:borlago/feature_user/presentation/screens/payment_methods_screen.dart';
 import 'package:borlago/feature_user/presentation/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,8 +32,10 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
   final _momoNumberFocusNode = FocusNode();
   String? _momoNumberError;
 
-  void popContext() {
-    Navigator.of(context).pop();
+  void navigateToPaymentMethodsScreen() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const PaymentMethodsScreen())
+    );
   }
 
   @override
@@ -64,15 +67,24 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
         _isLoading = true;
       });
 
-      paymentMethod = await _userViewModel.addPaymentMethod(
-        type: widget.type.type,
-        name: widget.type.name,
-        accountNumber: _momoNumberController.text,
-      );
+      if(widget.method != null) {
+        paymentMethod = await _userViewModel.updatePaymentMethod(
+          paymentMethodId: widget.method!.id,
+          type: widget.type.type,
+          name: widget.type.name,
+          accountNumber: _momoNumberController.text,
+        );
+      } else {
+        paymentMethod = await _userViewModel.addPaymentMethod(
+          type: widget.type.type,
+          name: widget.type.name,
+          accountNumber: _momoNumberController.text,
+        );
+      }
 
       if(paymentMethod != null) {
         _momoNumberController.clear();
-        popContext();
+        navigateToPaymentMethodsScreen();
       } else {
         toast(message: l10n!.err_wrong);
       }
@@ -116,7 +128,7 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
                   makeRequest();
                 }
               },
-              text: l10n.btn_submit
+              text: widget.method != null ? l10n.btn_update : l10n.btn_submit
           ),
         ],
       )

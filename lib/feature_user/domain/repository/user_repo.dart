@@ -33,6 +33,12 @@ abstract class UserRepository {
     required Map<String, dynamic> body
   });
 
+  Future<PaymentMethod?> updatePaymentMethod({
+    required String jwt,
+    required String paymentMethodId,
+    required Map<String, dynamic> body
+  });
+
   Future<List<PaymentMethod?>?> getPaymentMethods({
     required String jwt,
   });

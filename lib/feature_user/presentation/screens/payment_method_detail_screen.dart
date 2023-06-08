@@ -29,7 +29,7 @@ class _PaymentMethodDetailScreenState extends State<PaymentMethodDetailScreen> {
   bool _isLoading = false;
 
   void navigateToPaymentMethodsScreen() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => const PaymentMethodsScreen())
     );
   }

@@ -153,6 +153,33 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
+  Future<PaymentMethod?> updatePaymentMethod({
+    required String jwt,
+    required String paymentMethodId,
+    required Map<String, dynamic> body
+  }) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/user/payment-method/detail/$paymentMethodId/");
+    PaymentMethod? response;
+    String jsonBody = json.encode(body);
+
+    await http.patch(
+        uri,
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $jwt"
+        }
+    ).then((data){
+      Map<String, dynamic> dataJson = jsonDecode(data.body);
+      response = PaymentMethod.fromJson(dataJson);
+    }).catchError((error) {
+      debugPrint("User repository updatePaymentMethod error: $error");
+    });
+
+    return response;
+  }
+
+  @override
   Future<List<PaymentMethod?>?> getPaymentMethods({
     required String jwt
   }) async {

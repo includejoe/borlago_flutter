@@ -107,6 +107,35 @@ class UserViewModel {
     return paymentMethod;
   }
 
+  Future<PaymentMethod?> updatePaymentMethod({
+    required String paymentMethodId,
+    String? type,
+    String? name,
+    String? accountNumber,
+    String? nameOnCard,
+    String? expiryDate,
+    String? securityCode,
+    String? zipCode,
+  }) async {
+    PaymentMethod? paymentMethod;
+    try {
+      paymentMethod = await userUseCases.updatePaymentMethod(
+          jwt: authProvider.jwt!,
+          paymentMethodId: paymentMethodId,
+          type: type,
+          name: name,
+          accountNumber: accountNumber,
+          nameOnCard: nameOnCard,
+          expiryDate: expiryDate,
+          securityCode: securityCode,
+          zipCode: zipCode
+      );
+    } catch(error) {
+      debugPrint("User view model updatePaymentMethod error: $error");
+    }
+    return paymentMethod;
+  }
+
   Future<List<PaymentMethod?>?> getPaymentMethods() async {
     List<PaymentMethod?>? paymentMethods;
     try {
