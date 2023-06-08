@@ -1,6 +1,7 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_method_detail_screen.dart';
+import 'package:borlago/feature_user/presentation/widgets/payment_method_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,11 +12,11 @@ Future<dynamic> paymentMethodsDialog({
   final theme = Theme.of(context);
   final l10n = AppLocalizations.of(context);
   final user = getIt.get<AuthenticationProvider>().user;
-  List<PaymentType> paymentMethods = [];
+  List<PaymentType> paymentTypes = [];
 
-  Constants.paymentMethods.forEach((key, value) {
+  Constants.paymentTypes.forEach((key, value) {
     if(key == user!.country) {
-      paymentMethods = value;
+      paymentTypes = value;
     }
   });
 
@@ -37,16 +38,16 @@ Future<dynamic> paymentMethodsDialog({
       ),
       backgroundColor: theme.colorScheme.surface,
       children: [
-        for (var method in paymentMethods)
+        for (var type in paymentTypes)
           SimpleDialogOption(
             onPressed: () {
               Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PaymentMethodDetailScreen(
-                        method: method,
-                      )
+                    builder: (context) => PaymentMethodDetailScreen(
+                      type: type,
+                    )
                   )
               );
             },
@@ -54,21 +55,8 @@ Future<dynamic> paymentMethodsDialog({
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      method.logo,
-                      height: 35,
-                      width: 35,
-                      fit: BoxFit.contain,
-                    ),
-                  )
-                ),
-                Text(method.name, style: theme.textTheme.bodyMedium?.copyWith(
+                PaymentMethodLogo(logoUrl: type.logo, size: 35),
+                Text(type.name, style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurface,
                   ),
                 ),

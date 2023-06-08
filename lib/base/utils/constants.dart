@@ -8,7 +8,7 @@ class Constants {
   static const List<String> wasteTypes = ["General", "Organic", "Hazardous"];
   static const List<String> languages = ["English", "Français"];
 
-  static Map<String, List<PaymentType>> paymentMethods = {
+  static Map<String, List<PaymentType>> paymentTypes = {
     "Ghana": [
       PaymentType(
         name: "MTN Mobile Money",

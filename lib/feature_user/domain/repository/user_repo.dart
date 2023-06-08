@@ -1,3 +1,4 @@
+import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:borlago/feature_user/domain/models/user_location.dart';
 
@@ -25,6 +26,20 @@ abstract class UserRepository {
   Future<bool> deleteLocation({
     required String jwt,
     required String locationId
+  });
+
+  Future<PaymentMethod?> addPaymentMethod({
+    required String jwt,
+    required Map<String, dynamic> body
+  });
+
+  Future<List<PaymentMethod?>?> getPaymentMethods({
+    required String jwt,
+  });
+
+  Future<bool> deletePaymentMethod({
+    required String jwt,
+    required String paymentMethodId
   });
 
   Future<String?> changePassword({

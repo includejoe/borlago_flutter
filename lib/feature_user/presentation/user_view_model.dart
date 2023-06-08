@@ -1,5 +1,6 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
+import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:borlago/feature_user/domain/models/user_location.dart';
 import 'package:borlago/feature_user/domain/use_cases/user_use_cases.dart';
@@ -79,10 +80,61 @@ class UserViewModel {
     return success;
   }
 
+  Future<PaymentMethod?> addPaymentMethod({
+    required String type,
+    required String name,
+    required String accountNumber,
+    String? nameOnCard,
+    String? expiryDate,
+    String? securityCode,
+    String? zipCode,
+  }) async {
+    PaymentMethod? paymentMethod;
+    try {
+      paymentMethod = await userUseCases.addPaymentMethod(
+        jwt: authProvider.jwt!,
+        type: type,
+        name: name,
+        accountNumber: accountNumber,
+        nameOnCard: nameOnCard,
+        expiryDate: expiryDate,
+        securityCode: securityCode,
+        zipCode: zipCode
+      );
+    } catch(error) {
+      debugPrint("User view model addPaymentMethod error: $error");
+    }
+    return paymentMethod;
+  }
+
+  Future<List<PaymentMethod?>?> getPaymentMethods() async {
+    List<PaymentMethod?>? paymentMethods;
+    try {
+      paymentMethods = await userUseCases.getPaymentMethods(jwt: authProvider.jwt!);
+    } catch(error) {
+      debugPrint("User view model getPaymentMethods error: $error");
+    }
+    return paymentMethods;
+  }
+
+  Future<bool> deletePaymentMethod({required String paymentMethodId}) async {
+    bool success = false;
+    try {
+      success = await userUseCases.deletePaymentMethod(
+        jwt: authProvider.jwt!,
+        paymentMethodId: paymentMethodId
+      );
+    } catch(error) {
+      debugPrint("User view model deletePaymentMethod error: $error");
+    }
+    return success;
+  }
+
+
   Future<bool> changePassword({
     required String currentPassword,
     required String newPassword,
-}) async {
+  }) async {
     bool success = false;
     try {
       String? response = await userUseCases.changePassword(

@@ -1,5 +1,8 @@
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/utils/constants.dart';
+import 'package:borlago/feature_user/domain/models/payment_method.dart';
+import 'package:borlago/feature_user/presentation/user_view_model.dart';
+import 'package:borlago/feature_user/presentation/widgets/payment_method_item.dart';
 import 'package:borlago/feature_user/presentation/widgets/payment_methods_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +17,30 @@ class PaymentMethodsScreen extends StatefulWidget {
 }
 
 class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
+  final UserViewModel _userViewModel = UserViewModel();
+  List<PaymentMethod?> _paymentMethods = [];
+
+  @override
+  void initState() {
+    _userViewModel.getPaymentMethods().then((methods) {
+      setState(() {
+        _paymentMethods = methods!;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+
+    final List<PaymentMethodItem> paymentMethodItems = _paymentMethods.map((paymentMethod) {
+      return PaymentMethodItem(
+        method: paymentMethod!,
+      );
+    }).toList();
+
     return Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
@@ -29,11 +52,12 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             ),
           ),
         ),
-        body: Center(
-          child: Text(
-            "PAYMENT METHODS SCREEN",
-            style: theme.textTheme.headlineMedium,
-          ),
+        body: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: paymentMethodItems.length,
+            itemBuilder: (context, index) {
+              return paymentMethodItems[index];
+            }
         ),
         floatingActionButton: FloatActionButton(
             onPressed: () {

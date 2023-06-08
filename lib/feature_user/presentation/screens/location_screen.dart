@@ -94,22 +94,12 @@ class _LocationsScreenState extends State<LocationsScreen> {
           ),
         ),
       ),
-      body: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(12),
-                bottomRight: Radius.circular(12)
-            ),
-            color: theme.scaffoldBackgroundColor,
-          ),
-          height: MediaQuery.of(context).size.height,
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: locationsItems.length,
-              itemBuilder: (context, index) {
-                return locationsItems[index];
-              }
-          )
+      body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: locationsItems.length,
+        itemBuilder: (context, index) {
+          return locationsItems[index];
+        }
       ),
       floatingActionButton: FloatActionButton(
         onPressed: () {

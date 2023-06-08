@@ -1,4 +1,5 @@
 import 'package:borlago/base/di/get_it.dart';
+import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:borlago/feature_user/domain/models/user_location.dart';
 import 'package:borlago/feature_user/domain/repository/user_repo.dart';
@@ -69,6 +70,48 @@ class UserUseCases {
     return getIt<UserRepository>().deleteLocation(
       jwt: jwt,
       locationId: locationId
+    );
+  }
+
+  Future<PaymentMethod?> addPaymentMethod({
+    required String jwt,
+    required String type,
+    required String name,
+    required String accountNumber,
+    String? nameOnCard,
+    String? expiryDate,
+    String? securityCode,
+    String? zipCode,
+  }) async {
+    Map<String, dynamic> body = {
+      "type": type,
+      "name": name,
+      "account_number": accountNumber,
+      "name_on_card": nameOnCard,
+      "expiry_date": expiryDate,
+      "security_code": securityCode,
+      "zip_code": zipCode,
+    };
+
+    return getIt<UserRepository>().addPaymentMethod(
+      jwt: jwt,
+      body: body
+    );
+  }
+
+  Future<List<PaymentMethod?>?> getPaymentMethods({
+    required String jwt,
+  }) async {
+    return getIt<UserRepository>().getPaymentMethods(jwt: jwt);
+  }
+
+  Future<bool> deletePaymentMethod({
+    required String jwt,
+    required String paymentMethodId,
+  }) async {
+    return getIt<UserRepository>().deletePaymentMethod(
+      jwt: jwt,
+      paymentMethodId: paymentMethodId
     );
   }
 
