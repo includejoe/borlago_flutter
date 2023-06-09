@@ -6,7 +6,7 @@ class WCR {
   late final String wastePhoto;
   late final int status;
   late final String createdAt;
-  late final String user;
+  late final String? price;
   late final String? collectionDatetime;
   late final String? collectorUnit;
 
@@ -18,7 +18,7 @@ class WCR {
     required this.wastePhoto,
     required this.status,
     required this.createdAt,
-    required this.user,
+    this.price,
     this.collectionDatetime,
     this.collectorUnit,
   });
@@ -32,7 +32,7 @@ class WCR {
     collectionDatetime = json['collection_datetime'];
     status = json['status'];
     createdAt = json['created_at'];
-    user = json['user'];
+    price = json["price"];
     collectorUnit = json['collector_unit'];
   }
 
@@ -47,7 +47,7 @@ class WCR {
     map['collection_datetime'] = collectionDatetime;
     map['status'] = status;
     map['created_at'] = createdAt;
-    map['user'] = user;
+    map["price"] = price;
     map['collector_unit'] = collectorUnit;
     return map;
   }

@@ -1,3 +1,4 @@
+import 'package:borlago/base/utils/datetime_formatter.dart';
 import 'package:borlago/feature_wcr/presentation/screens/wcr_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class WCRItem extends StatelessWidget {
     final theme = Theme.of(context);
     String statusText = "";
     Color statusColor = Colors.transparent;
+    String formattedTime = formatDateTime(time);
 
     if(status == 1) {
       statusText = "Pending";
@@ -93,7 +95,7 @@ class WCRItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          time,
+                          formattedTime,
                           style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,

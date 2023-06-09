@@ -11,12 +11,12 @@ import 'package:supabase/supabase.dart';
 
 class WCRRepositoryImpl extends WCRRepository {
   @override
-  Future<double?> createWCR({
+  Future<WCR?> createWCR({
     required String jwt,
     required Map<String, dynamic> body
   }) async {
     var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/create/");
-    double? response;
+    WCR? response;
     String jsonBody = json.encode(body);
 
     await http.post(
@@ -28,7 +28,7 @@ class WCRRepositoryImpl extends WCRRepository {
       }
     ).then((data) {
       Map<String, dynamic> dataJson = jsonDecode(data.body) ;
-      response = dataJson["amount_to_pay"];
+      response = WCR.fromJson(dataJson);
     }).catchError((error) {
       debugPrint("WCR repository createWCR error: $error");
     });
@@ -62,7 +62,7 @@ class WCRRepositoryImpl extends WCRRepository {
 
   @override
   Future<List<WCR?>?> listWCR({required String jwt}) async {
-    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/all/");
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/user/all/");
     List<WCR?>? response;
 
     await http.get(
