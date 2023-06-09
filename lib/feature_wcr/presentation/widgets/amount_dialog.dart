@@ -39,7 +39,10 @@ Future<dynamic> amountDialog({
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MakePaymentScreen(wcr: wcr,)
+                          builder: (context) => MakePaymentScreen(
+                            wcr: wcr,
+                            justCreated: true,
+                          )
                       )
                     );
                   },

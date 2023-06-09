@@ -1,4 +1,4 @@
-import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
+import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
 import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_user/presentation/screens/change_password_screen.dart';

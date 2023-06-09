@@ -85,8 +85,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final genderValidator = TextValidator(context);
     final countryValidator = TextValidator(context);
 
-
-
     void makeRequest() async {
       User? updatedUser;
       setState(() {
@@ -129,6 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
+        automaticallyImplyLeading: true,
         title: Text(
           l10n!.lbl_profile,
           style: theme.textTheme.headlineMedium?.copyWith(

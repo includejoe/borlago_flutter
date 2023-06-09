@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<dynamic> infoDialog({
   required BuildContext context,
   required String info,
+  void Function()? okAction
 }) {
   final theme = Theme.of(context);
   final l10n = AppLocalizations.of(context);
@@ -19,6 +17,7 @@ Future<dynamic> infoDialog({
         ),
         backgroundColor: theme.colorScheme.surface,
         children: [
+          const SizedBox(height: 20,),
           Text(
             info,
             style: theme.textTheme.bodyMedium,
@@ -28,6 +27,9 @@ Future<dynamic> infoDialog({
           SimpleDialogOption(
               onPressed: () {
                 Navigator.pop(context);
+                if(okAction != null) {
+                  okAction();
+                }
               },
               child: Center(
                 child: Container(
@@ -48,7 +50,8 @@ Future<dynamic> infoDialog({
                   ),
                 ),
               )
-          )
+          ),
+          const SizedBox(height: 20,),
         ],
       )
   );

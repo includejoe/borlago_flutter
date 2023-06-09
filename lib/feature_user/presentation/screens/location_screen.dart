@@ -1,4 +1,4 @@
-import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
+import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/presentation/widgets/info_dialog.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
@@ -109,6 +109,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
+        automaticallyImplyLeading: true,
         title: Text(
           l10n!.lbl_locations,
           style: theme.textTheme.headlineMedium?.copyWith(

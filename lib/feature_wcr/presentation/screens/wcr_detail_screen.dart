@@ -1,15 +1,13 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
-import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
+import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
-import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/utils/datetime_formatter.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/base/utils/wcr_status.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/screens/make_payment_screen.dart';
-import 'package:borlago/feature_wcr/presentation/screens/wcrs_screen.dart';
 import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +25,7 @@ class WCRDetailScreen extends StatefulWidget {
 class _WCRDetailScreenState extends State<WCRDetailScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
 
-  void navigateToWCRsScreen() {
+  void popContext() {
     Navigator.of(context).pop();
   }
 
@@ -50,7 +48,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
       );
 
       if (success) {
-        navigateToWCRsScreen();
+        popContext();
       } else {
         toast(message: l10n!.err_wrong);
       }
@@ -60,7 +58,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
       WCR? wcr;
       wcr = await _wcrViewModel.cancelWCR(wcrId: widget.wcr.id);
       if (wcr != null) {
-        navigateToWCRsScreen();
+        popContext();
       } else {
         toast(message: l10n!.err_wrong);
       }
@@ -284,7 +282,10 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                           if(widget.wcr.status == 1) {
                             Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) {
-                                  return MakePaymentScreen(wcr: widget.wcr);
+                                  return MakePaymentScreen(
+                                    wcr: widget.wcr,
+                                    justCreated: false,
+                                  );
                                 })
                             );
                           } else if(widget.wcr.status == 2) {

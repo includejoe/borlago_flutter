@@ -58,26 +58,19 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
-    final List<PaymentMethodItem> paymentMethodItems = _paymentMethods.map((paymentMethod) {
-      return PaymentMethodItem(
-        method: paymentMethod!,
-      );
+    final List<PaymentMethodItem> paymentMethodItems = _paymentMethods.map(
+      (paymentMethod) {
+        return PaymentMethodItem(
+          method: paymentMethod!,
+          fetchPaymentMethods: fetchPaymentMethods,
+        );
     }).toList();
 
     return Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
           backgroundColor: theme.colorScheme.primary,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const SettingsScreen())
-              );
-            },
-          ),
+          automaticallyImplyLeading: true,
           title: Text(
             l10n!.lbl_payment_method,
             style: theme.textTheme.headlineMedium?.copyWith(
