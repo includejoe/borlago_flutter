@@ -1,4 +1,5 @@
 import 'package:borlago/base/presentation/widgets/button.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
@@ -110,14 +111,7 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
             },
           ),
           const SizedBox(height: 25,),
-          _isLoading ? SizedBox(
-            height: 24,
-            width: 24,
-            child: CircularProgressIndicator(
-                strokeWidth: 3,
-                color: theme.colorScheme.primary
-            ),
-          ) : Button(
+          _isLoading ? const Loader(size: 24) : Button(
               onTap: () {
                 setState(() {
                   _momoNumberError = numberValidator(_momoNumberController.text);

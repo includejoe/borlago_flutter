@@ -1,4 +1,5 @@
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
@@ -126,14 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                   ),
                   const SizedBox(height: 25,),
-                  _isLoading ? SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: theme.colorScheme.primary
-                    ),
-                  ) : Button(
+                  _isLoading ? const Loader(size: 24) : Button(
                     onTap: () {
                       setState(() {
                         _emailError = emailValidator(_emailController.text);

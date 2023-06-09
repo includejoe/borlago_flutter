@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:borlago/base/presentation/widgets/button.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
+import 'package:borlago/base/presentation/widgets/page_refresher.dart';
 import 'package:borlago/base/presentation/widgets/select_input.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/constants.dart';
@@ -26,10 +28,11 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
   final UserViewModel _userViewModel = UserViewModel();
   late XFile? _imageFile;
-
   final _formKey = GlobalKey<FormState>();
   List<UserLocation?> _userLocations = [];
   bool _isLoading = false;
+  bool _isLocationsLoading = false;
+  bool _fetchLocationsError = false;
 
   final _wasteTypeController = TextEditingController();
   final _pickUpLocationController = TextEditingController();
@@ -43,14 +46,32 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
   String? _pickUpLocationError;
   String? _descriptionError;
 
+  void fetchLocations() async {
+    List<UserLocation?>? locations;
+    setState(() {
+      _isLocationsLoading = true;
+      _fetchLocationsError = false;
+    });
+
+    locations = await _userViewModel.getUserLocations();
+
+    if(locations != null) {
+      setState(() {
+        _userLocations = locations!;
+        _isLocationsLoading = false;
+      });
+    } else {
+      setState(() {
+        _fetchLocationsError = true;
+        _isLocationsLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     _imageFile = widget.imageFile;
-    _userViewModel.getUserLocations().then((locations) {
-      setState(() {
-        _userLocations = locations!;
-      });
-    });
+    fetchLocations();
     super.initState();
   }
 
@@ -97,7 +118,6 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
       });
     }
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
@@ -109,7 +129,9 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: _isLocationsLoading ? const Center(child: Loader(size: 30),) :
+        _fetchLocationsError ? PageRefresher(onRefresh: fetchLocations) :
+        SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -176,14 +198,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
                       },
                     ),
                     const SizedBox(height: 15,),
-                    _isLoading ? SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 3,
-                          color: theme.colorScheme.primary
-                      ),
-                    ) : Button(
+                    _isLoading ? const Loader(size: 24) : Button(
                         onTap: () {
                           setState(() {
                             _wasteTypeError = wasteTypeValidator(_wasteTypeController.text);

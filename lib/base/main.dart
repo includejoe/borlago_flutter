@@ -15,7 +15,6 @@ import 'presentation/widgets/main_page_view.dart';
 
 // TODO: + get user wcrs request
 // TODO: create make payment ui
-// TODO: + error screen on all fetch screens
 // TODO: use dateformatter like moment.js
 // TODO: + cache user locations using hive box
 // TODO: fix camera flashlight bug

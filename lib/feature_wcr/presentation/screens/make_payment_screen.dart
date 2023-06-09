@@ -3,15 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key, required this.amountToPay});
+class MakePaymentScreen extends StatefulWidget {
+  const MakePaymentScreen({super.key, required this.amountToPay});
   final double amountToPay;
 
   @override
-  State<PaymentScreen> createState() => _PaymentScreenState();
+  State<MakePaymentScreen> createState() => _MakePaymentScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
+class _MakePaymentScreenState extends State<MakePaymentScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);

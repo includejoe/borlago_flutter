@@ -5,7 +5,6 @@ import 'package:borlago/feature_user/presentation/screens/change_password_screen
 import 'package:borlago/feature_user/presentation/screens/languages_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/location_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_methods_screen.dart';
-import 'package:borlago/feature_wcr/presentation/screens/payment_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/proile_screen.dart';
 import 'package:borlago/feature_user/presentation/widgets/settings_item.dart';
 import 'package:borlago/feature_user/presentation/widgets/theme_switch.dart';
