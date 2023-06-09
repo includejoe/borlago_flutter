@@ -47,4 +47,39 @@ class WCRViewModel {
 
     return wcrs;
   }
+
+  Future<WCR?> cancelWCR({required String wcrId}) async {
+    WCR? wcr;
+    try {
+      wcr = await wcrUseCases.cancelWCR(jwt: authProvider.jwt!, wcrId: wcrId);
+    } catch(error) {
+      debugPrint("WCR view model cancelWCR error: $error");
+    }
+
+    return wcr;
+  }
+
+  Future<bool> deleteWCR({
+    required String wcrId,
+    required String photoUrl
+  }) async {
+    bool success = false;
+    bool supabaseSuccess = false;
+    try {
+      supabaseSuccess = await wcrUseCases.deleteImageFromSupabase(
+        photoUrl: photoUrl
+      );
+
+      if(supabaseSuccess) {
+        success = await wcrUseCases.deleteWCR(
+          jwt: authProvider.jwt!,
+          wcrId: wcrId
+        );
+      }
+    } catch(error) {
+      debugPrint("WCR view model deleteWCR error: $error");
+    }
+
+    return success;
+  }
 }

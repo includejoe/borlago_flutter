@@ -13,10 +13,24 @@ abstract class WCRRepository {
     required String wcrId
   });
 
+  Future<WCR?> cancelWCR({
+    required String jwt,
+    required String wcrId
+  });
+
+  Future<bool> deleteWCR({
+    required String jwt,
+    required String wcrId
+  });
+
   Future<List<WCR?>?> listWCR({required String jwt});
 
   Future<String?> uploadImageToSupabase({
     required String userId,
     required XFile wastePhoto
+  });
+
+  Future<bool> deleteImageFromSupabase({
+    required String photoUrl,
   });
 }

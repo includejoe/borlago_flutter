@@ -54,7 +54,10 @@ class _WCRsScreenState extends State<WCRsScreen> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
-    final wcrItems = _wcrs.map((wcr) => WCRItem(wcr: wcr!,)).toList();
+    final wcrItems = _wcrs.map((wcr) => WCRItem(
+      wcr: wcr!,
+      fetchWCRs: fetchWCRs,
+    )).toList();
 
     return Scaffold(
       backgroundColor: Colors.black,

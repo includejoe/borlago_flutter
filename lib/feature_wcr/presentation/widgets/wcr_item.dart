@@ -9,10 +9,10 @@ class WCRItem extends StatelessWidget {
   const WCRItem({
     super.key,
     required this.wcr,
-
+    required this.fetchWCRs,
   });
-
   final WCR wcr;
+  final void Function() fetchWCRs;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class WCRItem extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => WCRDetailScreen(wcr: wcr)
             )
-          );
+          ).then((value) => fetchWCRs());
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -97,6 +97,7 @@ class WCRItem extends StatelessWidget {
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
                         color: wcrStatusData["statusColor"]
                       )
                     )

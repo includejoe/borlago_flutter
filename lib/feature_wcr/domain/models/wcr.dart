@@ -1,4 +1,5 @@
 class WCR {
+  late final String id;
   late final String pickUpLocation;
   late final String publicId;
   late final String wasteType;
@@ -11,6 +12,7 @@ class WCR {
   late final String? collectorUnit;
 
   WCR({
+    required this.id,
     required this.pickUpLocation,
     required this.publicId,
     required this.wasteType,
@@ -24,6 +26,7 @@ class WCR {
   });
 
   WCR.fromJson(dynamic json) {
+    id = json["id"];
     pickUpLocation = json['pick_up_location'];
     publicId = json['public_id'];
     wasteType = json['waste_type'];
@@ -39,6 +42,7 @@ class WCR {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map["id"] = id;
     map['pick_up_location'] = pickUpLocation;
     map['public_id'] = publicId;
     map['waste_type'] = wasteType;

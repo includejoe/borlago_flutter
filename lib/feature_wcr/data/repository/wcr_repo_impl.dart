@@ -41,7 +41,7 @@ class WCRRepositoryImpl extends WCRRepository {
     required String jwt,
     required String wcrId
   }) async {
-    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/detail/$wcrId");
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/detail/$wcrId/");
     WCR? response;
 
     await http.post(
@@ -58,6 +58,53 @@ class WCRRepositoryImpl extends WCRRepository {
     });
 
     return response;
+  }
+
+  @override
+  Future<WCR?> cancelWCR({
+    required String jwt,
+    required String wcrId
+  }) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/cancel/$wcrId/");
+    WCR? response;
+
+    await http.patch(
+        uri,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $jwt"
+        }
+    ).then((data) {
+      Map<String, dynamic> dataJson = jsonDecode(data.body) ;
+      response = WCR.fromJson(dataJson);
+    }).catchError((error) {
+      debugPrint("WCR repository cancelWCR error: $error");
+    });
+
+    return response;
+  }
+
+  @override
+  Future<bool> deleteWCR({
+    required String jwt,
+    required String wcrId
+  }) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/wcr/detail/$wcrId/");
+    bool success = false;
+
+    await http.delete(
+        uri,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $jwt"
+        }
+    ).then((data) {
+      success = true;
+    }).catchError((error) {
+      debugPrint("WCR repository deleteWCR error: $error");
+    });
+
+    return success;
   }
 
   @override
@@ -106,4 +153,22 @@ class WCRRepositoryImpl extends WCRRepository {
     return response;
   }
 
+  @override
+  Future<bool> deleteImageFromSupabase({
+    required String photoUrl,
+  }) async {
+    final supabase = getIt.get<SupabaseClient>();
+    bool success = false;
+    final filePath = photoUrl.substring(photoUrl.indexOf("waste_photos/") + 13);
+    try {
+      await supabase.storage.from("waste_photos")
+      .remove([filePath]).then((value) {
+        success = true;
+      });
+    } catch(error) {
+      debugPrint('Supabase storage delete error : $error');
+    }
+
+    return success;
+  }
 }

@@ -2,12 +2,14 @@ import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
-import 'package:borlago/base/utils/constants.dart';
+import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/utils/datetime_formatter.dart';
+import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/base/utils/wcr_status.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/screens/make_payment_screen.dart';
+import 'package:borlago/feature_wcr/presentation/screens/wcrs_screen.dart';
 import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,9 +27,10 @@ class WCRDetailScreen extends StatefulWidget {
 class _WCRDetailScreenState extends State<WCRDetailScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
 
-  void deleteWCR() {
-
+  void navigateToWCRsScreen() {
+    Navigator.of(context).pop();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,30 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
     final createdAt = formatDateTime(widget.wcr.createdAt);
     final collectedAt = formatDateTime(widget.wcr.collectionDatetime);
     final currency = getIt.get<AuthenticationProvider>().currency;
+
+    void deleteWCR() async {
+      bool success = false;
+      success = await _wcrViewModel.deleteWCR(
+        wcrId: widget.wcr.id,
+        photoUrl: widget.wcr.wastePhoto
+      );
+
+      if (success) {
+        navigateToWCRsScreen();
+      } else {
+        toast(message: l10n!.err_wrong);
+      }
+    }
+
+    void cancelWCR() async {
+      WCR? wcr;
+      wcr = await _wcrViewModel.cancelWCR(wcrId: widget.wcr.id);
+      if (wcr != null) {
+        navigateToWCRsScreen();
+      } else {
+        toast(message: l10n!.err_wrong);
+      }
+    }
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -173,7 +200,10 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     const SizedBox(width: 5,),
                     Text(
                       wcrStatusData["statusText"],
-                      style: theme.textTheme.bodyMedium
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color:  wcrStatusData["statusColor"],
+                        fontStyle: FontStyle.italic
+                      )
                     ),
                   ],
                 ),
@@ -241,18 +271,29 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                   ],
                 ),
-                widget.wcr.status == 1 ?
+                widget.wcr.status == 1 || widget.wcr.status == 2 ?
                   Column(
                     children: [
                       const SizedBox(height: 20,),
                       Button(
-                        text: l10n.btn_c_make_payment,
+                        backgroundColor: widget.wcr.status == 2 ? theme.colorScheme.error :
+                          theme.colorScheme.primary,
+                        text: widget.wcr.status == 1 ? l10n.btn_c_make_payment :
+                          widget.wcr.status == 2 ? l10n.btn_cancel_request : "",
                         onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) {
-                              return MakePaymentScreen(wcr: widget.wcr);
-                            })
-                          );
+                          if(widget.wcr.status == 1) {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) {
+                                  return MakePaymentScreen(wcr: widget.wcr);
+                                })
+                            );
+                          } else if(widget.wcr.status == 2) {
+                            confirmationDialog(
+                              context: context,
+                              title: l10n.txt_cancel_request,
+                              yesAction: cancelWCR
+                            );
+                          }
                         }
                       )
                     ],
@@ -263,7 +304,8 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
           ),
         ],
       ),
-      floatingActionButton: widget.wcr.status == 1 ? FloatActionButton(
+      floatingActionButton: widget.wcr.status == 1 ?
+      FloatActionButton(
         onPressed: () {
           confirmationDialog(
             context: context,

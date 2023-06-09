@@ -29,6 +29,20 @@ class WCRUseCases {
     return getIt.get<WCRRepository>().getWCR(jwt: jwt, wcrId: wcrId);
   }
 
+  Future<WCR?> cancelWCR({
+    required String jwt,
+    required String wcrId
+  }) async {
+    return getIt.get<WCRRepository>().cancelWCR(jwt: jwt, wcrId: wcrId);
+  }
+
+  Future<bool> deleteWCR({
+    required String jwt,
+    required String wcrId
+  }) async {
+    return getIt.get<WCRRepository>().deleteWCR(jwt: jwt, wcrId: wcrId);
+  }
+
   Future<List<WCR?>?> listWCR({
     required String jwt
   }) async {
@@ -38,10 +52,18 @@ class WCRUseCases {
   Future<String?> uploadImageToSupabase({
     required String userId,
     required XFile wastePhoto,
-}) async {
+  }) async {
     return getIt.get<WCRRepository>().uploadImageToSupabase(
       userId: userId,
       wastePhoto: wastePhoto
+    );
+  }
+
+  Future<bool> deleteImageFromSupabase({
+    required String photoUrl,
+  }) async {
+    return getIt.get<WCRRepository>().deleteImageFromSupabase(
+        photoUrl: photoUrl
     );
   }
 }
