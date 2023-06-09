@@ -99,9 +99,7 @@ class _PaymentMethodDetailScreenState extends State<PaymentMethodDetailScreen> {
           confirmationDialog(
             context: context,
             title: l10n.txt_confirm_delete,
-            yesAction: () {
-              deletePaymentMethod();
-            }
+            yesAction: deletePaymentMethod
           );
         },
         icon: Icons.delete,

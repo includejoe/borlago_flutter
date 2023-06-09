@@ -46,7 +46,7 @@ class Constants {
     "Cape Verde": "CVE",
     "Ivory Coast": "XOF",
     "Gambia": "GMD",
-    "Ghana": "GHS",
+    "Ghana": "GHC",
     "Guinea": "GNF",
     "Guinea-Bissau": "XOF",
     "Liberia": "LRD",

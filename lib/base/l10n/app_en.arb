@@ -15,6 +15,10 @@
   "txt_male": "Male",
   "txt_female": "Female",
   "txt_other": "Other",
+  "txt_pending": "Pending",
+  "txt_progress": "In Progress",
+  "txt_completed": "Completed",
+  "txt_canceled": "Canceled",
 
   "plh_gender": "Select your gender",
   "plh_country": "Select your country",
@@ -53,7 +57,7 @@
   "lbl_collector_unit": "Collector unit",
   "lbl_status": "Status",
   "lbl_location": "Location",
-  "lbl_payment": "Payment Amount",
+  "lbl_price": "Price",
   "lbl_created_at": "Created At",
   "lbl_collected_at": "Collected At",
   "lbl_current_password": "Current Password",
@@ -87,6 +91,7 @@
   "btn_no": "No",
   "btn_cancel": "Cancel",
   "btn_make_payment": "Make Payment",
+  "btn_c_make_payment": "MAKE PAYMENT",
 
   "err_empty_field": "This field cannot be empty",
   "err_invalid_email": "Enter a valid email address",

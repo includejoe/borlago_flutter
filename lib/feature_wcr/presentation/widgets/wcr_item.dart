@@ -1,4 +1,6 @@
 import 'package:borlago/base/utils/datetime_formatter.dart';
+import 'package:borlago/base/utils/wcr_status.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/screens/wcr_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,39 +8,17 @@ import 'package:flutter/material.dart';
 class WCRItem extends StatelessWidget {
   const WCRItem({
     super.key,
-    required this.id,
-    required this.time,
-    required this.status,
-    required this.wasteType,
+    required this.wcr,
 
   });
 
-  final String id;
-  final String time;
-  final int status;
-  final String wasteType;
+  final WCR wcr;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    String statusText = "";
-    Color statusColor = Colors.transparent;
-    String formattedTime = formatDateTime(time);
-
-    if(status == 1) {
-      statusText = "Pending";
-      statusColor = Colors.grey.shade600;
-    } else if(status == 2) {
-      statusText = "In Progress";
-      statusColor = Colors.yellow.shade900;
-    } else if(status == 3) {
-      statusText = "Completed";
-      statusColor = Colors.green.shade900;
-    } else if(status == 4) {
-      statusText = "Canceled";
-      statusColor = Colors.red.shade600;
-    }
-
+    String? formattedTime = formatDateTime(wcr.createdAt);
+    final wcrStatusData = wcrStatus(context, wcr.status);
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -57,7 +37,7 @@ class WCRItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => WCRDetailScreen(wcrId: id)
+              builder: (context) => WCRDetailScreen(wcr: wcr)
             )
           );
         },
@@ -76,7 +56,7 @@ class WCRItem extends StatelessWidget {
                 child: Icon(
                   CupertinoIcons.trash_fill,
                   size: 30,
-                  color: statusColor
+                  color: wcrStatusData["statusColor"]
                 ),
               ),
               const SizedBox(width: 10,),
@@ -89,13 +69,13 @@ class WCRItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          id,
+                          wcr.publicId,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          formattedTime,
+                          formattedTime!,
                           style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -105,19 +85,19 @@ class WCRItem extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      wasteType,
+                      wcr.wasteType,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 12,
                       )
                     ),
                     Text(
-                      statusText,
+                      wcrStatusData["statusText"],
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: statusColor
+                        color: wcrStatusData["statusColor"]
                       )
                     )
                   ],

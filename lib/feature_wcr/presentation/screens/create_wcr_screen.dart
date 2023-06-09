@@ -75,8 +75,8 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
     super.initState();
   }
 
-  void showAmountDialog(double amount) {
-    amountDialog(context: context, amount: amount);
+  void showAmountDialog(WCR wcr) {
+    amountDialog(context: context, wcr: wcr);
   }
 
   @override
@@ -108,7 +108,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
       );
 
       if(wcr != null) {
-        showAmountDialog(wcr.price as double);
+        showAmountDialog(wcr);
       } else {
         toast(message: l10n!.err_wrong);
       }

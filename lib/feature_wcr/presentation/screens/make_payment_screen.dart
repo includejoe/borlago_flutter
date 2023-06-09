@@ -1,11 +1,12 @@
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MakePaymentScreen extends StatefulWidget {
-  const MakePaymentScreen({super.key, required this.amountToPay});
-  final double amountToPay;
+  const MakePaymentScreen({super.key, required this.wcr});
+  final WCR wcr;
 
   @override
   State<MakePaymentScreen> createState() => _MakePaymentScreenState();
