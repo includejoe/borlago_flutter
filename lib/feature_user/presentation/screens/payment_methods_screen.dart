@@ -9,6 +9,7 @@ import 'package:borlago/feature_user/presentation/widgets/payment_methods_dialog
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PaymentMethodsScreen extends StatefulWidget {
   const PaymentMethodsScreen({super.key});
@@ -19,6 +20,7 @@ class PaymentMethodsScreen extends StatefulWidget {
 
 class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   final UserViewModel _userViewModel = UserViewModel();
+  final _refreshController = RefreshController(initialRefresh: false);
   List<PaymentMethod?> _paymentMethods = [];
   bool _isLoading = false;
   bool _isError = false;
@@ -85,13 +87,21 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
         ),
         body: _isLoading ? const Center(child: Loader(size: 30,),) :
             _isError ? PageRefresher(onRefresh: fetchPaymentMethods) :
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: paymentMethodItems.length,
-              itemBuilder: (context, index) {
-                return paymentMethodItems[index];
-              }
-        ),
+            SmartRefresher(
+              controller: _refreshController,
+              onRefresh: fetchPaymentMethods,
+              header: MaterialClassicHeader(
+                color: theme.colorScheme.primary,
+                backgroundColor: theme.colorScheme.surface,
+              ),
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: paymentMethodItems.length,
+                  itemBuilder: (context, index) {
+                    return paymentMethodItems[index];
+                  }
+              ),
+            ),
         floatingActionButton: FloatActionButton(
             onPressed: () {
               paymentMethodsDialog(context: context);

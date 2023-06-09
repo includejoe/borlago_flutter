@@ -1,3 +1,4 @@
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/page_refresher.dart';
 import 'package:borlago/feature_wcr/domain/models/wcr.dart';
@@ -15,6 +16,7 @@ class WCRsScreen extends StatefulWidget {
 
 class _WCRsScreenState extends State<WCRsScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
+  final _refreshController = RefreshController(initialRefresh: false);
   bool _isLoading = false;
   bool _isError = false;
   List<WCR?> _wcrs = [];
@@ -84,12 +86,20 @@ class _WCRsScreenState extends State<WCRsScreen> {
           height: MediaQuery.of(context).size.height,
           child: _isLoading ? const Center(child: Loader(size: 30),) :
             _isError ? PageRefresher(onRefresh: fetchWCRs) :
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: wcrItems.length,
-              itemBuilder: (context, index) {
-                return wcrItems[index];
-              }
+            SmartRefresher(
+              controller: _refreshController,
+              onRefresh: fetchWCRs,
+              header: MaterialClassicHeader(
+                color: theme.colorScheme.primary,
+                backgroundColor: theme.colorScheme.background,
+              ),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: wcrItems.length,
+                itemBuilder: (context, index) {
+                  return wcrItems[index];
+                }
+              ),
             )
       ),
     );
