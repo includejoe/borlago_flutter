@@ -1,11 +1,8 @@
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
-import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_0.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/register_field_set_1.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -15,9 +12,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final AuthenticationViewModel _authViewModel = AuthenticationViewModel();
   final _formKey = GlobalKey<FormState>();
   int _currentFieldSet = 0;
-  AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
   final _emailController = TextEditingController();
@@ -45,11 +42,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     Future<bool> makeRegisterRequest() async {
       bool success = false;
-      success = await authViewModel.register(
+      success = await _authViewModel.register(
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
           email: _emailController.text,
@@ -90,11 +85,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         emailController: _emailController,
         firstNameController: _firstNameController,
         lastNameController: _lastNameController,
-        phoneController: _phoneController,
+        countryController: _countryController,
         nextFieldSet: nextFieldSet
       ),
       RegisterFieldSet1(
         genderController: _genderController,
+        phoneController: _phoneController,
         countryController: _countryController,
         passwordController: _passwordController,
         confirmPasswordController: _confirmPasswordController,
@@ -114,9 +110,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.08,),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.28,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     child: const Center(child: AppLogo()),
                   ),
                   fieldSets[_currentFieldSet],

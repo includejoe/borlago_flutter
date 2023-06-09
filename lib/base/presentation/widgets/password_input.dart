@@ -10,7 +10,8 @@ class PasswordInput extends StatefulWidget {
     required this.inputAction,
     this.placeholder,
     this.error,
-    this.label
+    this.label,
+    this.showIcon
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -20,7 +21,7 @@ class PasswordInput extends StatefulWidget {
   final String? placeholder;
   final String? error;
   final String? label;
-
+  final bool? showIcon;
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -76,8 +77,11 @@ class _PasswordInputState extends State<PasswordInput> {
                         color: widget.error != null ? theme.colorScheme.error : Colors.transparent
                     )
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                prefixIcon: Icon(CupertinoIcons.lock_fill, color: theme.colorScheme.primary,),
+                contentPadding: widget.showIcon == true ? const EdgeInsets.symmetric(vertical: 8,) :
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                prefixIcon: widget.showIcon == true ?
+                Icon(CupertinoIcons.lock_fill, color: theme.colorScheme.primary,) :
+                null,
                 suffixIcon: IconButton(
                   highlightColor: Colors.transparent,
                   icon: Icon(

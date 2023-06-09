@@ -2,6 +2,7 @@ import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/providers/localization_provider.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:camera/camera.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -12,13 +13,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
-// TODO: + wcr detail screen ui
-// TODO: + create wcr request
-// TODO: + edit profile screen ui
-// TODO: + edit profile request
-// TODO: + locations screen ui
-// TODO: + add location request
-// TODO: + payments screen ui
+// TODO: + get user wcrs request
+// TODO: create make payment ui
+// TODO: use dateformatter like moment.js
+// TODO: + cache user locations using hive box
+// TODO: fix camera flashlight bug
+// TODO: + forgot password to login screen
 
 
 Future main() async {
@@ -29,6 +29,8 @@ Future main() async {
     DeviceOrientation.portraitUp,
   ]);
 
+  await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
+
   loadAppResources();
   runApp(const MyApp());
 }
@@ -38,7 +40,7 @@ void loadAppResources({BuildContext? context}) async {
   final cameras = await availableCameras();
   initialize(backCamera: cameras.first);
 
-  await Future.delayed(const Duration(seconds: 3));
+  await Future.delayed(const Duration(seconds: 1));
   FlutterNativeSplash.remove();
 }
 

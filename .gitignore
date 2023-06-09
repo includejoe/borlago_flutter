@@ -1,3 +1,6 @@
+# My custom files
+lib/base/utils/constants.dart
+
 # Miscellaneous
 *.class
 *.log

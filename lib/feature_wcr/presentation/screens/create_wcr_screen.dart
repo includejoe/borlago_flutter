@@ -1,14 +1,20 @@
 import 'dart:io';
 import 'package:borlago/base/presentation/widgets/button.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
+import 'package:borlago/base/presentation/widgets/page_refresher.dart';
 import 'package:borlago/base/presentation/widgets/select_input.dart';
 import 'package:borlago/base/presentation/widgets/text_input.dart';
 import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/base/utils/form_validators/text.dart';
 import 'package:borlago/base/utils/toast.dart';
+import 'package:borlago/feature_user/domain/models/user_location.dart';
+import 'package:borlago/feature_user/presentation/user_view_model.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
+import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
+import 'package:borlago/feature_wcr/presentation/widgets/amount_dialog.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateWCRScreen extends StatefulWidget {
   const CreateWCRScreen({super.key, required this.imageFile});
@@ -19,8 +25,14 @@ class CreateWCRScreen extends StatefulWidget {
 }
 
 class _CreateWCRScreenState extends State<CreateWCRScreen> {
+  final WCRViewModel _wcrViewModel = WCRViewModel();
+  final UserViewModel _userViewModel = UserViewModel();
+  late XFile? _imageFile;
   final _formKey = GlobalKey<FormState>();
+  List<UserLocation?> _userLocations = [];
   bool _isLoading = false;
+  bool _isLocationsLoading = false;
+  bool _fetchLocationsError = false;
 
   final _wasteTypeController = TextEditingController();
   final _pickUpLocationController = TextEditingController();
@@ -34,7 +46,38 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
   String? _pickUpLocationError;
   String? _descriptionError;
 
+  void fetchLocations() async {
+    List<UserLocation?>? locations;
+    setState(() {
+      _isLocationsLoading = true;
+      _fetchLocationsError = false;
+    });
 
+    locations = await _userViewModel.getUserLocations();
+
+    if(locations != null) {
+      setState(() {
+        _userLocations = locations!;
+        _isLocationsLoading = false;
+      });
+    } else {
+      setState(() {
+        _fetchLocationsError = true;
+        _isLocationsLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _imageFile = widget.imageFile;
+    fetchLocations();
+    super.initState();
+  }
+
+  void showAmountDialog(double amount) {
+    amountDialog(context: context, amount: amount);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,26 +87,35 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
     final pickUpLocationValidator = TextValidator(context);
 
     void makeRequest() async {
+      String locationId = "";
+      double? amountToPay;
+
       setState(() {
         _isLoading = true;
       });
 
-      // bool success = await authViewModel.login(
-      //     email: _emailController.text,
-      //     password: _passwordController.text
-      // );
+      _userLocations.map((location) {
+        if(location!.name == _pickUpLocationController.text) {
+          locationId = location.id;
+        }
+      }).toList();
+
+      amountToPay = await _wcrViewModel.createWCR(
+        wastePhoto: widget.imageFile,
+        pickUpLocation: locationId,
+        wasteDesc: _descriptionController.text,
+        wasteType: _wasteTypeController.text
+      );
+
+      if(amountToPay != null) {
+        showAmountDialog(amountToPay);
+      } else {
+        toast(message: l10n!.err_wrong);
+      }
 
       setState(() {
         _isLoading = false;
       });
-
-      // if(success) {
-      //   _emailController.clear();
-      //   _passwordController.clear();
-      //   navigateToMainScreen();
-      // } else {
-      //    toast(message: l10n!.err_wrong);
-      // }
     }
 
     return Scaffold(
@@ -71,13 +123,15 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
         backgroundColor: theme.colorScheme.primary,
         centerTitle: false,
         title: Text(
-          l10n!.create_wcr,
+          l10n!.lbl_create_wcr,
           style: theme.textTheme.headlineMedium?.copyWith(
             color: theme.colorScheme.onPrimary
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: _isLocationsLoading ? const Center(child: Loader(size: 30),) :
+        _fetchLocationsError ? PageRefresher(onRefresh: fetchLocations) :
+        SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -89,12 +143,14 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
               ),
               child: AspectRatio(
                 aspectRatio: 9 / 6,
-                child: Image.file(File(widget.imageFile.path)),
+                child: _imageFile != null ?
+                Image.file(File(_imageFile!.path)) :
+                Container(),
               ),
             ),
             const SizedBox(height: 50,),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 key: _formKey,
                 child:  Column(
@@ -124,14 +180,14 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_descriptionFocusNode);
                       },
-                      options: const ["Tesano, Glass Hostel", "GWCL Dzorwulu", "Fiesta Royal Hotel Accra"],
+                      options: _userLocations.map((location) => location!.name).toList(),
                     ),
                     const SizedBox(height: 15,),
                     TextInput(
                       controller: _descriptionController,
                       textInputType: TextInputType.text,
                       focusNode: _descriptionFocusNode,
-                      inputAction: TextInputAction.next,
+                      inputAction: TextInputAction.done,
                       placeholder: l10n.plh_description,
                       label: l10n.lbl_description,
                       height: 100,
@@ -142,14 +198,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
                       },
                     ),
                     const SizedBox(height: 15,),
-                    _isLoading ? SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 3,
-                          color: theme.colorScheme.primary
-                      ),
-                    ) : Button(
+                    _isLoading ? const Loader(size: 24) : Button(
                         onTap: () {
                           setState(() {
                             _wasteTypeError = wasteTypeValidator(_wasteTypeController.text);

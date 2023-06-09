@@ -1,4 +1,5 @@
 import 'package:borlago/base/presentation/widgets/app_logo.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
@@ -22,9 +23,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthenticationViewModel _authViewModel = AuthenticationViewModel();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  AuthenticationViewModel authViewModel = AuthenticationViewModel();
 
   // controllers
   final _emailController = TextEditingController();
@@ -65,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      bool success = await authViewModel.login(
+      bool success = await _authViewModel.login(
         email: _emailController.text,
         password: _passwordController.text
       );
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.3,),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.25,),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.18,
                     child: const Center(child: AppLogo()),
@@ -105,7 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     focusNode: _emailFocusNode,
                     inputAction: TextInputAction.next,
                     prefixIcon: CupertinoIcons.envelope_fill,
-                    placeholder: l10n!.plh_email,
+                    label: l10n!.lbl_email,
+                    placeholder: l10n.plh_email,
                     error: _emailError,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -117,20 +119,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       focusNode: _passwordFocusNode,
                       inputAction: TextInputAction.done,
                       error: _passwordError,
+                      label: l10n.lbl_password,
+                      placeholder: l10n.plh_password,
+                      showIcon: true,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).unfocus();
                       },
-                      placeholder: l10n.plh_password
                   ),
-                  const SizedBox(height: 15,),
-                  _isLoading ? SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: theme.colorScheme.primary
-                    ),
-                  ) : Button(
+                  const SizedBox(height: 25,),
+                  _isLoading ? const Loader(size: 24) : Button(
                     onTap: () {
                       setState(() {
                         _emailError = emailValidator(_emailController.text);
@@ -147,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: l10n.btn_login
                   ),
                   BottomAction(
-                    info: l10n.no_account,
+                    info: l10n.txt_no_account,
                     btnText: l10n.btn_register,
                     action: () {
                       Navigator.push(

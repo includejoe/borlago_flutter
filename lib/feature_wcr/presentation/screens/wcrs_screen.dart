@@ -1,9 +1,23 @@
+import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
 import 'package:borlago/feature_wcr/presentation/widgets/wcr_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class WCRsScreen extends StatelessWidget {
+class WCRsScreen extends StatefulWidget {
   const WCRsScreen({super.key});
+
+  @override
+  State<WCRsScreen> createState() => _WCRsScreenState();
+}
+
+class _WCRsScreenState extends State<WCRsScreen> {
+  final WCRViewModel _wcrViewModel = WCRViewModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +57,7 @@ class WCRsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.wcrs,
+          l10n!.lbl_wcrs,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),

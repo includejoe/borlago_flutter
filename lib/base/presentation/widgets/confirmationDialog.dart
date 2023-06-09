@@ -4,7 +4,11 @@ import 'package:borlago/feature_authentication/presentation/screens/login_screen
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Future<dynamic> confirmLogoutDialog(BuildContext context) {
+Future<dynamic> confirmationDialog({
+  required BuildContext context,
+  required String title,
+  required void Function() yesAction
+}) {
   final theme = Theme.of(context);
   final l10n = AppLocalizations.of(context);
 
@@ -13,11 +17,12 @@ Future<dynamic> confirmLogoutDialog(BuildContext context) {
       builder: (context) =>  SimpleDialog(
         title: Center(
           child: Text(
-            "Are you sure you want to logout?",
+            title,
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: theme.colorScheme.primary
             ),
+            textAlign: TextAlign.center
           ),
         ),
         shape: RoundedRectangleBorder(
@@ -28,13 +33,7 @@ Future<dynamic> confirmLogoutDialog(BuildContext context) {
           SimpleDialogOption(
             onPressed: () {
               Navigator.pop(context);
-              context.read<AuthenticationProvider>().logout();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const LoginScreen()
-                  )
-              );
+              yesAction();
             },
             child: Center(
               child: Container(
@@ -64,7 +63,7 @@ Future<dynamic> confirmLogoutDialog(BuildContext context) {
               child: Text(
                 l10n.btn_no,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
               ),),
             )
           )

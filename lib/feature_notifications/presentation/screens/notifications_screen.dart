@@ -31,7 +31,7 @@ class NotificationsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.notifications,
+          l10n!.lbl_notifications,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),

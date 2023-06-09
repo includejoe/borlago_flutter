@@ -1,14 +1,17 @@
+import 'package:borlago/base/presentation/widgets/float_action_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PaymentsScreen extends StatefulWidget {
-  const PaymentsScreen({super.key});
+class MakePaymentScreen extends StatefulWidget {
+  const MakePaymentScreen({super.key, required this.amountToPay});
+  final double amountToPay;
 
   @override
-  State<PaymentsScreen> createState() => _PaymentsScreenState();
+  State<MakePaymentScreen> createState() => _MakePaymentScreenState();
 }
 
-class _PaymentsScreenState extends State<PaymentsScreen> {
+class _MakePaymentScreenState extends State<MakePaymentScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -18,7 +21,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          l10n!.payments,
+          l10n!.lbl_make_payment,
           style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onPrimary
           ),
@@ -26,10 +29,14 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       ),
       body: Center(
         child: Text(
-          "PAYMENTS SCREEN",
+          "PAYMENT SCREEN",
           style: theme.textTheme.headlineMedium,
         ),
       ),
+      floatingActionButton: FloatActionButton(
+        onPressed: () {},
+        icon: CupertinoIcons.add
+      )
     );
   }
 }

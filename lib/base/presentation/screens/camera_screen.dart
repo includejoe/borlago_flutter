@@ -18,8 +18,6 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -122,10 +120,10 @@ class _CameraScreenState extends State<CameraScreen> {
                     InkWell(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>  CreateWCRScreen(imageFile: _imageFile!)
-                            )
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>  CreateWCRScreen(imageFile: _imageFile!)
+                          )
                         );
                       },
                       child: const Icon(

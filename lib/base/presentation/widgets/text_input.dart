@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput({
@@ -13,12 +14,13 @@ class TextInput extends StatelessWidget {
     this.maxLines,
     this.error,
     this.height,
+    this.enabled,
+    this.inputFormatters,
     this.onFieldSubmitted,
   }) : super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
-  final Function(String)? onFieldSubmitted;
   final TextInputAction inputAction;
   final TextInputType textInputType;
   final String? placeholder;
@@ -27,6 +29,9 @@ class TextInput extends StatelessWidget {
   final String? error;
   final int? maxLines;
   final double? height;
+  final bool? enabled;
+  final List<TextInputFormatter>? inputFormatters;
+  final Function(String)? onFieldSubmitted;
 
 
   @override
@@ -53,7 +58,9 @@ class TextInput extends StatelessWidget {
             onFieldSubmitted: onFieldSubmitted,
             keyboardType: textInputType,
             textInputAction: inputAction,
+            inputFormatters: inputFormatters,
             maxLines: maxLines ?? 1,
+            enabled: enabled ?? true,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurface,
             ),
@@ -67,6 +74,12 @@ class TextInput extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
                     color: theme.colorScheme.primary
+                  )
+              ),
+              disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                      color: Colors.transparent
                   )
               ),
               enabledBorder: OutlineInputBorder(
