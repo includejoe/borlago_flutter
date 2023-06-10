@@ -1,6 +1,5 @@
 import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
-import 'package:borlago/base/presentation/widgets/info_dialog.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/base/presentation/widgets/page_refresher.dart';
@@ -30,6 +29,7 @@ class _MakePaymentScreenState extends State<MakePaymentScreen> {
   String? _selectedMethodId;
   bool _isLoading = false;
   bool _isError = false;
+  bool _paymentInitiated = false;
 
   setSelectedMethodId(String id) {
     setState(() {
@@ -78,31 +78,22 @@ class _MakePaymentScreenState extends State<MakePaymentScreen> {
     final currency = getIt.get<AuthenticationProvider>().currency;
     final user = getIt.get<AuthenticationProvider>().user;
 
-    void showSuccessDialog() {
-      infoDialog(
-        context: context,
-        info: l10n!.suc_payment,
-        okAction: navigateHome
-      );
-    }
-
     void makeRequest() async {
-      bool success = false;
-
       setState(() {
         _isLoading = true;
+        _paymentInitiated = false;
       });
 
       await Future.delayed(const Duration(seconds: 3)).then((_) {
-        success = true;
-      });
-
-      if(success) {
-        showSuccessDialog();
-      } else {
         setState(() {
           _isLoading = false;
+          _paymentInitiated = true;
         });
+      });
+
+      if(_paymentInitiated) {
+
+      } else {
         toast(message: l10n!.err_wrong);
       }
 
@@ -135,6 +126,35 @@ class _MakePaymentScreenState extends State<MakePaymentScreen> {
         ),
       ),
       body: _isLoading ? const Center(child: Loader(size: 30)) :
+          _paymentInitiated ? SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Center(child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.green, size: 100),
+                  const SizedBox(height: 20),
+                  Text(
+                    l10n.lbl_payment_initiated,
+                    style: theme.textTheme.headlineMedium
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    l10n.txt_payment_initiated,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyMedium
+                  ),
+                  const SizedBox(height: 20),
+                  Button(
+                    text: l10n.btn_completed,
+                    // text: l10n.btn_completed,
+                    onTap: navigateHome,
+                  )
+                ],
+              ),
+            )),
+          ) :
           _isError ? PageRefresher(onRefresh: fetchPaymentMethods) :
       SingleChildScrollView(
         child: Padding(

@@ -12,6 +12,9 @@
   "txt_cancel_request": "Are you sure you want to cancel this waste collection request?",
   "txt_enable_location": "Please enable location services",
   "txt_amount": "The amount to pay for this waste collection request is",
+  "txt_payment_initiated": "An online payment has been initiated on your phone. Please follow the instructions on your screen to complete the payment. Once the payment is complete, you will receive a confirmation email. Click on \"Completed\" when you are finished.",
+
+
   "txt_na": "N/A",
   "txt_male": "Male",
   "txt_female": "Female",
@@ -76,6 +79,8 @@
   "lbl_add_payment_method": "Add Payment Method",
   "lbl_update_payment_method": "Update Payment Method",
   "lbl_make_payment": "Make Payment",
+  "lbl_payment_initiated": "Payment Initiated",
+  "lbl_payment_history": "Payment History",
   "lbl_languages": "Languages",
   "lbl_dark_theme": "Dark Theme",
   "lbl_change_password": "Change Password",
@@ -96,6 +101,7 @@
   "btn_c_make_payment": "MAKE PAYMENT",
   "btn_cancel_request": "CANCEL REQUEST",
   "btn_pay": "PAY",
+  "btn_completed": "COMPLETED",
 
   "err_empty_field": "This field cannot be empty",
   "err_invalid_email": "Enter a valid email address",
@@ -109,6 +115,5 @@
   "suc_password": "Password changed successfully",
   "suc_update": "Updated successfully",
   "suc_delete": "Deleted successfully",
-  "suc_location": "Location added successfully",
-  "suc_payment": "Payment made successfully"
+  "suc_location": "Location added successfully"
 }

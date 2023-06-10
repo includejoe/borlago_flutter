@@ -4,6 +4,7 @@ import 'package:borlago/feature_authentication/providers/authentication_provider
 import 'package:borlago/feature_user/presentation/screens/change_password_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/languages_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/location_screen.dart';
+import 'package:borlago/feature_user/presentation/screens/payment_history_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/payment_methods_screen.dart';
 import 'package:borlago/feature_user/presentation/screens/proile_screen.dart';
 import 'package:borlago/feature_user/presentation/widgets/settings_item.dart';
@@ -53,6 +54,18 @@ class SettingsScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => const PaymentMethodsScreen()
+            )
+          );
+        },
+      ),
+      SettingsItem(
+        icon: CupertinoIcons.archivebox_fill,
+        text: l10n.lbl_payment_history,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PaymentHistoryScreen()
             )
           );
         },

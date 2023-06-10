@@ -52,10 +52,8 @@ class _BankCardFormState extends State<BankCardForm> {
   String? _securityCodeError;
   String? _zipCodeError;
 
-  void navigateToPaymentMethodsScreen() {
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const PaymentMethodsScreen())
-    );
+  void popContext() {
+    Navigator.of(context).pop();
   }
 
 
@@ -130,7 +128,7 @@ class _BankCardFormState extends State<BankCardForm> {
         _expiryDateController.clear();
         _securityCodeController.clear();
         _zipCodeControllerController.clear();
-        navigateToPaymentMethodsScreen();
+        popContext();
       } else {
         toast(message: l10n!.err_wrong);
       }
