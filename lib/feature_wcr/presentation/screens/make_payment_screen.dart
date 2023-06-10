@@ -26,14 +26,14 @@ class MakePaymentScreen extends StatefulWidget {
 class _MakePaymentScreenState extends State<MakePaymentScreen> {
   final _userViewModel = UserViewModel();
   List<PaymentMethod?> _paymentMethods = [];
-  String? _selectedMethodId;
+  PaymentMethod? _selectedMethod;
   bool _isLoading = false;
   bool _isError = false;
   bool _paymentInitiated = false;
 
-  setSelectedMethodId(String id) {
+  setSelectedMethod(PaymentMethod method) {
     setState(() {
-      _selectedMethodId = id;
+      _selectedMethod = method;
     });
   }
 
@@ -141,13 +141,15 @@ class _MakePaymentScreenState extends State<MakePaymentScreen> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    l10n.txt_payment_initiated,
+                    _selectedMethod!.type == "Mobile Money" ?
+                    l10n.txt_momo_payment_initiated : l10n.txt_card_payment_initiated,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyMedium
                   ),
                   const SizedBox(height: 20),
                   Button(
-                    text: l10n.btn_completed,
+                    text: _selectedMethod!.type == "Mobile Money" ?
+                    l10n.btn_completed : l10n.btn_ok,
                     // text: l10n.btn_completed,
                     onTap: navigateHome,
                   )
@@ -197,13 +199,13 @@ class _MakePaymentScreenState extends State<MakePaymentScreen> {
                   });
                   return InkWell(
                     onTap: (){
-                      setSelectedMethodId(method.id);
+                      setSelectedMethod(method);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       decoration:  BoxDecoration(
                         border: Border.all(
-                          color: _selectedMethodId == method!.id ?
+                          color: _selectedMethod?.id == method!.id ?
                           theme.colorScheme.primary : Colors.transparent,
                           width: 2
                         ),
@@ -244,7 +246,7 @@ class _MakePaymentScreenState extends State<MakePaymentScreen> {
               const SizedBox(height: 25),
               Button(
                 onTap: () {
-                  if(_selectedMethodId == null) {
+                  if(_selectedMethod == null) {
                     toast(message: l10n.err_select_payment);
                     return;
                   } else {
