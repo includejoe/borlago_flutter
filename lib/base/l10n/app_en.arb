@@ -12,6 +12,7 @@
   "txt_cancel_request": "Are you sure you want to cancel this waste collection request?",
   "txt_enable_location": "Please enable location services",
   "txt_amount": "The amount to pay for this waste collection request is",
+  "txt_request_canceled": "Your waste collection request has been canceled. Your payment will be reversed within 3 business days.",
   "txt_momo_payment_initiated": "An online payment has been initiated on your phone. Please follow the instructions on your screen to complete the payment. Once the payment is complete, you will receive a confirmation email. Click on \"Completed\" when you are finished.",
   "txt_card_payment_initiated": "Your payment is currently being processed and we will send you a confirmation email once it has been completed. If you have any questions, please do not hesitate to contact us.",
 

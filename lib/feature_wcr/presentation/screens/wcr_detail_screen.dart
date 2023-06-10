@@ -2,6 +2,8 @@ import 'package:borlago/base/di/get_it.dart';
 import 'package:borlago/base/presentation/widgets/button.dart';
 import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
+import 'package:borlago/base/presentation/widgets/info_dialog.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/utils/datetime_formatter.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/base/utils/wcr_status.dart';
@@ -24,6 +26,7 @@ class WCRDetailScreen extends StatefulWidget {
 
 class _WCRDetailScreenState extends State<WCRDetailScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
+  bool _isLoading = false;
 
   void popContext() {
     Navigator.of(context).pop();
@@ -40,8 +43,20 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
     final collectedAt = formatDateTime(widget.wcr.collectionDatetime);
     final currency = getIt.get<AuthenticationProvider>().currency;
 
+    void showInfoDialog() {
+      infoDialog(
+        context: context,
+        info: l10n!.txt_request_canceled,
+        okAction: popContext
+      );
+    }
+
     void deleteWCR() async {
       bool success = false;
+      setState(() {
+        _isLoading = true;
+      });
+
       success = await _wcrViewModel.deleteWCR(
         wcrId: widget.wcr.id,
         photoUrl: widget.wcr.wastePhoto
@@ -50,16 +65,28 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
       if (success) {
         popContext();
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         toast(message: l10n!.err_wrong);
       }
     }
 
     void cancelWCR() async {
       WCR? wcr;
+      setState(() {
+        _isLoading = true;
+      });
       wcr = await _wcrViewModel.cancelWCR(wcrId: widget.wcr.id);
       if (wcr != null) {
-        popContext();
+        setState(() {
+          _isLoading = false;
+        });
+        showInfoDialog();
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         toast(message: l10n!.err_wrong);
       }
     }
@@ -75,7 +102,8 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
           ),
         ),
       ),
-      body: Column(
+      body: _isLoading ? const Center(child: Loader(size: 34)) :
+      Column(
         children: [
           Container(
             width: MediaQuery.of(context).size.width,

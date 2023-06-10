@@ -16,8 +16,8 @@ Future<dynamic> infoDialog({
           borderRadius: BorderRadius.circular(8),
         ),
         backgroundColor: theme.colorScheme.surface,
+        contentPadding: const EdgeInsets.all(24),
         children: [
-          const SizedBox(height: 20,),
           Text(
             info,
             style: theme.textTheme.bodyMedium,
@@ -51,7 +51,6 @@ Future<dynamic> infoDialog({
                 ),
               )
           ),
-          const SizedBox(height: 20,),
         ],
       )
   );
