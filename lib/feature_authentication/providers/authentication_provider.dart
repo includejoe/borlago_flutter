@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:borlago/base/utils/constants.dart';
 import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -8,11 +9,20 @@ class AuthenticationProvider with ChangeNotifier {
   late SharedPreferences _prefs;
   late User? _user;
   String? _jwt;
+  String _currency = "€";
 
   AuthenticationProvider() {
     init();
   }
 
+  String get currency {
+    Constants.currencies.forEach((key, value) {
+      if(key == _user!.country) {
+        _currency = value;
+      }
+    });
+    return _currency;
+  }
   String? get jwt => _jwt;
   User? get user => _user;
   set user(User? user) {

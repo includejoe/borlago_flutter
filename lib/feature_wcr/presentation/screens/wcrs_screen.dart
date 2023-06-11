@@ -1,3 +1,7 @@
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
+import 'package:borlago/base/presentation/widgets/page_refresher.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
 import 'package:borlago/feature_wcr/presentation/widgets/wcr_item.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +16,36 @@ class WCRsScreen extends StatefulWidget {
 
 class _WCRsScreenState extends State<WCRsScreen> {
   final WCRViewModel _wcrViewModel = WCRViewModel();
+  final _refreshController = RefreshController(initialRefresh: false);
+  bool _isLoading = false;
+  bool _isError = false;
+  List<WCR?> _wcrs = [];
+
+  void fetchWCRs() async {
+    List<WCR?>? wcrs;
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+    });
+
+    wcrs = await _wcrViewModel.listWCR();
+
+    if(wcrs != null) {
+      setState(() {
+        _wcrs = wcrs!;
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+        _isError = true;
+      });
+    }
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
+    fetchWCRs();
     super.initState();
   }
 
@@ -24,32 +54,10 @@ class _WCRsScreenState extends State<WCRsScreen> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
-    const wcrItems = <WCRItem>[
-      WCRItem(
-        id: "02388546",
-        time: "Today, 12:47 PM",
-        status: 1,
-        wasteType: "General Waste"
-      ),
-      WCRItem(
-          id: "1886476",
-          time: "Yesterday, 8:06 AM",
-          status: 2,
-          wasteType: "General Waste"
-      ),
-      WCRItem(
-        id: "02386476",
-        time: "01/06/23, 4:54 PM",
-        status: 4,
-        wasteType: "Organic Waste"
-      ),
-      WCRItem(
-        id: "02386476",
-        time: "12/05/23, 1:13 PM",
-        status: 3,
-        wasteType: "Hazardous Waste"
-      )
-    ];
+    final wcrItems = _wcrs.map((wcr) => WCRItem(
+      wcr: wcr!,
+      fetchWCRs: fetchWCRs,
+    )).toList();
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -72,13 +80,23 @@ class _WCRsScreenState extends State<WCRsScreen> {
             color: theme.scaffoldBackgroundColor,
           ),
           height: MediaQuery.of(context).size.height,
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: wcrItems.length,
-              itemBuilder: (context, index) {
-                return wcrItems[index];
-              }
-          )
+          child: _isLoading ? const Center(child: Loader(size: 30),) :
+            _isError ? PageRefresher(onRefresh: fetchWCRs) :
+            SmartRefresher(
+              controller: _refreshController,
+              onRefresh: fetchWCRs,
+              header: MaterialClassicHeader(
+                color: theme.colorScheme.primary,
+                backgroundColor: theme.colorScheme.background,
+              ),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: wcrItems.length,
+                itemBuilder: (context, index) {
+                  return wcrItems[index];
+                }
+              ),
+            )
       ),
     );
   }

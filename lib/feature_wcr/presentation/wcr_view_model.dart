@@ -10,20 +10,20 @@ class WCRViewModel {
   final wcrUseCases = getIt<WCRUseCases>();
   final authProvider = getIt<AuthenticationProvider>();
 
-  Future<double?> createWCR({
+  Future<WCR?> createWCR({
     required XFile wastePhoto,
     required String pickUpLocation,
     required String wasteDesc,
     required String wasteType,
   }) async {
-    double? amountToPay;
+    WCR? wcr;
     try {
       final wastePhotoUrl = await wcrUseCases.uploadImageToSupabase(
         userId: authProvider.user!.id,
         wastePhoto: wastePhoto
       );
 
-      amountToPay = await wcrUseCases.createWCR(
+      wcr = await wcrUseCases.createWCR(
         jwt: authProvider.jwt!,
         wastePhoto: wastePhotoUrl!,
         pickUpLocation: pickUpLocation,
@@ -34,6 +34,52 @@ class WCRViewModel {
     } catch(error) {
       debugPrint("WCR view model createWCR error: $error");
     }
-    return amountToPay;
+    return wcr;
+  }
+
+  Future<List<WCR?>?> listWCR() async {
+    List<WCR?>? wcrs;
+    try {
+      wcrs = await wcrUseCases.listWCR(jwt: authProvider.jwt!);
+    } catch(error) {
+      debugPrint("WCR view model listWCR error: $error");
+    }
+
+    return wcrs;
+  }
+
+  Future<WCR?> cancelWCR({required String wcrId}) async {
+    WCR? wcr;
+    try {
+      wcr = await wcrUseCases.cancelWCR(jwt: authProvider.jwt!, wcrId: wcrId);
+    } catch(error) {
+      debugPrint("WCR view model cancelWCR error: $error");
+    }
+
+    return wcr;
+  }
+
+  Future<bool> deleteWCR({
+    required String wcrId,
+    required String photoUrl
+  }) async {
+    bool success = false;
+    bool supabaseSuccess = false;
+    try {
+      supabaseSuccess = await wcrUseCases.deleteImageFromSupabase(
+        photoUrl: photoUrl
+      );
+
+      if(supabaseSuccess) {
+        success = await wcrUseCases.deleteWCR(
+          jwt: authProvider.jwt!,
+          wcrId: wcrId
+        );
+      }
+    } catch(error) {
+      debugPrint("WCR view model deleteWCR error: $error");
+    }
+
+    return success;
   }
 }

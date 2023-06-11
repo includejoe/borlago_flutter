@@ -1,22 +1,96 @@
+import 'package:borlago/base/di/get_it.dart';
+import 'package:borlago/base/presentation/widgets/button.dart';
+import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
+import 'package:borlago/base/presentation/widgets/float_action_button.dart';
+import 'package:borlago/base/presentation/widgets/info_dialog.dart';
+import 'package:borlago/base/presentation/widgets/loader.dart';
+import 'package:borlago/base/utils/datetime_formatter.dart';
+import 'package:borlago/base/utils/toast.dart';
+import 'package:borlago/base/utils/wcr_status.dart';
+import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
+import 'package:borlago/feature_wcr/presentation/screens/make_payment_screen.dart';
+import 'package:borlago/feature_wcr/presentation/wcr_view_model.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WCRDetailScreen extends StatefulWidget {
-  const WCRDetailScreen({super.key, required this.wcrId});
-  final String wcrId;
+  const WCRDetailScreen({super.key, required this.wcr});
+  final WCR wcr;
 
   @override
   State<WCRDetailScreen> createState() => _WCRDetailScreenState();
 }
 
 class _WCRDetailScreenState extends State<WCRDetailScreen> {
-  final String imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqnCCoztXLXIUPW7r7iypMPTwURDcx62SIQg&usqp=CAU";
+  final WCRViewModel _wcrViewModel = WCRViewModel();
+  bool _isLoading = false;
+
+  void popContext() {
+    Navigator.of(context).pop();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final imageUrl = widget.wcr.wastePhoto;
+    final wcrStatusData = wcrStatus(context, widget.wcr.status);
+    final createdAt = formatDateTime(widget.wcr.createdAt);
+    final collectedAt = formatDateTime(widget.wcr.collectionDatetime);
+    final currency = getIt.get<AuthenticationProvider>().currency;
+
+    void showInfoDialog() {
+      infoDialog(
+        context: context,
+        info: l10n!.txt_request_canceled,
+        okAction: popContext
+      );
+    }
+
+    void deleteWCR() async {
+      bool success = false;
+      setState(() {
+        _isLoading = true;
+      });
+
+      success = await _wcrViewModel.deleteWCR(
+        wcrId: widget.wcr.id,
+        photoUrl: widget.wcr.wastePhoto
+      );
+
+      if (success) {
+        popContext();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        toast(message: l10n!.err_wrong);
+      }
+    }
+
+    void cancelWCR() async {
+      WCR? wcr;
+      setState(() {
+        _isLoading = true;
+      });
+      wcr = await _wcrViewModel.cancelWCR(wcrId: widget.wcr.id);
+      if (wcr != null) {
+        setState(() {
+          _isLoading = false;
+        });
+        showInfoDialog();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        toast(message: l10n!.err_wrong);
+      }
+    }
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -28,7 +102,8 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
           ),
         ),
       ),
-      body: Column(
+      body: _isLoading ? const Center(child: Loader(size: 34)) :
+      Column(
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
@@ -42,18 +117,33 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                 url: imageUrl,
                 fadeInDuration: const Duration(seconds: 1),
                 errorBuilder: (context, exception, stacktrace) {
-                  return Text(stacktrace.toString());
+                  return Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.exclamationmark_circle_fill,
+                          size: 50,
+                        ),
+                        const SizedBox(height: 10,),
+                        Text(
+                          l10n.err_wrong,
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyMedium
+                        ),
+                      ],
+                    ),
+                  );
                 },
                 loadingBuilder: (context, progress) {
-                  debugPrint(
-                      'Progress: ${progress.isDownloading} ${progress.downloadedBytes} / ${progress.totalBytes}');
                   return Stack(
                     alignment: Alignment.center,
                     children: [
                       if (progress.isDownloading && progress.totalBytes != null)
                         Text(
                           '${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
-                          style: const TextStyle(color: Colors.red)
+                          style: theme.textTheme.bodyMedium
                         ),
                         SizedBox(
                           width: 120,
@@ -84,7 +174,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                      "132547945",
+                      widget.wcr.publicId,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.primary,
                         fontWeight: FontWeight.bold
@@ -103,7 +193,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "General",
+                        widget.wcr.wasteType,
                         style: theme.textTheme.bodyMedium
                     ),
                   ],
@@ -119,7 +209,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "GHA0001",
+                        widget.wcr.collectorUnit ?? l10n.txt_na,
                         style: theme.textTheme.bodyMedium
                     ),
                   ],
@@ -135,8 +225,11 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "Pending",
-                        style: theme.textTheme.bodyMedium
+                      wcrStatusData["statusText"],
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color:  wcrStatusData["statusColor"],
+                        fontStyle: FontStyle.italic
+                      )
                     ),
                   ],
                 ),
@@ -151,7 +244,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "Accra, Tesano - Glass Hostel",
+                        widget.wcr.pickUpLocation,
                         style: theme.textTheme.bodyMedium
                     ),
                   ],
@@ -160,14 +253,14 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                 Row(
                   children: [
                     Text(
-                      "${l10n.lbl_payment}:",
+                      "${l10n.lbl_price}:",
                       style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold
                       ),
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "GHC 5.47",
+                        "$currency ${widget.wcr.price}",
                         style: theme.textTheme.bodyMedium
                     ),
                   ],
@@ -183,7 +276,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "05/06/23",
+                        createdAt ?? l10n.txt_na,
                         style: theme.textTheme.bodyMedium
                     ),
                   ],
@@ -199,17 +292,58 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        l10n.txt_na,
+                        collectedAt ?? l10n.txt_na,
                         style: theme.textTheme.bodyMedium
                     ),
                   ],
                 ),
-
+                widget.wcr.status == 1 || widget.wcr.status == 2 ?
+                  Column(
+                    children: [
+                      const SizedBox(height: 20,),
+                      Button(
+                        backgroundColor: widget.wcr.status == 2 ? theme.colorScheme.error :
+                          theme.colorScheme.primary,
+                        text: widget.wcr.status == 1 ? l10n.btn_c_make_payment :
+                          widget.wcr.status == 2 ? l10n.btn_cancel_request : "",
+                        onTap: () {
+                          if(widget.wcr.status == 1) {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) {
+                                  return MakePaymentScreen(
+                                    wcr: widget.wcr,
+                                    justCreated: false,
+                                  );
+                                })
+                            );
+                          } else if(widget.wcr.status == 2) {
+                            confirmationDialog(
+                              context: context,
+                              title: l10n.txt_cancel_request,
+                              yesAction: cancelWCR
+                            );
+                          }
+                        }
+                      )
+                    ],
+                  )
+                  : Container(),
               ],
             ),
-          )
+          ),
         ],
-      )
+      ),
+      floatingActionButton: widget.wcr.status == 1 ?
+      FloatActionButton(
+        onPressed: () {
+          confirmationDialog(
+            context: context,
+            title: l10n.txt_confirm_delete,
+            yesAction: deleteWCR
+          );
+        },
+        icon: Icons.delete,
+      ) : Container(),
     );
   }
 }

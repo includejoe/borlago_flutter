@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/base/presentation/screens/camera_screen.dart';
+import 'package:borlago/feature_wcr/presentation/screens/camera_screen.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_help/presentation/screens/help_screen.dart';
 import 'package:borlago/feature_notifications/presentation/screens/notifications_screen.dart';
@@ -20,11 +20,9 @@ class MainPageView extends StatefulWidget {
 class _MainPageViewState extends State<MainPageView> {
   int _currentScreen = 2;
   final PageController _pageController = PageController(initialPage: 2);
-  late CameraController _cameraController;
-  final CameraDescription _backCamera = getIt.get<CameraDescription>();
+  final CameraController _cameraController = getIt.get<CameraController>();
 
   Future<void> initCamera() async {
-    _cameraController = CameraController(_backCamera, ResolutionPreset.max);
     _cameraController.initialize().then((_) {
       if (!mounted) {
         return;

@@ -38,6 +38,7 @@ class LanguagesScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
+        automaticallyImplyLeading: true,
         title: Text(
           l10n!.lbl_languages,
           style: theme.textTheme.headlineMedium?.copyWith(

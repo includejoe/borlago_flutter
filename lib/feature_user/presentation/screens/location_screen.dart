@@ -1,4 +1,4 @@
-import 'package:borlago/base/presentation/widgets/confirmationDialog.dart';
+import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/presentation/widgets/info_dialog.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class LocationsScreen extends StatefulWidget {
   const LocationsScreen({super.key});
@@ -22,6 +23,7 @@ class LocationsScreen extends StatefulWidget {
 
 class _LocationsScreenState extends State<LocationsScreen> {
   final UserViewModel _userViewModel = UserViewModel();
+  final _refreshController = RefreshController(initialRefresh: false);
   bool _isLoading = false;
   bool _isError = false;
   List<UserLocation?> _userLocations = [];
@@ -107,6 +109,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
+        automaticallyImplyLeading: true,
         title: Text(
           l10n!.lbl_locations,
           style: theme.textTheme.headlineMedium?.copyWith(
@@ -116,13 +119,21 @@ class _LocationsScreenState extends State<LocationsScreen> {
       ),
       body: _isLoading ? const Center(child: Loader(size: 30)) :
         _isError ? PageRefresher(onRefresh: fetchLocations) :
-        ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: locationsItems.length,
-          itemBuilder: (context, index) {
-            return locationsItems[index];
-          }
-        ),
+        SmartRefresher(
+          controller: _refreshController,
+          onRefresh: fetchLocations,
+          header: MaterialClassicHeader(
+            color: theme.colorScheme.primary,
+            backgroundColor: theme.colorScheme.surface,
+          ),
+          child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: locationsItems.length,
+              itemBuilder: (context, index) {
+                return locationsItems[index];
+              }
+          ),
+      ),
       floatingActionButton: FloatActionButton(
         onPressed: () {
           confirmationDialog(

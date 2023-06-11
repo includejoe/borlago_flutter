@@ -1,24 +1,20 @@
 import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/base/utils/constants.dart';
+import 'package:borlago/feature_wcr/presentation/screens/camera_screen.dart';
+import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
+import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/screens/make_payment_screen.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<dynamic> amountDialog({
   required BuildContext context,
-  required double amount,
+  required WCR wcr,
 }) {
   final theme = Theme.of(context);
   final l10n = AppLocalizations.of(context);
-  final user = getIt.get<AuthenticationProvider>().user;
-  String currency = "";
-
-  Constants.currencies.forEach((key, value) {
-    if(key == user!.country) {
-      currency = value;
-    }
-  });
+  final currency = getIt.get<AuthenticationProvider>().currency;
 
   return showDialog(
       context: context,
@@ -30,7 +26,7 @@ Future<dynamic> amountDialog({
         backgroundColor: theme.colorScheme.surface,
         children: [
           Text(
-            "${l10n!.txt_amount} $currency$amount",
+            "${l10n!.txt_amount} $currency ${wcr.price}",
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -43,7 +39,10 @@ Future<dynamic> amountDialog({
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MakePaymentScreen(amountToPay: amount,)
+                          builder: (context) => MakePaymentScreen(
+                            wcr: wcr,
+                            justCreated: true,
+                          )
                       )
                     );
                   },
@@ -70,7 +69,9 @@ Future<dynamic> amountDialog({
               SimpleDialogOption(
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => const MainPageView()
+                    ));
                   },
                   child: Center(
                     child: Text(

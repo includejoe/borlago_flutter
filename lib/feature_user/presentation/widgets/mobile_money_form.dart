@@ -33,10 +33,8 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
   final _momoNumberFocusNode = FocusNode();
   String? _momoNumberError;
 
-  void navigateToPaymentMethodsScreen() {
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const PaymentMethodsScreen())
-    );
+  void popContext() {
+    Navigator.of(context).pop();
   }
 
   @override
@@ -58,8 +56,7 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final numberValidator = TextValidator(context);
+    final momNumberValidator = TextValidator(context);
 
     void makeRequest() async {
       PaymentMethod? paymentMethod;
@@ -85,7 +82,7 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
 
       if(paymentMethod != null) {
         _momoNumberController.clear();
-        navigateToPaymentMethodsScreen();
+        popContext();
       } else {
         toast(message: l10n!.err_wrong);
       }
@@ -106,6 +103,7 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
             inputAction: TextInputAction.done,
             placeholder: "##########",
             label: l10n!.lbl_mobile_no,
+            error: _momoNumberError,
             onFieldSubmitted: (_) {
               FocusScope.of(context).dispose();
             },
@@ -114,7 +112,7 @@ class _MobileMoneyFormState extends State<MobileMoneyForm> {
           _isLoading ? const Loader(size: 24) : Button(
               onTap: () {
                 setState(() {
-                  _momoNumberError = numberValidator(_momoNumberController.text);
+                  _momoNumberError = momNumberValidator(_momoNumberController.text);
                 });
 
                 if(_momoNumberError == null) {

@@ -17,6 +17,14 @@ class _CameraScreenState extends State<CameraScreen> {
   FlashMode flashMode = FlashMode.off;
 
   @override
+  void dispose() {
+    setState(() {
+      _imageFile = null;
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,

@@ -75,8 +75,8 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
     super.initState();
   }
 
-  void showAmountDialog(double amount) {
-    amountDialog(context: context, amount: amount);
+  void showAmountDialog(WCR wcr) {
+    amountDialog(context: context, wcr: wcr);
   }
 
   @override
@@ -88,7 +88,7 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
 
     void makeRequest() async {
       String locationId = "";
-      double? amountToPay;
+      WCR? wcr;
 
       setState(() {
         _isLoading = true;
@@ -100,15 +100,15 @@ class _CreateWCRScreenState extends State<CreateWCRScreen> {
         }
       }).toList();
 
-      amountToPay = await _wcrViewModel.createWCR(
+      wcr = await _wcrViewModel.createWCR(
         wastePhoto: widget.imageFile,
         pickUpLocation: locationId,
         wasteDesc: _descriptionController.text,
         wasteType: _wasteTypeController.text
       );
 
-      if(amountToPay != null) {
-        showAmountDialog(amountToPay);
+      if(wcr != null) {
+        showAmountDialog(wcr);
       } else {
         toast(message: l10n!.err_wrong);
       }

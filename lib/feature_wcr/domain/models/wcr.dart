@@ -1,4 +1,5 @@
 class WCR {
+  late final String id;
   late final String pickUpLocation;
   late final String publicId;
   late final String wasteType;
@@ -6,11 +7,12 @@ class WCR {
   late final String wastePhoto;
   late final int status;
   late final String createdAt;
-  late final String user;
+  late final String? price;
   late final String? collectionDatetime;
   late final String? collectorUnit;
 
   WCR({
+    required this.id,
     required this.pickUpLocation,
     required this.publicId,
     required this.wasteType,
@@ -18,12 +20,13 @@ class WCR {
     required this.wastePhoto,
     required this.status,
     required this.createdAt,
-    required this.user,
+    this.price,
     this.collectionDatetime,
     this.collectorUnit,
   });
 
   WCR.fromJson(dynamic json) {
+    id = json["id"];
     pickUpLocation = json['pick_up_location'];
     publicId = json['public_id'];
     wasteType = json['waste_type'];
@@ -32,13 +35,14 @@ class WCR {
     collectionDatetime = json['collection_datetime'];
     status = json['status'];
     createdAt = json['created_at'];
-    user = json['user'];
+    price = json["price"];
     collectorUnit = json['collector_unit'];
   }
 
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map["id"] = id;
     map['pick_up_location'] = pickUpLocation;
     map['public_id'] = publicId;
     map['waste_type'] = wasteType;
@@ -47,7 +51,7 @@ class WCR {
     map['collection_datetime'] = collectionDatetime;
     map['status'] = status;
     map['created_at'] = createdAt;
-    map['user'] = user;
+    map["price"] = price;
     map['collector_unit'] = collectorUnit;
     return map;
   }
