@@ -1,10 +1,9 @@
 import 'package:borlago/base/di/get_it.dart';
-import 'package:borlago/feature_wcr/presentation/screens/camera_screen.dart';
+import 'package:borlago/base/presentation/widgets/dialog_button.dart';
 import 'package:borlago/base/presentation/widgets/main_page_view.dart';
 import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:borlago/feature_wcr/domain/models/wcr.dart';
 import 'package:borlago/feature_wcr/presentation/screens/make_payment_screen.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -46,25 +45,7 @@ Future<dynamic> amountDialog({
                       )
                     );
                   },
-                  child: Center(
-                    child: Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      decoration: BoxDecoration(
-                          color: theme.colorScheme.primary,
-                          borderRadius: const BorderRadius.all(Radius.circular(8))
-                      ),
-                      child: Center(
-                          child: Text(
-                            l10n.btn_make_payment,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.onPrimary,
-                                fontWeight: FontWeight.bold
-                            ),
-                          )
-                      ),
-                    ),
-                  )
+                child: DialogButton(btnText: l10n.btn_make_payment),
               ),
               SimpleDialogOption(
                   onPressed: () {
