@@ -17,11 +17,8 @@ final GetIt getIt = GetIt.instance;
 final SupabaseClient supabase = SupabaseClient(Constants.supabaseProjectUrl, Constants.supabasePublicKey);
 
 void initialize({required CameraDescription backCamera}) {
-  CameraController cameraController = CameraController(
-    backCamera,
-    ResolutionPreset.max
-  );
-  getIt.registerSingleton<CameraController>(cameraController);
+
+  getIt.registerSingleton<CameraDescription>(backCamera);
 
   // Supabase
   getIt.registerLazySingleton<SupabaseClient>(() => supabase);

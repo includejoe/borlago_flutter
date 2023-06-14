@@ -1,3 +1,4 @@
+import 'package:borlago/base/presentation/widgets/dialog_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -31,25 +32,7 @@ Future<dynamic> infoDialog({
                   okAction();
                 }
               },
-              child: Center(
-                child: Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
-                      color: theme.colorScheme.primary,
-                      borderRadius: const BorderRadius.all(Radius.circular(8))
-                  ),
-                  child: Center(
-                      child: Text(
-                        l10n!.btn_ok,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onPrimary,
-                            fontWeight: FontWeight.bold
-                        ),
-                      )
-                  ),
-                ),
-              )
+              child: DialogButton(btnText: l10n!.btn_ok),
           ),
         ],
       )

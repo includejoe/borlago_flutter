@@ -1,7 +1,5 @@
+import 'package:borlago/base/presentation/widgets/dialog_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:borlago/feature_authentication/presentation/screens/login_screen.dart';
-import 'package:borlago/feature_authentication/providers/authentication_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<dynamic> confirmationDialog({
@@ -35,25 +33,7 @@ Future<dynamic> confirmationDialog({
               Navigator.pop(context);
               yesAction();
             },
-            child: Center(
-              child: Container(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
-                    borderRadius: const BorderRadius.all(Radius.circular(8))
-                ),
-                child: Center(
-                  child: Text(
-                    l10n!.btn_yes,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold
-                    ),
-                  )
-                ),
-              ),
-            )
+            child: DialogButton(btnText: l10n!.btn_yes),
           ),
           SimpleDialogOption(
             onPressed: () {

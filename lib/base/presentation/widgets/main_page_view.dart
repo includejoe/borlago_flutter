@@ -20,9 +20,11 @@ class MainPageView extends StatefulWidget {
 class _MainPageViewState extends State<MainPageView> {
   int _currentScreen = 2;
   final PageController _pageController = PageController(initialPage: 2);
-  final CameraController _cameraController = getIt.get<CameraController>();
+  late final CameraController _cameraController;
+  final CameraDescription _backCamera = getIt.get<CameraDescription>();
 
   Future<void> initCamera() async {
+    _cameraController = CameraController(_backCamera, ResolutionPreset.max);
     _cameraController.initialize().then((_) {
       if (!mounted) {
         return;
