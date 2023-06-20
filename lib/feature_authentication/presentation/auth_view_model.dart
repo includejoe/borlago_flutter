@@ -80,13 +80,29 @@ class AuthenticationViewModel {
 
   Future<bool> forgotPassword({required String email}) async {
     bool success = false;
-
+    try {
+      success = await authUseCases.forgotPassword(email: email);
+    } catch(error) {
+      debugPrint("Authentication view model forgotPassword error: $error");
+    }
     return success;
   }
 
-  Future<bool> resetPassword({required String resetCode}) async {
+  Future<bool> resetPassword({
+    required String email,
+    required String resetCode,
+    required String newPassword
+  }) async {
     bool success = false;
-
+    try {
+      success = await authUseCases.resetPassword(
+        email: email,
+        resetCode: resetCode,
+        newPassword: newPassword
+      );
+    } catch(error) {
+      debugPrint("Authentication view model resetPassword error: $error");
+    }
     return success;
   }
 

@@ -18,12 +18,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       headers: {
         "Content-Type": "application/json"
       }
-    )
-    .then((data) {
+    ).then((data) {
       Map<String, dynamic> dataJson = jsonDecode(data.body);
       response = Login.fromJson(dataJson);
-    })
-    .catchError((error) {
+    }).catchError((error) {
       debugPrint("Authentication repository login error: ${error.toString()}");
     });
 
@@ -42,14 +40,56 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       headers: {
         "Content-Type": "application/json"
       }
-    )
-    .then((data) {
+    ).then((data) {
       Map<String, dynamic> dataJson = jsonDecode(data.body);
       response = Login.fromJson(dataJson);
-    })
-    .catchError((error) {
+    }).catchError((error) {
       debugPrint("Authentication repository register error: ${error.toString()}");
     });
     return response;
+  }
+
+  @override
+  Future<bool> forgotPassword(Map<String, dynamic> body) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/forgot-password/");
+    bool success = false;
+    String jsonBody = json.encode(body);
+
+    await http.post(
+        uri,
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json"
+        }
+    ).then((_) {
+      success = true;
+    }).catchError((error) {
+      debugPrint("Authentication repository forgotPassword error: ${error.toString()}");
+    });
+
+    return success;
+  }
+
+  @override
+  Future<bool> resetPassword(Map<String, dynamic> body) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/reset-password/");
+    bool success = false;
+    String jsonBody = json.encode(body);
+
+    await http.patch(
+        uri,
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json"
+        }
+    ).then((response) {
+      if(response.statusCode >= 200 && response.statusCode < 400) {
+        success = true;
+      }
+    }).catchError((error) {
+      debugPrint("Authentication repository resetPassword error: ${error.toString()}");
+    });
+
+    return success;
   }
 }

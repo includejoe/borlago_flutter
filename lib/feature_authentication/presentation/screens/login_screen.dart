@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                       child: Text(
-                        l10n.txt_forgot_password,
+                        l10n.lbl_forgot_password,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
