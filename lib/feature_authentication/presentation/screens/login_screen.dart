@@ -5,7 +5,7 @@ import 'package:borlago/base/utils/form_validators/email.dart';
 import 'package:borlago/base/utils/form_validators/password.dart';
 import 'package:borlago/base/utils/toast.dart';
 import 'package:borlago/feature_authentication/presentation/auth_view_model.dart';
-import 'package:borlago/feature_authentication/presentation/screens/authenticated_screen.dart';
+import 'package:borlago/feature_authentication/presentation/screens/forgot_password_screen.dart';
 import 'package:borlago/feature_authentication/presentation/screens/register_screen.dart';
 import 'package:borlago/base/presentation/widgets/password_input.dart';
 import 'package:borlago/feature_authentication/presentation/widgets/bottom_action.dart';
@@ -126,8 +126,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         FocusScope.of(context).unfocus();
                       },
                   ),
-                  const SizedBox(height: 25,),
+                  const SizedBox(height: 5,),
+                  Container(
+                    padding: const EdgeInsets.only(right: 5),
+                    width: MediaQuery.of(context).size.width,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => const ForgotPasswordScreen())
+                        );
+                      },
+                      child: Text(
+                        l10n.txt_forgot_password,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          fontSize: 12.0,
+                          color: theme.colorScheme.primary
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15,),
                   _isLoading ? const Loader(size: 24) : Button(
+                    text: l10n.btn_login,
                     onTap: () {
                       setState(() {
                         _emailError = emailValidator(_emailController.text);
@@ -141,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         makeLoginRequest();
                       }
                     },
-                    text: l10n.btn_login
                   ),
                   BottomAction(
                     info: l10n.txt_no_account,

@@ -5,6 +5,7 @@
   "txt_no_account": "Don't have an account? ",
   "txt_yes_account": "Already have an account? ",
   "txt_mistakes": "Made some mistakes?",
+  "txt_forgot_password": "Forgot Password?",
   "txt_confirm_logout": "Are you sure you want to logout?",
   "txt_confirm_delete": "Are you sure you want to delete this?",
   "txt_confirm_cancel": "Are you sure you want to cancel this?",
@@ -15,7 +16,7 @@
   "txt_request_canceled": "Your waste collection request has been canceled. Your payment will be reversed within 3 business days.",
   "txt_momo_payment_initiated": "An online payment has been initiated on your phone. Please follow the instructions on your screen to complete the payment. Once the payment is complete, you will receive a confirmation email. Click on \"Completed\" when you are finished.",
   "txt_card_payment_initiated": "Your payment is currently being processed and we will send you a confirmation email once it has been completed. If you have any questions, please do not hesitate to contact us.",
-
+  "txt_reset_code": "A password reset code has been sent to your email, please check the code and enter it here",
 
   "txt_na": "N/A",
   "txt_male": "Male",
@@ -41,6 +42,7 @@
   "plh_current_password": "Enter your current password",
   "plh_new_password": "Enter your new password",
   "plh_confirm_new_password": "Confirm your new password",
+  "plh_reset_code": "Enter reset code",
 
   "lbl_email": "Email",
   "lbl_password": "Password",
@@ -59,6 +61,7 @@
   "lbl_waste_type": "Waste Type",
   "lbl_pick_up_loc": "Pick Up Location",
   "lbl_description": "Description",
+  "lbl_reset_code": "Reset Code",
   "lbl_id": "ID",
   "lbl_collector_unit": "Collector unit",
   "lbl_status": "Status",
@@ -104,6 +107,7 @@
   "btn_cancel_request": "CANCEL REQUEST",
   "btn_pay": "PAY",
   "btn_completed": "COMPLETED",
+  "btn_reset": "RESET",
 
   "err_empty_field": "This field cannot be empty",
   "err_invalid_email": "Enter a valid email address",
@@ -114,8 +118,9 @@
   "err_wrong": "Something went wrong",
   "err_select_payment": "Please select a payment method",
 
-  "suc_password": "Password changed successfully",
   "suc_update": "Updated successfully",
   "suc_delete": "Deleted successfully",
-  "suc_location": "Location added successfully"
+  "suc_location": "Location added successfully",
+  "suc_password_changed": "Password changed successfully",
+  "suc_password_reset": "Your password has been reset successfully, please login with your new password"
 }

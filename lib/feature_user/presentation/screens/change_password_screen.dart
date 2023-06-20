@@ -64,7 +64,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         _currentPasswordController.clear();
         _newPasswordController.clear();
         _confirmNewPasswordController.clear();
-        toast(message: l10n!.suc_password);
+        toast(message: l10n!.suc_password_changed);
       } else {
         toast(message: l10n!.err_wrong);
       }

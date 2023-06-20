@@ -13,6 +13,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'presentation/widgets/main_page_view.dart';
 
+// TODO: implement forgot password screen
 // TODO: add info to when a list screen return an empty list
 // TODO: + cache user locations using hive box
 // TODO: fix camera flashlight bug
