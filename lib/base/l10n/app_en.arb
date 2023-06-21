@@ -17,7 +17,6 @@
   "txt_card_payment_initiated": "Your payment is currently being processed and we will send you a confirmation email once it has been completed. If you have any questions, please do not hesitate to contact us.",
   "txt_reset_code": "A password reset code has been sent to your email. Please check your spam folder if you can't find the mail in your inbox folder.",
   "txt_forgot_password": "Enter the email address associated with your account and a password reset code will be sent to that email.",
-
   "txt_na": "N/A",
   "txt_male": "Male",
   "txt_female": "Female",
@@ -123,5 +122,5 @@
   "suc_delete": "Deleted successfully",
   "suc_location": "Location added successfully",
   "suc_password_changed": "Password changed successfully",
-  "suc_password_reset": "Your password has been reset successfully, please login with your new password"
+  "suc_password_reset": "Your password has been reset successfully, please login with your new password."
 }
