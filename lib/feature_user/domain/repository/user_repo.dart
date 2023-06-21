@@ -48,7 +48,7 @@ abstract class UserRepository {
     required String paymentMethodId
   });
 
-  Future<String?> changePassword({
+  Future<bool> changePassword({
     required String jwt,
     required Map<String, dynamic> body
   });

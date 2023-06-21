@@ -155,7 +155,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         label: l10n.lbl_reset_code,
                         prefixIcon: CupertinoIcons.lock_fill,
                         textInputType: TextInputType.text,
-                        inputAction: TextInputAction.done,
+                        inputAction: TextInputAction.next,
                         error: _resetCodeError,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_newPasswordFocusNode);

@@ -143,7 +143,7 @@ class UserUseCases {
     );
   }
 
-  Future<String?> changePassword({
+  Future<bool> changePassword({
     required String jwt,
     required String currentPassword,
     required String newPassword,

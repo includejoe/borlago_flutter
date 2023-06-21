@@ -19,9 +19,13 @@ class UserRepositoryImpl extends UserRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body) ;
-      response = User.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = User.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository getUser error: $error");
     });
@@ -46,9 +50,13 @@ class UserRepositoryImpl extends UserRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = User.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = User.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository updateUser error: ${error.toString()}");
     });
@@ -72,9 +80,13 @@ class UserRepositoryImpl extends UserRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = UserLocation.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = UserLocation.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository addLocation error: $error");
     });
@@ -93,9 +105,14 @@ class UserRepositoryImpl extends UserRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      List<dynamic> dataList = jsonDecode(data.body);
-      response = dataList.map((location) => UserLocation.fromJson(location)).toList();
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        List<dynamic> dataList = jsonDecode(httpResponse.body);
+        response = dataList.map((location) => UserLocation.fromJson(location))
+            .toList();
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository getUserLocations error: $error");
     });
@@ -116,8 +133,12 @@ class UserRepositoryImpl extends UserRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-    ).then((data) {
-      success = true;
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository getUserLocations error: $error");
     });
@@ -142,9 +163,13 @@ class UserRepositoryImpl extends UserRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-      ).then((data){
-        Map<String, dynamic> dataJson = jsonDecode(data.body);
-        response = PaymentMethod.fromJson(dataJson);
+      ).then((httpResponse){
+        if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+          Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+          response = PaymentMethod.fromJson(dataJson);
+        } else {
+          debugPrint(httpResponse.body);
+        }
       }).catchError((error) {
         debugPrint("User repository addPaymentMethod error: $error");
       });
@@ -169,9 +194,13 @@ class UserRepositoryImpl extends UserRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-    ).then((data){
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = PaymentMethod.fromJson(dataJson);
+    ).then((httpResponse){
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = PaymentMethod.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository updatePaymentMethod error: $error");
     });
@@ -192,9 +221,14 @@ class UserRepositoryImpl extends UserRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-      ).then((data) {
-        List<dynamic> dataList = jsonDecode(data.body);
-        response = dataList.map((paymentMethod) => PaymentMethod.fromJson(paymentMethod)).toList();
+      ).then((httpResponse) {
+        if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+          List<dynamic> dataList = jsonDecode(httpResponse.body);
+          response = dataList.map((paymentMethod) =>
+              PaymentMethod.fromJson(paymentMethod)).toList();
+        } else {
+          debugPrint(httpResponse.body);
+        }
       }).catchError((error) {
         debugPrint("User repository getPaymentMethods error: $error");
       });
@@ -217,8 +251,12 @@ class UserRepositoryImpl extends UserRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      success = true;
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository deletePaymentMethod error: $error");
     });
@@ -229,12 +267,12 @@ class UserRepositoryImpl extends UserRepository {
 
 
   @override
-  Future<String?> changePassword({
+  Future<bool> changePassword({
     required String jwt,
     required Map<String, dynamic> body
   }) async {
     var uri = Uri.parse("${Constants.borlaGoBaseUrl}/user/password/change/");
-    String? response;
+    bool success = false;
     String jsonBody = json.encode(body);
 
     await http.patch(
@@ -244,13 +282,16 @@ class UserRepositoryImpl extends UserRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = dataJson["detail"];
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("User repository changeUser error: $error");
     });
 
-    return response;
+    return success;
   }
 }

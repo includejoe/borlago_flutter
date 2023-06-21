@@ -15,7 +15,7 @@
   "txt_request_canceled": "Your waste collection request has been canceled. Your payment will be reversed within 3 business days.",
   "txt_momo_payment_initiated": "An online payment has been initiated on your phone. Please follow the instructions on your screen to complete the payment. Once the payment is complete, you will receive a confirmation email. Click on \"Completed\" when you are finished.",
   "txt_card_payment_initiated": "Your payment is currently being processed and we will send you a confirmation email once it has been completed. If you have any questions, please do not hesitate to contact us.",
-  "txt_reset_code": "A password reset code has been sent to your email. Please check your spam folder if you can't find the mail in your primary inbox.",
+  "txt_reset_code": "A password reset code has been sent to your email. Please check your spam folder if you can't find the mail in your inbox folder.",
   "txt_forgot_password": "Enter the email address associated with your account and a password reset code will be sent to that email.",
 
   "txt_na": "N/A",

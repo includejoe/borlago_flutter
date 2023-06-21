@@ -18,9 +18,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       headers: {
         "Content-Type": "application/json"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = Login.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = Login.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("Authentication repository login error: ${error.toString()}");
     });
@@ -40,9 +44,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       headers: {
         "Content-Type": "application/json"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = Login.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = Login.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("Authentication repository register error: ${error.toString()}");
     });
@@ -61,8 +69,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         headers: {
           "Content-Type": "application/json"
         }
-    ).then((_) {
-      success = true;
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("Authentication repository forgotPassword error: ${error.toString()}");
     });
@@ -82,9 +94,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         headers: {
           "Content-Type": "application/json"
         }
-    ).then((response) {
-      if(response.statusCode >= 200 && response.statusCode < 400) {
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
         success = true;
+      } else {
+        debugPrint(httpResponse.body);
       }
     }).catchError((error) {
       debugPrint("Authentication repository resetPassword error: ${error.toString()}");
