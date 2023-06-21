@@ -1,4 +1,5 @@
 import 'package:borlago/base/di/get_it.dart';
+import 'package:borlago/feature_user/domain/models/Payment.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:borlago/feature_user/domain/models/user_location.dart';
@@ -141,6 +142,12 @@ class UserUseCases {
       jwt: jwt,
       paymentMethodId: paymentMethodId
     );
+  }
+
+  Future<List<Payment?>?> getPaymentHistory({
+    required String jwt,
+  }) async {
+    return getIt<UserRepository>().getPaymentHistory(jwt: jwt);
   }
 
   Future<bool> changePassword({

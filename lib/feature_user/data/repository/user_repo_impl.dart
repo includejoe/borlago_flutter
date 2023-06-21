@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:borlago/base/utils/constants.dart';
+import 'package:borlago/feature_user/domain/models/Payment.dart';
 import 'package:borlago/feature_user/domain/models/payment_method.dart';
 import 'package:borlago/feature_user/domain/models/user.dart';
 import 'package:borlago/feature_user/domain/models/user_location.dart';
@@ -225,7 +226,7 @@ class UserRepositoryImpl extends UserRepository {
         if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
           List<dynamic> dataList = jsonDecode(httpResponse.body);
           response = dataList.map((paymentMethod) =>
-              PaymentMethod.fromJson(paymentMethod)).toList();
+            PaymentMethod.fromJson(paymentMethod)).toList();
         } else {
           debugPrint(httpResponse.body);
         }
@@ -264,7 +265,31 @@ class UserRepositoryImpl extends UserRepository {
     return success;
   }
 
+  @override
+  Future<List<Payment?>?> getPaymentHistory({required String jwt}) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/user/payments/all/");
+    List<Payment?>? response;
 
+    await http.get(
+        uri,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $jwt"
+        }
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        List<dynamic> dataList = jsonDecode(httpResponse.body);
+        response = dataList.map((paymentMethod) =>
+          Payment.fromJson(paymentMethod)).toList();
+      } else {
+        debugPrint(httpResponse.body);
+      }
+    }).catchError((error) {
+      debugPrint("User repository getPaymentHistory error: $error");
+    });
+
+    return response;
+  }
 
   @override
   Future<bool> changePassword({
@@ -294,4 +319,6 @@ class UserRepositoryImpl extends UserRepository {
 
     return success;
   }
+
+
 }
