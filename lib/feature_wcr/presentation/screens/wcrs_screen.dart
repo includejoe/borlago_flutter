@@ -1,3 +1,5 @@
+import 'package:borlago/base/presentation/widgets/empty_list_placeholder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/page_refresher.dart';
@@ -89,12 +91,15 @@ class _WCRsScreenState extends State<WCRsScreen> {
                 color: theme.colorScheme.primary,
                 backgroundColor: theme.colorScheme.background,
               ),
-              child: ListView.builder(
+              child: _wcrs.isNotEmpty ? ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: wcrItems.length,
                 itemBuilder: (context, index) {
                   return wcrItems[index];
                 }
+              ) : EmptyListPlaceholder(
+                icon: CupertinoIcons.trash,
+                message: l10n.txt_no_wcrs,
               ),
             )
       ),

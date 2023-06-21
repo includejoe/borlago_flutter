@@ -1,3 +1,4 @@
+import 'package:borlago/base/presentation/widgets/empty_list_placeholder.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
 import 'package:borlago/base/presentation/widgets/page_refresher.dart';
@@ -87,13 +88,16 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                 color: theme.colorScheme.primary,
                 backgroundColor: theme.colorScheme.surface,
               ),
-              child: ListView.builder(
+              child: _paymentMethods.isNotEmpty ? ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: paymentMethodItems.length,
                   itemBuilder: (context, index) {
                     return paymentMethodItems[index];
                   }
-              ),
+              ) : EmptyListPlaceholder(
+                  icon: CupertinoIcons.creditcard_fill,
+                  message: l10n.txt_no_payment_methods
+              )
             ),
         floatingActionButton: FloatActionButton(
             onPressed: () {

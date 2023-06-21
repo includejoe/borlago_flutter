@@ -1,4 +1,5 @@
 import 'package:borlago/base/presentation/widgets/confirmation_dialog.dart';
+import 'package:borlago/base/presentation/widgets/empty_list_placeholder.dart';
 import 'package:borlago/base/presentation/widgets/float_action_button.dart';
 import 'package:borlago/base/presentation/widgets/info_dialog.dart';
 import 'package:borlago/base/presentation/widgets/loader.dart';
@@ -126,12 +127,15 @@ class _LocationsScreenState extends State<LocationsScreen> {
             color: theme.colorScheme.primary,
             backgroundColor: theme.colorScheme.surface,
           ),
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: locationsItems.length,
-              itemBuilder: (context, index) {
-                return locationsItems[index];
-              }
+          child: _userLocations.isNotEmpty ? ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: locationsItems.length,
+            itemBuilder: (context, index) {
+              return locationsItems[index];
+            }
+          ) : EmptyListPlaceholder(
+              icon: CupertinoIcons.location_solid,
+              message: l10n.txt_no_locations
           ),
       ),
       floatingActionButton: FloatActionButton(

@@ -47,7 +47,7 @@ class SettingsScreen extends StatelessWidget {
         },
       ),
       SettingsItem(
-        icon: CupertinoIcons.money_dollar,
+        icon: CupertinoIcons.creditcard_fill,
         text: l10n.lbl_payment_method,
         onTap: () {
           Navigator.push(
