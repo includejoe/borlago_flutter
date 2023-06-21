@@ -26,9 +26,13 @@ class WCRRepositoryImpl extends WCRRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body) ;
-      response = WCR.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = WCR.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("WCR repository createWCR error: $error");
     });
@@ -50,9 +54,13 @@ class WCRRepositoryImpl extends WCRRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body) ;
-      response = WCR.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = WCR.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("WCR repository getWCR error: $error");
     });
@@ -74,9 +82,13 @@ class WCRRepositoryImpl extends WCRRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-    ).then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body) ;
-      response = WCR.fromJson(dataJson);
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = WCR.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("WCR repository cancelWCR error: $error");
     });
@@ -98,8 +110,12 @@ class WCRRepositoryImpl extends WCRRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt"
         }
-    ).then((data) {
-      success = true;
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("WCR repository deleteWCR error: $error");
     });
@@ -118,9 +134,13 @@ class WCRRepositoryImpl extends WCRRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer $jwt"
       }
-    ).then((data) {
-      List<dynamic> dataList = jsonDecode(data.body);
-      response = dataList.map((wcr) => WCR.fromJson(wcr)).toList();
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        List<dynamic> dataList = jsonDecode(httpResponse.body);
+        response = dataList.map((wcr) => WCR.fromJson(wcr)).toList();
+      } else {
+        debugPrint(httpResponse.body);
+      }
     }).catchError((error) {
       debugPrint("WCR repository listWCR error: $error");
     });

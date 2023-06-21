@@ -6,8 +6,8 @@ class TextInput extends StatelessWidget {
     Key? key,
     required this.controller,
     required this.textInputType,
-    required this.focusNode,
     required this.inputAction,
+    this.focusNode,
     this.prefixIcon,
     this.placeholder,
     this.label,
@@ -20,7 +20,7 @@ class TextInput extends StatelessWidget {
   }) : super(key: key);
 
   final TextEditingController controller;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final TextInputAction inputAction;
   final TextInputType textInputType;
   final String? placeholder;

@@ -40,4 +40,27 @@ class AuthenticationUseCases {
 
     return getIt.get<AuthenticationRepository>().register(body);
   }
+
+  Future<bool> forgotPassword({
+    required String email
+  }) async {
+    Map<String, dynamic> body = {
+      "email": email,
+    };
+    return getIt.get<AuthenticationRepository>().forgotPassword(body);
+  }
+
+  Future<bool> resetPassword({
+    required String email,
+    required String resetCode,
+    required String newPassword,
+  }) async {
+    Map<String, dynamic> body = {
+      "email": email,
+      "reset_code": resetCode,
+      "new_password": newPassword
+    };
+
+    return getIt.get<AuthenticationRepository>().resetPassword(body);
+  }
 }

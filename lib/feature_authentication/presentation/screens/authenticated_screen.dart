@@ -3,6 +3,7 @@ import 'package:borlago/feature_authentication/providers/authentication_provider
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// Not implemented in any file
 class AuthenticatedScreen extends StatefulWidget {
   const AuthenticatedScreen({
     super.key,

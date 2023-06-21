@@ -17,6 +17,7 @@ import 'presentation/widgets/main_page_view.dart';
 // TODO: + cache user locations using hive box
 // TODO: fix camera flashlight bug
 // TODO: + forgot password to login screen
+// TODO: implement accurate error messages
 
 
 Future main() async {

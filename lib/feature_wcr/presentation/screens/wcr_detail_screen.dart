@@ -32,7 +32,6 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
     Navigator.of(context).pop();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -98,7 +97,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
         title: Text(
           l10n!.lbl_wcr_detail,
           style: theme.textTheme.headlineMedium?.copyWith(
-              color: theme.colorScheme.onPrimary
+            color: theme.colorScheme.onPrimary
           ),
         ),
       ),
@@ -108,9 +107,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: 250,
-            decoration: BoxDecoration(
-                color: theme.colorScheme.surface
-            ),
+            decoration: BoxDecoration(color: theme.colorScheme.surface),
             child: AspectRatio(
               aspectRatio: 9 / 6,
               child: FastCachedImage(
@@ -193,8 +190,8 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        widget.wcr.wasteType,
-                        style: theme.textTheme.bodyMedium
+                      widget.wcr.wasteType,
+                      style: theme.textTheme.bodyMedium
                     ),
                   ],
                 ),
@@ -209,8 +206,8 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        widget.wcr.collectorUnit ?? l10n.txt_na,
-                        style: theme.textTheme.bodyMedium
+                      widget.wcr.collectorUnit ?? l10n.txt_na,
+                      style: theme.textTheme.bodyMedium
                     ),
                   ],
                 ),
@@ -220,7 +217,7 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     Text(
                       "${l10n.lbl_status}:",
                       style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     const SizedBox(width: 5,),
@@ -243,9 +240,12 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                       ),
                     ),
                     const SizedBox(width: 5,),
-                    Text(
+                    Expanded(
+                      child: Text(
                         widget.wcr.pickUpLocation,
+                        overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.bodyMedium
+                      ),
                     ),
                   ],
                 ),
@@ -255,13 +255,13 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     Text(
                       "${l10n.lbl_price}:",
                       style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        "$currency ${widget.wcr.price}",
-                        style: theme.textTheme.bodyMedium
+                      "$currency ${widget.wcr.price}",
+                      style: theme.textTheme.bodyMedium
                     ),
                   ],
                 ),
@@ -271,13 +271,13 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     Text(
                       "${l10n.lbl_created_at}:",
                       style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        createdAt ?? l10n.txt_na,
-                        style: theme.textTheme.bodyMedium
+                      createdAt ?? l10n.txt_na,
+                      style: theme.textTheme.bodyMedium
                     ),
                   ],
                 ),
@@ -287,13 +287,13 @@ class _WCRDetailScreenState extends State<WCRDetailScreen> {
                     Text(
                       "${l10n.lbl_collected_at}:",
                       style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                        collectedAt ?? l10n.txt_na,
-                        style: theme.textTheme.bodyMedium
+                      collectedAt ?? l10n.txt_na,
+                      style: theme.textTheme.bodyMedium
                     ),
                   ],
                 ),

@@ -166,15 +166,11 @@ class UserViewModel {
   }) async {
     bool success = false;
     try {
-      String? response = await userUseCases.changePassword(
+      success = await userUseCases.changePassword(
         jwt: authProvider.jwt!,
         currentPassword: currentPassword,
         newPassword: newPassword
       );
-
-      if(response != null) {
-        success = true;
-      }
     } catch(error) {
       debugPrint("User view model change password error: $error");
     }

@@ -64,7 +64,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         _currentPasswordController.clear();
         _newPasswordController.clear();
         _confirmNewPasswordController.clear();
-        toast(message: l10n!.suc_password);
+        toast(message: l10n!.suc_password_changed);
       } else {
         toast(message: l10n!.err_wrong);
       }
@@ -123,11 +123,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   PasswordInput(
                       controller: _confirmNewPasswordController,
                       focusNode: _confirmNewPasswordFocusNode,
-                      inputAction: TextInputAction.next,
+                      inputAction: TextInputAction.done,
                       placeholder: l10n.plh_confirm_new_password,
                       error: _confirmNewPasswordError,
                       onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_confirmNewPasswordFocusNode);
+                        FocusScope.of(context).unfocus();
                       },
                       label: l10n.lbl_confirm_new_password
                   ),
@@ -154,7 +154,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             _newPasswordController.text,
                             _confirmNewPasswordController.text,
                           );
-
                         });
 
                         final errors = [

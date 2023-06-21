@@ -11,33 +11,6 @@ class AuthenticationViewModel {
   final userUseCases = getIt<UserUseCases>();
   final authProvider = getIt<AuthenticationProvider>();
 
-  Future<bool> login({required String email, required String password}) async {
-    bool success = false;
-
-    try {
-      Login? response = await authUseCases.login(
-        email: email,
-        password: password
-      );
-
-      if (response != null) {
-        User? user = await userUseCases.getUser(
-          jwt: response.jwt,
-          email: response.email
-        );
-
-        if (user != null) {
-          authProvider.login(jwt: response.jwt, user: user);
-          success = true;
-        }
-      }
-    } catch(error) {
-      debugPrint("Authentication view model login error: $error");
-    }
-
-    return success;
-  }
-
   Future<bool> register({
     required String firstName,
     required String lastName,
@@ -75,6 +48,61 @@ class AuthenticationViewModel {
       debugPrint("Authentication view model register error: $error");
     }
 
+    return success;
+  }
+
+  Future<bool> login({required String email, required String password}) async {
+    bool success = false;
+
+    try {
+      Login? response = await authUseCases.login(
+          email: email,
+          password: password
+      );
+
+      if (response != null) {
+        User? user = await userUseCases.getUser(
+            jwt: response.jwt,
+            email: response.email
+        );
+
+        if (user != null) {
+          authProvider.login(jwt: response.jwt, user: user);
+          success = true;
+        }
+      }
+    } catch(error) {
+      debugPrint("Authentication view model login error: $error");
+    }
+
+    return success;
+  }
+
+  Future<bool> forgotPassword({required String email}) async {
+    bool success = false;
+    try {
+      success = await authUseCases.forgotPassword(email: email);
+    } catch(error) {
+      debugPrint("Authentication view model forgotPassword error: $error");
+    }
+    return success;
+  }
+
+  Future<bool> resetPassword({
+    required String email,
+    required String resetCode,
+    required String newPassword
+  }) async {
+    bool success = false;
+    try {
+      success = await authUseCases.resetPassword(
+        email: email,
+        resetCode: resetCode,
+        newPassword: newPassword
+      );
+    } catch(error) {
+      debugPrint("Authentication view model resetPassword error: $error");
+    }
     return success;
   }
 

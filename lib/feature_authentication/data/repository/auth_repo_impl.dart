@@ -18,12 +18,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       headers: {
         "Content-Type": "application/json"
       }
-    )
-    .then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = Login.fromJson(dataJson);
-    })
-    .catchError((error) {
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = Login.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
+    }).catchError((error) {
       debugPrint("Authentication repository login error: ${error.toString()}");
     });
 
@@ -42,14 +44,66 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       headers: {
         "Content-Type": "application/json"
       }
-    )
-    .then((data) {
-      Map<String, dynamic> dataJson = jsonDecode(data.body);
-      response = Login.fromJson(dataJson);
-    })
-    .catchError((error) {
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        Map<String, dynamic> dataJson = jsonDecode(httpResponse.body);
+        response = Login.fromJson(dataJson);
+      } else {
+        debugPrint(httpResponse.body);
+      }
+    }).catchError((error) {
       debugPrint("Authentication repository register error: ${error.toString()}");
     });
     return response;
+  }
+
+  @override
+  Future<bool> forgotPassword(Map<String, dynamic> body) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/forgot-password/");
+    bool success = false;
+    String jsonBody = json.encode(body);
+
+    await http.post(
+        uri,
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json"
+        }
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
+    }).catchError((error) {
+      debugPrint("Authentication repository forgotPassword error: ${error.toString()}");
+    });
+
+    return success;
+  }
+
+  @override
+  Future<bool> resetPassword(Map<String, dynamic> body) async {
+    var uri = Uri.parse("${Constants.borlaGoBaseUrl}/auth/reset-password/");
+    bool success = false;
+    String jsonBody = json.encode(body);
+
+    await http.patch(
+        uri,
+        body: jsonBody,
+        headers: {
+          "Content-Type": "application/json"
+        }
+    ).then((httpResponse) {
+      if(httpResponse.statusCode >= 200 && httpResponse.statusCode < 400) {
+        success = true;
+      } else {
+        debugPrint(httpResponse.body);
+      }
+    }).catchError((error) {
+      debugPrint("Authentication repository resetPassword error: ${error.toString()}");
+    });
+
+    return success;
   }
 }
